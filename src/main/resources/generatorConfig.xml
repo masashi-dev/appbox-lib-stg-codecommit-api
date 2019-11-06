@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <classPathEntry location="C:\mysql-connector-java-8.0.18.jar"/>
+
+  <context id="storage-tables" targetRuntime="MyBatis3">
+  
+    <property name="javaFileEncoding" value="UTF-8" />
+
+    <!-- スキーマ情報を取得する DB への接続設定 -->
+    <!-- https://qiita.com/k_hoso/items/230e720b79317939da60 -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://localhost:3306/storage?serverTimezone=JST" 
+        userId="root"
+        password="rootroot">
+    </jdbcConnection>
+
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="true" />
+      <property name="useJSR310Types" value="true" />
+    </javaTypeResolver>
+      
+    <!-- SELECT 結果等を格納するドメインモデルを生成する設定 -->
+    <javaModelGenerator targetPackage="jp.co.fnj.storage.api.entity.model.generat" targetProject="storage-api/src/main/java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <!-- SQL 設定が記述された XML を生成する設定 -->
+    <sqlMapGenerator targetPackage="jp.co.fnj.storage.api.entity.mapper.generat" targetProject="storage-api/src/main/resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+    <!-- マッパークラスを生成する設定 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="jp.co.fnj.storage.api.entity.mapper.generat" targetProject="storage-api/src/main/java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+    
+    <!-- コードを生成するテーブルを指定 -->
+    <table schema="storage" tableName="T_FILE">
+      <!-- TODO <columnOverride column="DELETE_FLG" javaType="java.lang.Boolean" /> -->
+    </table>
+    <table schema="storage" tableName="T_FOLDER">
+      <!-- TODO <columnOverride column="DELETE_FLG" javaType="java.lang.Boolean" /> -->
+      <!-- TODO <columnOverride column="PRIVATE_FLG" javaType="java.lang.Boolean" /> -->
+    </table>
+    <table schema="storage" tableName="T_BOOKMARK">
+      <!-- TODO <columnOverride column="DELETE_FLG" javaType="java.lang.Boolean" /> -->
+    </table>
+    <!-- <table schema="storage" tableName="T_EXTERNAL_ACCESS_LOG"> -->
+      <!-- TODO <columnOverride column="LOGIN_SUCCESS" javaType="" /> -->
+    <!-- </table> -->
+    <!-- <table schema="storage" tableName="M_AUTHORITY"> -->
+      <!-- TODO <columnOverride column="FUNCTION_TYPE_1" javaType="" /> -->
+      <!-- TODO <columnOverride column="FUNCTION_TYPE_1" javaType="" /> -->
+      <!-- TODO <columnOverride column="FUNCTION_TYPE_1" javaType="" /> -->
+      <!-- TODO <columnOverride column="FUNCTION_TYPE_1" javaType="" /> -->
+      <!-- TODO <columnOverride column="FUNCTION_TYPE_1" javaType="" /> -->
+      <!-- TODO <columnOverride column="FUNCTION_TYPE_1" javaType="" /> -->
+      <!-- TODO <columnOverride column="FUNCTION_TYPE_1" javaType="" /> -->
+      <!-- TODO <columnOverride column="FUNCTION_TYPE_1" javaType="" /> -->
+      <!-- TODO <columnOverride column="FUNCTION_TYPE_1" javaType="" /> -->
+    <!-- </table> -->
+    <table schema="storage" tableName="T_SORT_ORDER">
+    </table>
+    <table schema="storage" tableName="T_EXTERNAL_SERVICE_OBJECT">
+    </table>
+    <table schema="storage" tableName="T_SEQUENCE">
+    </table>
+    <table schema="storage" tableName="T_FULL_TEXT_SEARCH">
+    </table>
+       
+  </context>
+</generatorConfiguration>
