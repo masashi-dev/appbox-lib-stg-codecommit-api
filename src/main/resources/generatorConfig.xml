@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-  <classPathEntry location="C:\mysql-connector-java-8.0.18.jar"/>
+  <classPathEntry location="C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.16.jar"/>
 
   <context id="storage-tables" targetRuntime="MyBatis3">
   
@@ -22,17 +22,17 @@
     </javaTypeResolver>
       
     <!-- SELECT 結果等を格納するドメインモデルを生成する設定 -->
-    <javaModelGenerator targetPackage="jp.co.fnj.storage.api.entity.model.generat" targetProject="storage-api/src/main/java">
+    <javaModelGenerator targetPackage="jp.co.fnj.storage.entity.model.generat" targetProject="src/main/java">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
     <!-- SQL 設定が記述された XML を生成する設定 -->
-    <sqlMapGenerator targetPackage="jp.co.fnj.storage.api.entity.mapper.generat" targetProject="storage-api/src/main/resources">
+    <sqlMapGenerator targetPackage="jp.co.fnj.storage.entity.mapper.generat" targetProject="src/main/resources">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
     <!-- マッパークラスを生成する設定 -->
-    <javaClientGenerator type="XMLMAPPER" targetPackage="jp.co.fnj.storage.api.entity.mapper.generat" targetProject="storage-api/src/main/java">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="jp.co.fnj.storage.entity.mapper.generat" targetProject="src/main/java">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
     
