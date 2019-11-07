@@ -1,10 +1,5 @@
 package jp.co.fnj.storage.api.client;
 
-import org.springframework.http.HttpStatus;
-import jp.co.fnj.storage.exception.StorageException;
-//import jp.co.fnj.storage.model.error.AppboxPlatformApiErrorResponse;
-import lombok.Getter;
-
 /**
  * Api呼び出し失敗の例外(認証固まってから修正入れる)
  * 

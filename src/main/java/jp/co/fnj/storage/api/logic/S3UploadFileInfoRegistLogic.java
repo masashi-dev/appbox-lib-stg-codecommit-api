@@ -15,142 +15,142 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 import org.springframework.validation.SmartValidator;
 
-import jp.co.fnj.storage.constant.Messages;
-import jp.co.fnj.storage.exception.StorageBadRequestException;
-import jp.co.fnj.storage.exception.StorageException;
-import jp.co.fnj.storage.model.s3uploadfile.S3UploadFileInfoRegistRequest;
-import jp.co.fnj.storage.model.s3uploadfile.S3UploadFileInfoRegistResponse;
-import jp.co.fnj.storage.service.S3UploadFileInfoRegistService;
+import jp.co.fnj.storage.api.constant.Messages;
+import jp.co.fnj.storage.api.exception.StorageBadRequestException;
+import jp.co.fnj.storage.api.exception.StorageException;
+import jp.co.fnj.storage.api.model.s3uploadfile.S3UploadFileInfoRegistRequest;
+import jp.co.fnj.storage.api.model.s3uploadfile.S3UploadFileInfoRegistResponse;
+import jp.co.fnj.storage.api.service.S3UploadFileInfoRegistService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class S3UploadFileInfoRegistLogic <REQUEST_BODY extends S3UploadFileInfoRegistRequest, RESPONSE extends S3UploadFileInfoRegistResponse>{
+public abstract class S3UploadFileInfoRegistLogic<REQUEST_BODY extends S3UploadFileInfoRegistRequest, RESPONSE extends S3UploadFileInfoRegistResponse> {
 
 	@Autowired
 	S3UploadFileInfoRegistService s3UploadFileInfoRegistService;
-		
-    @Autowired
-    protected MessageSource messageSource;
 
-    @Autowired
-    private SmartValidator validator;
+	@Autowired
+	protected MessageSource messageSource;
 
-    /**
-     * 処理実行
-     * 
-     * @param request
-     * @param response
-     * @param requestBody
-     * @return
-     * @throws StorageException
-     */
-    public final ResponseEntity<RESPONSE> execute(HttpServletRequest request, HttpServletResponse response, REQUEST_BODY requestBody)
-            throws StorageException {
+	@Autowired
+	private SmartValidator validator;
 
-        // 事前実行
-        preExecute(request, response, requestBody);
+	/**
+	 * 処理実行
+	 * 
+	 * @param request
+	 * @param response
+	 * @param requestBody
+	 * @return
+	 * @throws StorageException
+	 */
+	public final ResponseEntity<RESPONSE> execute(HttpServletRequest request, HttpServletResponse response,
+			REQUEST_BODY requestBody) throws StorageException {
 
-        // バリデーション
-        validate(requestBody);
+		// 事前実行
+		preExecute(request, response, requestBody);
 
-        // ロジカルチェックなし
-        // logicalCheck(request, response, requestBody);
+		// バリデーション
+		validate(requestBody);
 
-        // メイン処理実行
-        RESPONSE responseBody = innerExecute(request, response, requestBody);
+		// ロジカルチェックなし
+		// logicalCheck(request, response, requestBody);
 
-        MultiValueMap<String, String> headerMap = new LinkedMultiValueMap<>();
+		// メイン処理実行
+		RESPONSE responseBody = innerExecute(request, response, requestBody);
 
-        return new ResponseEntity<RESPONSE>(responseBody, headerMap, HttpStatus.OK);
-    }
+		MultiValueMap<String, String> headerMap = new LinkedMultiValueMap<>();
 
-    /**
-     * 認証情報を取得します。
-     * 
-     * @return
-     * @throws AppboxPlatformException
-     */
+		return new ResponseEntity<RESPONSE>(responseBody, headerMap, HttpStatus.OK);
+	}
+
+	/**
+	 * 認証情報を取得します。
+	 * 
+	 * @return
+	 * @throws AppboxPlatformException
+	 */
 //    protected AppboxPlatformUser getAuthenticationPrincipal() throws AppboxPlatformException {
 //        return AuthenticationUtil.getAuthenticationPrincipal();
 //    }
 
-    /**
-     * システム日時を取得します。
-     * 
-     * @return
-     */
-    protected LocalDateTime getSystemDate() {
-        return LocalDateTime.now();
-    }
+	/**
+	 * システム日時を取得します。
+	 * 
+	 * @return
+	 */
+	protected LocalDateTime getSystemDate() {
+		return LocalDateTime.now();
+	}
 
-    /**
-     * バリデーションチェックを行う。
-     * 
-     * @param requestBody
-     * @throws AppboxPlatformException
-     */
-    protected void validate(REQUEST_BODY requestBody) throws StorageException {
+	/**
+	 * バリデーションチェックを行う。
+	 * 
+	 * @param requestBody
+	 * @throws AppboxPlatformException
+	 */
+	protected void validate(REQUEST_BODY requestBody) throws StorageException {
 
-        if (requestBody == null) {
-            return;
-        }
+		if (requestBody == null) {
+			return;
+		}
 
-        BindingResult bindingResult = new DataBinder(requestBody).getBindingResult();
-        validator.validate(requestBody, bindingResult, getValidationGroup());
+		BindingResult bindingResult = new DataBinder(requestBody).getBindingResult();
+		validator.validate(requestBody, bindingResult, getValidationGroup());
 
-        if (bindingResult.hasErrors()) {
-            throw new StorageBadRequestException(Messages.E05001);
-        }
+		if (bindingResult.hasErrors()) {
+			throw new StorageBadRequestException(Messages.E05001);
+		}
 
-    }
+	}
 
-    /**
-     * バリデーショングループを取得します。 各機能で任意でオーバーライドしてください。
-     * 
-     * @return
-     */
-    protected Class<?> getValidationGroup() throws StorageException {
-        return null;
-    }
+	/**
+	 * バリデーショングループを取得します。 各機能で任意でオーバーライドしてください。
+	 * 
+	 * @return
+	 */
+	protected Class<?> getValidationGroup() throws StorageException {
+		return null;
+	}
 
-    /**
-     * レスポンスヘッダーにIF_UNMODIFIED_SINCEを含めるか？
-     * 
-     * @return
-     */
-    protected abstract Boolean isAddResponseHeaderIfUnmodifiedSince();
+	/**
+	 * レスポンスヘッダーにIF_UNMODIFIED_SINCEを含めるか？
+	 * 
+	 * @return
+	 */
+	protected abstract Boolean isAddResponseHeaderIfUnmodifiedSince();
 
-    /**
-     * 事前処理
-     * 
-     * @param request
-     * @param response
-     * @param requestBody
-     * @throws AppboxPlatformException
-     */
-    protected abstract void preExecute(HttpServletRequest request, HttpServletResponse response, REQUEST_BODY requestBody)
-            throws StorageException;
+	/**
+	 * 事前処理
+	 * 
+	 * @param request
+	 * @param response
+	 * @param requestBody
+	 * @throws AppboxPlatformException
+	 */
+	protected abstract void preExecute(HttpServletRequest request, HttpServletResponse response,
+			REQUEST_BODY requestBody) throws StorageException;
 
-    /**
-     * ロジカルチェック
-     * 
-     * @param request
-     * @param response
-     * @param requestBody
-     * @throws AppboxPlatformException
-     */
-    protected abstract void logicalCheck(HttpServletRequest request, HttpServletResponse response, REQUEST_BODY requestBody)
-            throws StorageException;
-    
-    /**
-     * メイン処理
-     * 
-     * @param request
-     * @param response
-     * @param requestBody
-     * @return
-     * @throws AppboxPlatformException
-     */
-    protected abstract RESPONSE innerExecute(HttpServletRequest request, HttpServletResponse response, REQUEST_BODY requestBody)
-            throws StorageException;
+	/**
+	 * ロジカルチェック
+	 * 
+	 * @param request
+	 * @param response
+	 * @param requestBody
+	 * @throws AppboxPlatformException
+	 */
+	protected abstract void logicalCheck(HttpServletRequest request, HttpServletResponse response,
+			REQUEST_BODY requestBody) throws StorageException;
+
+	/**
+	 * メイン処理
+	 * 
+	 * @param request
+	 * @param response
+	 * @param requestBody
+	 * @return
+	 * @throws AppboxPlatformException
+	 */
+	protected abstract RESPONSE innerExecute(HttpServletRequest request, HttpServletResponse response,
+			REQUEST_BODY requestBody) throws StorageException;
 }
