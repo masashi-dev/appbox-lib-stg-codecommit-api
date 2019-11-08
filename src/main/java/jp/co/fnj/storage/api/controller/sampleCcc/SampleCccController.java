@@ -1,6 +1,7 @@
-package jp.co.fnj.storage.api.controller.sampleAaa;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+package jp.co.fnj.storage.api.controller.sampleCcc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -16,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 /********************************************************************
  *
- * XXX-XXX-XXX ユーザー情報取得コントローラー（GETリクエスト版）
+ * XXX-XXX-XXX ユーザー情報取得コントローラー
  *
  * @author G.Kaga
  * @version 1.0
  *
  *******************************************************************/
 @RestController
-public class SampleAaaController {
+public class SampleCccController {
 
 	@Autowired
 	public Validator validator;
@@ -37,8 +38,8 @@ public class SampleAaaController {
      * @param user_id ユーザーID
      * @return UserInfoResponse ユーザー情報
      */
-    @RequestMapping(value = "/sample1",  method = GET)
-    public ResponseEntity<SampleAaaResponse> getUserInfo(
+    @RequestMapping("/sample3")
+    public ResponseEntity<SampleCccResponse> getUserInfo(
     		@RequestParam(value="user_id", defaultValue="99999") String user_id
 	) {
 
@@ -47,10 +48,10 @@ public class SampleAaaController {
 
 
     	// リクエストパラメータをリクエストクラスに設定
-    	SampleAaaRequest req = new SampleAaaRequest(user_id);
+    	SampleCccRequest req = new SampleCccRequest(user_id);
     	
     	// バリデーションエラーがある場合はエラーを返却
-    	Set<ConstraintViolation<SampleAaaRequest>> errorResult = validator.validate(req);
+    	Set<ConstraintViolation<SampleCccRequest>> errorResult = validator.validate(req);
     	if (0 < errorResult.size()) {
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
     	}
@@ -68,7 +69,11 @@ public class SampleAaaController {
 
     	// レスポンスを返却
     	// 上記で取得した値などを使ってレスポンスを組み立てる
-    	SampleAaaResponse res = new SampleAaaResponse(req.getUser_id(), "田中", "太郎", 18);
+//    	List<> res = new ArrayList();
+    	SampleCccResponse res = new SampleCccResponse(req.getUser_id(), "田中", "太郎", 18);
+//    	res.add(res1);
+//    	SampleBbbResponse res2 = new SampleBbbResponse(req.getUser_id(), "田中", "太郎", 18);
+//    	res.add(res2);
         return new ResponseEntity<>(res, headers, HttpStatus.OK);
 
     }
@@ -77,13 +82,6 @@ public class SampleAaaController {
 
 /**
  * [サンプル解説]
- *   GETリクエストで1つのキーをもとに1つのデータを返却するサンプルです.
- * 
- *   "@RequestMapping"アノテーションで指定したURLへのリクエストが来た場合に処理します.
+ *   GETリクエストで1つのキーをもとに複数のデータを返却するサンプルです.
  *
- *   URLにリクエストパラメーラを指定した場合は指定した値が利用され、
- *   リクエストパラメータを省略した場合はdefaultValueで指定した値が利用されます.
- *
- *   （例）http://localhost:8081/sample                → user_id："99999"（デフォルト値）
- *         http://localhost:8081/sample?user_id=12345  → user_id："12345"
  */
