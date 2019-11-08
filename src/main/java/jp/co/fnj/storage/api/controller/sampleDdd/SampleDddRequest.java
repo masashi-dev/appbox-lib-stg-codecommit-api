@@ -21,4 +21,8 @@ public class SampleDddRequest {
 	@Size(max=3)
     private final String user_id;
 
+	/** パラメータ */
+	@NotNull
+    private final String test_param;
+
 }

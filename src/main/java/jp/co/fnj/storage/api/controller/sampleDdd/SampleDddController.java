@@ -36,11 +36,13 @@ public class SampleDddController {
      * 指定したユーザーIDのユーザー情報を取得します.
      *
      * @param user_id ユーザーID
+     * @param test_param 任意のパラメータ
      * @return UserInfoResponse ユーザー情報
      */
-    @RequestMapping(value = "/sample4/{user_id}",  method = GET)
+    @RequestMapping(value = "/sample4/{user_id}/{test_param}",  method = GET)
     public ResponseEntity<SampleDddResponse> getUserInfo(
-    		@PathVariable("user_id") String user_id
+    		@PathVariable("user_id") String user_id,
+    		@PathVariable("test_param") String test_param
 	) {
 
         HttpHeaders headers = new HttpHeaders();
@@ -48,7 +50,7 @@ public class SampleDddController {
 
 
     	// リクエストパラメータをリクエストクラスに設定
-    	SampleDddRequest req = new SampleDddRequest(user_id);
+    	SampleDddRequest req = new SampleDddRequest(user_id, test_param);
     	
     	// バリデーションエラーがある場合はエラーを返却
     	Set<ConstraintViolation<SampleDddRequest>> errorResult = validator.validate(req);
@@ -69,7 +71,7 @@ public class SampleDddController {
 
     	// レスポンスを返却
     	// 上記で取得した値などを使ってレスポンスを組み立てる
-    	SampleDddResponse res = new SampleDddResponse(req.getUser_id(), "田中", "太郎", 18);
+    	SampleDddResponse res = new SampleDddResponse(req.getUser_id(), req.getTest_param(), "太郎", 18);
         return new ResponseEntity<>(res, headers, HttpStatus.OK);
 
     }
@@ -78,12 +80,12 @@ public class SampleDddController {
 
 /**
  * [サンプル解説]
- *   GETリクエストで1つのキーをもとに1つのデータを返却するサンプルです.
+ *   GETリクエストで複数のキーをもとに1つのデータを返却するサンプルです.
  *   キーはルートパラメータから取得します.
  * 
  *   "@RequestMapping"アノテーションで指定したURLへのリクエストが来た場合に処理します.
  *
  *   URLにルートパラメーラを指定した場合は指定した値が利用されます.
  *
- *   （例）http://localhost:8081/sample4/12345  → user_id："12345"
+ *   （例）http://localhost:8081/sample4/12345/てすと  → user_id："12345"、test_param："てすと"
  */
