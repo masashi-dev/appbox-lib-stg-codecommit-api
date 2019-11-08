@@ -1,5 +1,8 @@
 package jp.co.fnj.storage.api.controller.sampleAaa;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,17 +27,31 @@ public class SampleAaaController {
      * @return UserInfoResponse ユーザー情報
      */
     @RequestMapping("/sample1")
-    public SampleAaaResponse getUserInfo(@RequestParam(value="user_id", defaultValue="99999") long user_id) {
+    public ResponseEntity<SampleAaaResponse> getUserInfo(
+    		@RequestParam(value="user_id", defaultValue="99999")
+    		long user_id
+	) {
 
+    	// バリデーション
+    	
+    	
     	// ユーザー情報を取得
     	// {ここでDBやファイルから情報を取得する}
+    	// ユーザー情報を取得できなかった場合
+    	if (true) {
+    		// {404エラー等を返却}
+    	}
     	
     	// レスポンスを生成
     	// 上記で取得した値などを使ってレスポンスを組み立てる
     	SampleAaaResponse res = new SampleAaaResponse(user_id, "田中", "太郎", 18);
-    	
-    	// レスポンスを返却
-        return res;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("header1", "heaer1-value");
+        HttpStatus status = HttpStatus.OK;
+
+        // レスポンスを返却
+        return new ResponseEntity<>(res, headers, status);
 
     }
 
@@ -42,7 +59,7 @@ public class SampleAaaController {
 
 /**
  * [サンプル解説]
- *   1つのキーをもとに1つのデータを返却するサンプルです.
+ *   GETリクエストで1つのキーをもとに1つのデータを返却するサンプルです.
  * 
  *   "@RequestMapping"アノテーションで指定したURLへのリクエストが来た場合に処理します.
  *
