@@ -1,5 +1,13 @@
 package jp.co.fnj.storage.api.controller.sampleAaa;
 
+import java.io.IOError;
+import java.io.IOException;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SampleAaaController {
 
+	@Autowired
+	public Validator validator;
+
     /**
      * ユーザー情報取得
      *
@@ -25,16 +36,21 @@ public class SampleAaaController {
      *
      * @param user_id ユーザーID
      * @return UserInfoResponse ユーザー情報
+     * @throws IOException 
      */
     @RequestMapping("/sample1")
     public ResponseEntity<SampleAaaResponse> getUserInfo(
     		@RequestParam(value="user_id", defaultValue="99999")
     		String user_id
-	) {
+	) throws IOException {
 
     	// バリデーション
-    	
-    	
+    	SampleAaaRequest req = new SampleAaaRequest(user_id);
+    	Set<ConstraintViolation<SampleAaaRequest>> errorResult = validator.validate(req);
+    	if (0 < errorResult.size()) {
+    		throw new IOException();
+    	}
+
     	// ユーザー情報を取得
     	// {ここでDBやファイルから情報を取得する}
     	// ユーザー情報を取得できなかった場合
@@ -44,7 +60,7 @@ public class SampleAaaController {
     	
     	// レスポンスを生成
     	// 上記で取得した値などを使ってレスポンスを組み立てる
-    	SampleAaaResponse res = new SampleAaaResponse(user_id, "田中", "太郎", 18);
+    	SampleAaaResponse res = new SampleAaaResponse(req.getUser_id(), "田中", "太郎", 18);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("header1", "heaer1-value");
