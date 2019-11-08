@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jp.co.fnj.storage.api.exception.StorageRuntimeException;
+
 /********************************************************************
  *
  * XXX-XXX-XXX ユーザー情報取得コントローラー
@@ -42,30 +44,25 @@ public class SampleCccController {
     public ResponseEntity<List<SampleCccResponse>> getUserInfo(
     		@ModelAttribute @Validated SampleCccRequest request
 	) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("header1", "heaer1-value");
-
     	// ユーザー情報を取得
     	// {ここでDBやファイルから情報を取得する}
 
     	// ユーザー情報を取得できなかった場合はエラーを返却
     	// ※if文の条件は見直して下さい
     	if ("333".equals(request.getUser_id())) {
-    		return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+    		throw new StorageRuntimeException();
     	}
     	
 
     	// レスポンスを返却
     	// 上記で取得した値などを使ってレスポンスを組み立てる
     	List<SampleCccResponse> tmp = new ArrayList<SampleCccResponse>();
-
     	SampleCccResponse res1 = new SampleCccResponse(request.getUser_id(), "田中", "太郎", 18);
     	tmp.add(res1);
-
     	SampleCccResponse res2 = new SampleCccResponse(request.getUser_id(), "伊東", "次郎", 21);
     	tmp.add(res2);
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("header1", "heaer1-value");
     	return new ResponseEntity<>(tmp, headers, HttpStatus.OK);
 
     }
