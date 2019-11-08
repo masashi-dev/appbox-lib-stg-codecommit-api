@@ -29,7 +29,7 @@ public class SampleAaaController {
     @RequestMapping("/sample1")
     public ResponseEntity<SampleAaaResponse> getUserInfo(
     		@RequestParam(value="user_id", defaultValue="99999")
-    		long user_id
+    		String user_id
 	) {
 
     	// バリデーション

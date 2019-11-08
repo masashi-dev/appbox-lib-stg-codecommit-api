@@ -1,28 +1,24 @@
 package jp.co.fnj.storage.api.controller.sampleAaa;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import lombok.Data;
 
 /********************************************************************
  *
- * SampleAaaレスポンスクラス
+ * SampleAaaリクエストクラス
  *
  * @author G.Kaga
  * @version 1.0
  *
  *******************************************************************/
 @Data
-public class SampleAaaResponse {
+public class SampleAaaRequest {
 
 	/** ユーザーID */
+	@NotNull
+	@Size(max=3)
     private final String user_id;
-
-    /** 姓 */
-    private final String sei;    
-
-    /** 名 */
-    private final String mei;
-
-    /** 年齢 */
-    private final int age;
 
 }
