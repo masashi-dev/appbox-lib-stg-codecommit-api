@@ -115,6 +115,9 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="forUpdate">
+      for update
+    </if>
   </select>
   <select id="selectByExample" parameterType="jp.co.fnj.storage.api.entity.model.generat.TFullTextSearchExample" resultMap="BaseResultMap">
     <!--
@@ -132,6 +135,9 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
+    </if>
+    <if test="forUpdate">
+      for update
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="jp.co.fnj.storage.api.entity.model.generat.TFullTextSearchKey" resultMap="ResultMapWithBLOBs">
@@ -304,6 +310,9 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="forUpdate">
+      for update
+    </if>
   </select>
   <select id="selectByExampleWithRowbounds" parameterType="jp.co.fnj.storage.api.entity.model.generat.TFullTextSearchExample" resultMap="BaseResultMap">
     <!--
@@ -321,6 +330,9 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
+    </if>
+    <if test="forUpdate">
+      for update
     </if>
   </select>
 </mapper>

@@ -109,6 +109,9 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="forUpdate">
+      for update
+    </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--
@@ -379,6 +382,9 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
+    </if>
+    <if test="forUpdate">
+      for update
     </if>
   </select>
 </mapper>
