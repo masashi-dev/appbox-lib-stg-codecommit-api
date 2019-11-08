@@ -1,18 +1,17 @@
 package jp.co.fnj.storage.api.controller.sampleDdd;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.fnj.storage.api.exception.StorageRuntimeException;
@@ -26,6 +25,7 @@ import jp.co.fnj.storage.api.exception.StorageRuntimeException;
  *
  *******************************************************************/
 @RestController
+@Validated
 public class SampleDddController {
 
 	@Autowired
@@ -43,33 +43,22 @@ public class SampleDddController {
      */
     @RequestMapping(value = "/sample4/{user_id}/{test_param}",  method = GET)
     public ResponseEntity<SampleDddResponse> getUserInfo(
-    		@PathVariable("user_id") String user_id,
+    		@NotNull @Size(max=3) @PathVariable("user_id") String user_id,
     		@PathVariable("test_param") String test_param
 	) {
-
-    	// リクエストパラメータをリクエストクラスに設定
-    	SampleDddRequest req = new SampleDddRequest(user_id, test_param);
-    	
-    	// バリデーションエラーがある場合はエラーを返却
-    	Set<ConstraintViolation<SampleDddRequest>> errorResult = validator.validate(req);
-    	if (0 < errorResult.size()) {
-    		throw new StorageRuntimeException();
-    	}
-
-
     	// ユーザー情報を取得
     	// {ここでDBやファイルから情報を取得する}
 
     	// ユーザー情報を取得できなかった場合はエラーを返却
     	// ※if文の条件は見直して下さい
-    	if ("333".equals(req.getUser_id())) {
+    	if ("333".equals(user_id)) {
     		throw new StorageRuntimeException();
     	}
     	
 
     	// レスポンスを返却
     	// 上記で取得した値などを使ってレスポンスを組み立てる
-    	SampleDddResponse res = new SampleDddResponse(req.getUser_id(), req.getTest_param(), "太郎", 18);
+    	SampleDddResponse res = new SampleDddResponse(user_id, test_param, "太郎", 18);
         HttpHeaders headers = new HttpHeaders();
         headers.add("header1", "heaer1-value");
         return new ResponseEntity<>(res, headers, HttpStatus.OK);
