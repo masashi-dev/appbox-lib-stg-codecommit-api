@@ -1,4 +1,5 @@
 package jp.co.fnj.storage.api.controller.sampleCcc;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +39,9 @@ public class SampleCccController {
      * @param user_id ユーザーID
      * @return UserInfoResponse ユーザー情報
      */
-    @RequestMapping("/sample3")
-    public ResponseEntity<SampleCccResponse> getUserInfo(
-    		@RequestParam(value="user_id", defaultValue="99999") String user_id
+    @RequestMapping(value = "/sample3",  method = GET)
+    public ResponseEntity<List<SampleCccResponse>> getUserInfo(
+    		@RequestParam(value="user_id") String user_id
 	) {
 
         HttpHeaders headers = new HttpHeaders();
@@ -69,12 +70,15 @@ public class SampleCccController {
 
     	// レスポンスを返却
     	// 上記で取得した値などを使ってレスポンスを組み立てる
-//    	List<> res = new ArrayList();
-    	SampleCccResponse res = new SampleCccResponse(req.getUser_id(), "田中", "太郎", 18);
-//    	res.add(res1);
-//    	SampleBbbResponse res2 = new SampleBbbResponse(req.getUser_id(), "田中", "太郎", 18);
-//    	res.add(res2);
-        return new ResponseEntity<>(res, headers, HttpStatus.OK);
+    	List<SampleCccResponse> tmp = new ArrayList<SampleCccResponse>();
+
+    	SampleCccResponse res1 = new SampleCccResponse(req.getUser_id(), "田中", "太郎", 18);
+    	tmp.add(res1);
+
+    	SampleCccResponse res2 = new SampleCccResponse(req.getUser_id(), "伊東", "次郎", 21);
+    	tmp.add(res2);
+
+    	return new ResponseEntity<>(tmp, headers, HttpStatus.OK);
 
     }
 
