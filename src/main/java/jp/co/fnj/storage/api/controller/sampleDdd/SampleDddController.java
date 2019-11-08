@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.controller.sampleAaa;
+package jp.co.fnj.storage.api.controller.sampleDdd;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.Set;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  *******************************************************************/
 @RestController
-public class SampleAaaController {
+public class SampleDddController {
 
 	@Autowired
 	public Validator validator;
@@ -37,9 +38,9 @@ public class SampleAaaController {
      * @param user_id ユーザーID
      * @return UserInfoResponse ユーザー情報
      */
-    @RequestMapping(value = "/sample1",  method = GET)
-    public ResponseEntity<SampleAaaResponse> getUserInfo(
-    		@RequestParam(value="user_id") String user_id
+    @RequestMapping(value = "/sample4/{user_id}",  method = GET)
+    public ResponseEntity<SampleDddResponse> getUserInfo(
+    		@PathVariable("user_id") String user_id
 	) {
 
         HttpHeaders headers = new HttpHeaders();
@@ -47,10 +48,10 @@ public class SampleAaaController {
 
 
     	// リクエストパラメータをリクエストクラスに設定
-    	SampleAaaRequest req = new SampleAaaRequest(user_id);
+    	SampleDddRequest req = new SampleDddRequest(user_id);
     	
     	// バリデーションエラーがある場合はエラーを返却
-    	Set<ConstraintViolation<SampleAaaRequest>> errorResult = validator.validate(req);
+    	Set<ConstraintViolation<SampleDddRequest>> errorResult = validator.validate(req);
     	if (0 < errorResult.size()) {
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
     	}
@@ -68,7 +69,7 @@ public class SampleAaaController {
 
     	// レスポンスを返却
     	// 上記で取得した値などを使ってレスポンスを組み立てる
-    	SampleAaaResponse res = new SampleAaaResponse(req.getUser_id(), "田中", "太郎", 18);
+    	SampleDddResponse res = new SampleDddResponse(req.getUser_id(), "田中", "太郎", 18);
         return new ResponseEntity<>(res, headers, HttpStatus.OK);
 
     }
@@ -78,11 +79,11 @@ public class SampleAaaController {
 /**
  * [サンプル解説]
  *   GETリクエストで1つのキーをもとに1つのデータを返却するサンプルです.
- *   キーはクエリパラメータから取得します.
+ *   キーはルートパラメータから取得します.
  * 
  *   "@RequestMapping"アノテーションで指定したURLへのリクエストが来た場合に処理します.
  *
- *   URLにクエリパラメーラを指定した場合は指定した値が利用されます.
+ *   URLにルートパラメーラを指定した場合は指定した値が利用されます.
  *
- *   （例）http://localhost:8081/sample1?user_id=12345  → user_id："12345"
+ *   （例）http://localhost:8081/sample4/12345  → user_id："12345"
  */

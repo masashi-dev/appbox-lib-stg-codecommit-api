@@ -39,7 +39,7 @@ public class SampleBbbController {
      */
     @RequestMapping(value = "/sample2", method = POST)
     public ResponseEntity<SampleBbbResponse> getUserInfo(
-    		@RequestParam(value="user_id", defaultValue="99999") String user_id
+    		@RequestParam(value="user_id") String user_id
 	) {
 
         HttpHeaders headers = new HttpHeaders();
