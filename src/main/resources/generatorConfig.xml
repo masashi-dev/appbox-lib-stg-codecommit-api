@@ -8,6 +8,7 @@
     <property name="javaFileEncoding" value="UTF-8" />
     
     <!-- プラグイン設定 -->
+    <plugin type="jp.co.fnj.storage.api.MyBatisForUpdatePlugin" />
     <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin" />
     <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
     <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
@@ -23,7 +24,7 @@
     <!-- スキーマ情報を取得する DB への接続設定 -->
     <!-- https://qiita.com/k_hoso/items/230e720b79317939da60 -->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-        connectionURL="jdbc:mysql://192.168.1.160:3306/storage?serverTimezone=JST" 
+        connectionURL="jdbc:mysql://localhost:3306/storage?serverTimezone=JST" 
         userId="root"
         password="rootroot">
     </jdbcConnection>
