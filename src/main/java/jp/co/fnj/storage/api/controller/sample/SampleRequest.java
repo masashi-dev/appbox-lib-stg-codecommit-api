@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.controller.sampleAaa;
+package jp.co.fnj.storage.api.controller.sample;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,11 +14,11 @@ import lombok.Data;
  *
  *******************************************************************/
 @Data
-public class SampleAaaRequest {
+public class SampleRequest {
 
 	/** ユーザーID */
 	@NotNull
-	@Size(max=3)
-    private final String user_id;
+	@Size(max = 3)
+	private final String user_id;
 
 }
