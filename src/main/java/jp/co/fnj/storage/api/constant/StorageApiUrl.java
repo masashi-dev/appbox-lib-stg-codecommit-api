@@ -7,4 +7,7 @@ public final class StorageApiUrl {
 
 	public static final String STORAGEACCESS = "/storageaccess";
 
+	// ファイル管理
+	public static final String FILE_GET_LIST = "/lib/filemanagement/{folder_id}";
+
 }

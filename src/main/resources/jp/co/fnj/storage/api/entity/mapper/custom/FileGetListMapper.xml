@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jp.co.fnj.storage.api.entity.mapper.custom.FileGetListMapper">
+
+	<resultMap type="jp.co.fnj.storage.api.entity.model.custom.FileListEntity" id="fileGetListMap">
+		<association property="tFolder" columnPrefix="a_" javaType="jp.co.fnj.storage.api.entity.model.generat.TFolder" autoMapping="true">
+			<id property="folderId" column="folder_id"/>
+		</association>
+		<association property="tFile" columnPrefix="b_" javaType="jp.co.fnj.storage.api.entity.model.generat.TFile" autoMapping="true">
+			<id property="fileId" column="file_id"/>
+			<id property="folderId" column="folder_id"/>
+		</association>
+	</resultMap>
+	
+	<select id="selectGetFileList" resultMap="fileGetListMap">
+		SELECT
+			folder_id as a_folder_id
+		FROM
+			T_FOLDER
+	</select>
+</mapper>
