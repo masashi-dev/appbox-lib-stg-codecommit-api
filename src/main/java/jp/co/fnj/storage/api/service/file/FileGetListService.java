@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.entity.mapper.custom.FileGetListMapper;
 import jp.co.fnj.storage.api.entity.model.custom.FileListEntity;
@@ -25,6 +26,7 @@ public class FileGetListService<REQUEST_BODY extends FileGetListRequest, RESPONS
   @Autowired
   FileGetListMapper fileGetListMapper;
 
+  @Transactional(noRollbackFor = Throwable.class)
   public RESPONSE execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
