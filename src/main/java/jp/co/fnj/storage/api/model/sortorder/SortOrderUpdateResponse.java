@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.model.file;
+package jp.co.fnj.storage.api.model.sortorder;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +13,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 //@NoArgsConstructor
 //@AllArgsConstructor
-public class FileUpdateDisplayOrderResponse {
+public class SortOrderUpdateResponse {
 
 }

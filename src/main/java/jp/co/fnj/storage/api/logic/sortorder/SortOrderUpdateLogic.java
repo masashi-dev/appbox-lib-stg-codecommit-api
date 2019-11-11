@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.logic.file;
+package jp.co.fnj.storage.api.logic.sortorder;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +15,9 @@ import org.springframework.validation.SmartValidator;
 import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.exception.StorageBadRequestException;
 import jp.co.fnj.storage.api.exception.StorageException;
-import jp.co.fnj.storage.api.model.file.FileUpdateDisplayOrderRequest;
-import jp.co.fnj.storage.api.model.file.FileUpdateDisplayOrderResponse;
-import jp.co.fnj.storage.api.service.file.FileUpdateDisplayOrderService;
+import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateRequest;
+import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateResponse;
+import jp.co.fnj.storage.api.service.sortorder.SortOrderUpdateService;
 
 /**
  * 表示順更新APIロジック.
@@ -26,10 +26,10 @@ import jp.co.fnj.storage.api.service.file.FileUpdateDisplayOrderService;
  * @param <RESPONSE>
  */
 @Service
-public class FileUpdateDisplayOrderLogic<REQUEST_BODY extends FileUpdateDisplayOrderRequest, RESPONSE extends List<FileUpdateDisplayOrderResponse>> {
+public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, RESPONSE extends List<SortOrderUpdateResponse>> {
 
   @Autowired
-  private FileUpdateDisplayOrderService<REQUEST_BODY, RESPONSE> fileUpdateDisplayOrderService;
+  private SortOrderUpdateService<REQUEST_BODY, RESPONSE> sortOrderUpdateService;
 
   @Autowired
   private SmartValidator validator;
@@ -59,7 +59,7 @@ public class FileUpdateDisplayOrderLogic<REQUEST_BODY extends FileUpdateDisplayO
 	// リクエスト項目「ファイルID」「フォルダID」のどちらかのみが設定されていることをチェック
 	if ((requestBody.getFile_id() == null && requestBody.getFolder_id() == null)
 		|| (requestBody.getFile_id() != null && requestBody.getFolder_id() != null)) {
-		throw new StorageBadRequestException(Messages.E05001);  
+		throw new StorageBadRequestException(Messages.E05001);
 	}
       
   }
@@ -77,7 +77,7 @@ public class FileUpdateDisplayOrderLogic<REQUEST_BODY extends FileUpdateDisplayO
       REQUEST_BODY requestBody) {
 
     // 各種サービスを順次実行
-    fileUpdateDisplayOrderService.execute(request, response, requestBody);
+    sortOrderUpdateService.execute(request, response, requestBody);
     return;
   }
 
@@ -90,6 +90,7 @@ public class FileUpdateDisplayOrderLogic<REQUEST_BODY extends FileUpdateDisplayO
   // protected AppboxPlatformUser getAuthenticationPrincipal() throws AppboxPlatformException {
   // return AuthenticationUtil.getAuthenticationPrincipal();
   // }
+
   /**
    * 処理実行
    * 

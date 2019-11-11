@@ -8,5 +8,5 @@ public final class StorageApiUrl {
 	public static final String STORAGEACCESS = "/storageaccess";
 
 	// 表示順更新
-	public static final String FILE_UPDATE_DISPLAY_ORDER = "/lib/filemanagement/update";
+	public static final String SORT_ORDER_UPDATE = "/lib/filemanagement/update";  // TODO:URLが確定次第修正する
 }

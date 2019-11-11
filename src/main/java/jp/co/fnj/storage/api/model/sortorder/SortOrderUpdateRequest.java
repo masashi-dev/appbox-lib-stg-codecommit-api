@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.model.file;
+package jp.co.fnj.storage.api.model.sortorder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-public class FileUpdateDisplayOrderRequest {
+public class SortOrderUpdateRequest {
 
   /** ファイルID */
   @Size(max = 14)
