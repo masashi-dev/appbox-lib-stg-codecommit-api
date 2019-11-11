@@ -1,6 +1,9 @@
 package jp.co.fnj.storage.api.controller.sample;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /********************************************************************
  *
@@ -11,18 +14,21 @@ import lombok.Data;
  *
  *******************************************************************/
 @Data
+@Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class SampleResponse {
 
-	/** ユーザーID */
-	private final String user_id;
+  /** ユーザーID */
+  private String user_id;
 
-	/** 姓 */
-	private final String sei;
+  /** 姓 */
+  private String sei;
 
-	/** 名 */
-	private final String mei;
+  /** 名 */
+  private String mei;
 
-	/** 年齢 */
-	private final int age;
+  /** 年齢 */
+  private int age;
 
 }

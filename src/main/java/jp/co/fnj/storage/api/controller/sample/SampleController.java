@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jp.co.fnj.storage.api.logic.sample.SampleLogic;
 
 /********************************************************************
  *
@@ -28,6 +30,9 @@ import org.springframework.web.bind.annotation.RestController;
  *******************************************************************/
 @RestController
 public class SampleController {
+
+  @Autowired
+  private SampleLogic<SampleResponse, SampleResponse> sampleLogic;
 
   /*
    * [サンプル解説] GETリクエストで1つのキーをもとに1つのデータを返却するサンプルです. キーはクエリパラメータから取得します.
@@ -50,6 +55,8 @@ public class SampleController {
   public ResponseEntity<SampleResponse> sample1(HttpServletRequest request,
       HttpServletResponse response, @ModelAttribute @Validated SampleRequest requestBody) {
     // クエリパラメータは@ModelAttributeでrequestクラスとマッピングする
+
+    sampleLogic.execute(request, response, requestBody);
 
     // レスポンスを返却
     // 上記で取得した値などを使ってレスポンスを組み立てる
