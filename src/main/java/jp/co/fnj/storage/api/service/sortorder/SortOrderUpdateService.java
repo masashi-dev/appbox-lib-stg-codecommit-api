@@ -1,7 +1,7 @@
 package jp.co.fnj.storage.api.service.sortorder;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +50,7 @@ public class SortOrderUpdateService<REQUEST_BODY extends SortOrderUpdateRequest,
 	tSortOrderUpdate.setFolderId(requestBody.getFolder_id());
 	tSortOrderUpdate.setSortOrder(requestBody.getSort_order());
 	tSortOrderUpdate.setUpdateUser("tetuser");  // TODO:未整備のため別途対応
-//	tSortOrder.setUpdateDate(updateDate);  // TODO:現在時刻を設定
+	tSortOrderUpdate.setUpdateDate(LocalDateTime.now());
 	// 更新処理を実施
 	tSortOrderMapper.updateByPrimaryKey(tSortOrderUpdate);
 
