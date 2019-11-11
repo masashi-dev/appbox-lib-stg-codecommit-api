@@ -34,7 +34,7 @@ import jp.co.fnj.storage.api.model.sample.SampleResponse;
 public class SampleController {
 
   @Autowired
-  private SampleLogic<SampleResponse, SampleResponse> sampleLogic;
+  private SampleLogic<SampleRequest, SampleResponse> sampleLogic;
 
   /*
    * [サンプル解説] GETリクエストで1つのキーをもとに1つのデータを返却するサンプルです. キーはクエリパラメータから取得します.
