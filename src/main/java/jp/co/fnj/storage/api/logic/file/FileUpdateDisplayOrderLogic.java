@@ -96,28 +96,18 @@ public class FileUpdateDisplayOrderLogic<REQUEST_BODY extends FileUpdateDisplayO
 
     // 事前実行
     preExecute(request, response, requestBody);
-    
-    
-    System.out.println("★★ここまできた１★★");
 
     // バリデーション
     validate(requestBody);
-
-    System.out.println("★★ここまできた２★★");
     
     // ロジカルチェック
     logicalCheck(request, response, requestBody);
 
-    System.out.println("★★ここまできた３★★");
     // メイン処理実行
     innerExecute(request, response, requestBody);
-
-    System.out.println("★★ここまできた４★★");
     
     MultiValueMap<String, String> headerMap = new LinkedMultiValueMap<>();
 
-    System.out.println("★★ここまできた５★★");
-    
     return new ResponseEntity<RESPONSE>(null, headerMap, HttpStatus.OK);
   }
 
