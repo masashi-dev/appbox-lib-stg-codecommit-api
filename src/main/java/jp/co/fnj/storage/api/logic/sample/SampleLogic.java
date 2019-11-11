@@ -128,7 +128,7 @@ public class SampleLogic<REQUEST_BODY extends SampleRequest, RESPONSE extends Sa
     }
 
     BindingResult bindingResult = new DataBinder(requestBody).getBindingResult();
-    validator.validate(requestBody, bindingResult, null);
+    validator.validate(requestBody, bindingResult);
 
     if (bindingResult.hasErrors()) {
       throw new StorageBadRequestException(Messages.E05001);
