@@ -61,12 +61,7 @@ public class SortOrderUpdateService<REQUEST_BODY extends SortOrderUpdateRequest,
     tSortOrderExampleForNumbering.createCriteria().andParentFolderIdEqualTo(tSortOrderUpdate.getParentFolderId());
 	List<TSortOrder> listForNumbering = tSortOrderMapper.selectByExample(tSortOrderExampleForNumbering);
 	// 取得した一覧を表示順の値でソートした後に再付番し、更新処理を実施
-	Collections.sort(listForNumbering, new Comparator<TSortOrder>() {
-		@Override
-		public int compare(TSortOrder personFirst, TSortOrder personSecond) {
-			return Integer.compare(personFirst.getSortOrder(), personSecond.getSortOrder());
-		}
-	});
+	Collections.sort(listForNumbering, ((tmpRec1, tmpRec2) -> (tmpRec2.getSortOrder()) - (tmpRec1.getSortOrder())));
 	int numbering = 2;
 	for (TSortOrder tmpRec: listForNumbering) {
 		tmpRec.setSortOrder(numbering);
