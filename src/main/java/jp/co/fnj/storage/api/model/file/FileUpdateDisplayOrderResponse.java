@@ -11,19 +11,8 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class FileUpdateDisplayOrderResponse {
-
-  // TODO:実装する
-	
-  /** 表示順ID */
-  private String sort_order_id;
-
-  /** 表示順 */
-  private Integer sort_order;
-  
-  /** 更新ユーザID */
-  private String update_user_id;
 
 }

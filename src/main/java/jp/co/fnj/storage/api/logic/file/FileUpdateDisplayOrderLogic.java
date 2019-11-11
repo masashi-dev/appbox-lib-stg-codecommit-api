@@ -65,12 +65,12 @@ public class FileUpdateDisplayOrderLogic<REQUEST_BODY extends FileUpdateDisplayO
    * @return
    * @throws StorageException
    */
-  private RESPONSE innerExecute(HttpServletRequest request, HttpServletResponse response,
+  private void innerExecute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
     // 各種サービスを順次実行
-    RESPONSE res = (RESPONSE) fileUpdateDisplayOrderService.execute(request, response, requestBody);
-    return res;
+    fileUpdateDisplayOrderService.execute(request, response, requestBody);
+    return;
   }
 
   /**
@@ -96,19 +96,29 @@ public class FileUpdateDisplayOrderLogic<REQUEST_BODY extends FileUpdateDisplayO
 
     // 事前実行
     preExecute(request, response, requestBody);
+    
+    
+    System.out.println("★★ここまできた１★★");
 
     // バリデーション
     validate(requestBody);
 
+    System.out.println("★★ここまできた２★★");
+    
     // ロジカルチェック
     logicalCheck(request, response, requestBody);
 
+    System.out.println("★★ここまできた３★★");
     // メイン処理実行
-    RESPONSE responseBody = innerExecute(request, response, requestBody);
+    innerExecute(request, response, requestBody);
 
+    System.out.println("★★ここまできた４★★");
+    
     MultiValueMap<String, String> headerMap = new LinkedMultiValueMap<>();
 
-    return new ResponseEntity<RESPONSE>(responseBody, headerMap, HttpStatus.OK);
+    System.out.println("★★ここまできた５★★");
+    
+    return new ResponseEntity<RESPONSE>(null, headerMap, HttpStatus.OK);
   }
 
   /**

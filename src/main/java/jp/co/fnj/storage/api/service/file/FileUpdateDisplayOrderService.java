@@ -27,14 +27,14 @@ public class FileUpdateDisplayOrderService<REQUEST_BODY extends FileUpdateDispla
   FileUpdateDisplayOrderMapper fileUpdateDisplayOrderMapper;
 
   @Transactional(noRollbackFor = Throwable.class)
-  public RESPONSE execute(HttpServletRequest request, HttpServletResponse response,
+  public void execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
     // 更新処理を実施
     List<FileUpdateDisplayOrderEntity> list = fileUpdateDisplayOrderMapper.updateDisplayOrder(requestBody.getSort_order_id());
 
     // レスポンス成型して返却
-    return (RESPONSE) List.of(new FileUpdateDisplayOrderResponse().setSort_order(1234));
+    return;
 
 //    // レスポンス成型して返却
 //    return (RESPONSE) List.of(new FileUpdateDisplayOrderResponse().setUpdate_user_id("K2110031"),
