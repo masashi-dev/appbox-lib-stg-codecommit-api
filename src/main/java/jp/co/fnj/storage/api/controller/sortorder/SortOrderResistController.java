@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.controller.file;
+package jp.co.fnj.storage.api.controller.sortorder;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.fnj.storage.api.constant.StorageApiUrl;
 import jp.co.fnj.storage.api.exception.StorageException;
-import jp.co.fnj.storage.api.logic.file.FileInsertDisplayOrderLogic;
-import jp.co.fnj.storage.api.model.file.FileInsertDisplayOrderRequest;
-import jp.co.fnj.storage.api.model.file.FileInsertDisplayOrderResponse;
+import jp.co.fnj.storage.api.logic.sortorder.SortOrderResistLogic;
+import jp.co.fnj.storage.api.model.sortorder.SortOrderResistRequest;
+import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
 
 /**
  * 表示順登録APIコントローラ.
@@ -25,14 +25,14 @@ import jp.co.fnj.storage.api.model.file.FileInsertDisplayOrderResponse;
  */
 @RestController
 @Validated
-public class FileInsertDisplayOrderController {
+public class SortOrderResistController {
 
   @Autowired
-  FileInsertDisplayOrderLogic<FileInsertDisplayOrderRequest, List<FileInsertDisplayOrderResponse>> fileUpdateDisplayOrderLogic;
+  SortOrderResistLogic<SortOrderResistRequest, List<SortOrderResistResponse>> fileUpdateDisplayOrderLogic;
 
   @RequestMapping(method = RequestMethod.POST, path = StorageApiUrl.FILE_INSERT_DISPLAY_ORDER)
-  public ResponseEntity<List<FileInsertDisplayOrderResponse>> getList(HttpServletRequest request,
-      HttpServletResponse response, @RequestBody FileInsertDisplayOrderRequest requestBody) throws StorageException {
+  public ResponseEntity<List<SortOrderResistResponse>> getList(HttpServletRequest request,
+      HttpServletResponse response, @RequestBody SortOrderResistRequest requestBody) throws StorageException {
 
     return fileUpdateDisplayOrderLogic.execute(request, response, requestBody);
   }

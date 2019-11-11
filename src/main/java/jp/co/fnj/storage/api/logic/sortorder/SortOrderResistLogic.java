@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.logic.file;
+package jp.co.fnj.storage.api.logic.sortorder;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +15,9 @@ import org.springframework.validation.SmartValidator;
 import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.exception.StorageBadRequestException;
 import jp.co.fnj.storage.api.exception.StorageException;
-import jp.co.fnj.storage.api.model.file.FileInsertDisplayOrderRequest;
-import jp.co.fnj.storage.api.model.file.FileInsertDisplayOrderResponse;
-import jp.co.fnj.storage.api.service.file.FileInsertDisplayOrderService;
+import jp.co.fnj.storage.api.model.sortorder.SortOrderResistRequest;
+import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
+import jp.co.fnj.storage.api.service.sortorder.SortOrderResistService;
 
 /**
  * 表示順更新APIロジック.
@@ -26,10 +26,10 @@ import jp.co.fnj.storage.api.service.file.FileInsertDisplayOrderService;
  * @param <RESPONSE>
  */
 @Service
-public class FileInsertDisplayOrderLogic<REQUEST_BODY extends FileInsertDisplayOrderRequest, RESPONSE extends List<FileInsertDisplayOrderResponse>> {
+public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, RESPONSE extends List<SortOrderResistResponse>> {
 
   @Autowired
-  private FileInsertDisplayOrderService<REQUEST_BODY, RESPONSE> fileUpdateDisplayOrderService;
+  private SortOrderResistService<REQUEST_BODY, RESPONSE> fileUpdateDisplayOrderService;
 
   @Autowired
   private SmartValidator validator;

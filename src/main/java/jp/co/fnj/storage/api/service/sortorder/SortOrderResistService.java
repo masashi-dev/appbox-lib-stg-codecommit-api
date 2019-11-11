@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.service.file;
+package jp.co.fnj.storage.api.service.sortorder;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrder;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrderExample;
-import jp.co.fnj.storage.api.model.file.FileInsertDisplayOrderRequest;
-import jp.co.fnj.storage.api.model.file.FileInsertDisplayOrderResponse;
+import jp.co.fnj.storage.api.model.sortorder.SortOrderResistRequest;
+import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
 
 /**
  * 表示順更新APIサービス.
@@ -22,7 +22,7 @@ import jp.co.fnj.storage.api.model.file.FileInsertDisplayOrderResponse;
  * @param <RESPONSE>
  */
 @Service
-public class FileInsertDisplayOrderService<REQUEST_BODY extends FileInsertDisplayOrderRequest, RESPONSE extends List<FileInsertDisplayOrderResponse>> {
+public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest, RESPONSE extends List<SortOrderResistResponse>> {
 
   /** 表示順テーブルマッパー */
   @Autowired
