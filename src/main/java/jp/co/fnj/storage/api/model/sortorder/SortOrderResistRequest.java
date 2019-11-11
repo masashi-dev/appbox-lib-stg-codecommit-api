@@ -1,5 +1,7 @@
 package jp.co.fnj.storage.api.model.sortorder;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -8,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- * 表示順更新APIリクエスト.
+ * 表示順登録APIリクエスト.
  *
  */
 @Data
@@ -16,16 +18,20 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class SortOrderResistRequest {
 
-  /** ファイルID */
+  /** ファイルID／フォルダID */
+  @NotNull
   @Size(max = 14)
-  private String file_id;
+  private String file_folder_id;
 
-  /** フォルダID */
+  /** 親フォルダID */
+  @NotNull
   @Size(max = 14)
-  private String folder_id;
+  private String parent_folder_id;
 
   /** 並び順 */
   @NotNull
-  private int sort_order;
+  @Min(0)
+  @Max(1)
+  private int entry_devision;
 
 }

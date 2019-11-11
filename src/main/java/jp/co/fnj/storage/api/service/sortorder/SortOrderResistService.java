@@ -11,12 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrder;
-import jp.co.fnj.storage.api.entity.model.generat.TSortOrderExample;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistRequest;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
 
 /**
- * 表示順更新APIサービス.
+ * 表示順登録APIサービス.
  *
  * @param <REQUEST_BODY>
  * @param <RESPONSE>
@@ -32,22 +31,42 @@ public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest,
   public void execute(HttpServletRequest request, HttpServletResponse response,
     REQUEST_BODY requestBody) {
 
-	// ファイルIDまたはフォルダIDをもとに表示順テーブルを絞り込み
-	TSortOrderExample tSortOrderExample = new TSortOrderExample();
-	if (requestBody.getFile_id() != null) {
-	  tSortOrderExample.createCriteria().andFileIdEqualTo(requestBody.getFile_id());
+	// 悲観ロック
+	// TODO:実装する
+
+
+
+
+	// 登録する項目を設定
+	TSortOrder tSortOrder = new TSortOrder();
+	tSortOrder.setParentFolderId(requestBody.getParent_folder_id());
+
+	// 登録区分に応じて設定する項目を切り替え
+	if (requestBody.getEntry_devision() == 0) {
+	  tSortOrder.setFileId(requestBody.getFile_folder_id());
 	} else {
-	  tSortOrderExample.createCriteria().andFolderIdEqualTo(requestBody.getFolder_id());
+      tSortOrder.setFolderId(requestBody.getFile_folder_id());
 	}
 
-	// 更新する項目を設定
-	TSortOrder tSortOrder = new TSortOrder();
-	tSortOrder.setFileId(requestBody.getFile_id());
-	tSortOrder.setFolderId(requestBody.getFolder_id());
-	tSortOrder.setSortOrder(requestBody.getSort_order());
+	// 親フォルダIDを条件として表示順テーブルをグルーピングする
 
-	// 更新処理を実施
-	tSortOrderMapper.updateByExampleSelective(tSortOrder, tSortOrderExample);
+
+//	// リクエストの親フォルダIDに値が設定されている場合は親フォルダIDを条件とし表示順テーブルをグルーピングする
+//	if (requestBody.getParent_folder_id().isEmpty()) {
+//      // TODO:実装する
+//      tSortOrder.setSortOrder(2);
+//	} else {
+//      // 親フォルダIDが未指定の場合
+//      // 表示順には初期値を設定
+//	  tSortOrder.setSortOrder(2);
+//	}
+
+	tSortOrder.setCreateUser("testuser");  // TODO:未整備事項のため別途実装
+//	tSortOrder.setCreateDate();  // TODO:現在時刻を取得する
+
+
+	// 登録処理を実施
+	tSortOrderMapper.insert(tSortOrder);
 
 	// レスポンス項目なし
 	return;

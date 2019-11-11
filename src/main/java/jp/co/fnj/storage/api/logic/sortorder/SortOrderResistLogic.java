@@ -20,7 +20,7 @@ import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
 import jp.co.fnj.storage.api.service.sortorder.SortOrderResistService;
 
 /**
- * 表示順更新APIロジック.
+ * 表示順登録APIロジック.
  *
  * @param <REQUEST_BODY>
  * @param <RESPONSE>
@@ -29,7 +29,7 @@ import jp.co.fnj.storage.api.service.sortorder.SortOrderResistService;
 public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, RESPONSE extends List<SortOrderResistResponse>> {
 
   @Autowired
-  private SortOrderResistService<REQUEST_BODY, RESPONSE> fileUpdateDisplayOrderService;
+  private SortOrderResistService<REQUEST_BODY, RESPONSE> sortOrderResistService;
 
   @Autowired
   private SmartValidator validator;
@@ -56,12 +56,8 @@ public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, R
   private void logicalCheck(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 	  
-	// リクエスト項目「ファイルID」「フォルダID」のどちらかのみが設定されていることをチェック
-	if ((requestBody.getFile_id() == null && requestBody.getFolder_id() == null)
-		|| (requestBody.getFile_id() != null && requestBody.getFolder_id() != null)) {
-		throw new StorageBadRequestException(Messages.E05001);  
-	}
-      
+    // セッション情報から実行権限をチェックする
+	// TODO:未整備事項のため別途実装
   }
 
   /**
@@ -77,7 +73,7 @@ public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, R
       REQUEST_BODY requestBody) {
 
     // 各種サービスを順次実行
-    fileUpdateDisplayOrderService.execute(request, response, requestBody);
+	sortOrderResistService.execute(request, response, requestBody);
     return;
   }
 

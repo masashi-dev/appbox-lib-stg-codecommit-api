@@ -28,12 +28,12 @@ import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
 public class SortOrderResistController {
 
   @Autowired
-  SortOrderResistLogic<SortOrderResistRequest, List<SortOrderResistResponse>> fileUpdateDisplayOrderLogic;
+  SortOrderResistLogic<SortOrderResistRequest, List<SortOrderResistResponse>> sortOrderResistLogic;
 
   @RequestMapping(method = RequestMethod.POST, path = StorageApiUrl.FILE_INSERT_DISPLAY_ORDER)
   public ResponseEntity<List<SortOrderResistResponse>> getList(HttpServletRequest request,
       HttpServletResponse response, @RequestBody SortOrderResistRequest requestBody) throws StorageException {
 
-    return fileUpdateDisplayOrderLogic.execute(request, response, requestBody);
+    return sortOrderResistLogic.execute(request, response, requestBody);
   }
 }

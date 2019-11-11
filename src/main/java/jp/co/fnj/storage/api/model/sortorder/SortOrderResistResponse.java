@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- * 表示順更新APIレスポンス.
+ * 表示順登録APIレスポンス.
  *
  */
 @Data
