@@ -67,7 +67,7 @@ public class FileGetListResponse {
   private String file_s3_objecrt_key;
 
   /** (ファイルTBL)ファイルサイズ */
-  private Integer file_file_size;
+  private Long file_file_size;
 
   /** (ファイルTBL)追加ユーザID */
   private String file_insert_user_id;
