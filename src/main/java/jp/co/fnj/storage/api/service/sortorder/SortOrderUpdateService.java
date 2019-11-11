@@ -45,6 +45,8 @@ public class SortOrderUpdateService<REQUEST_BODY extends SortOrderUpdateRequest,
 	tSortOrder.setFileId(requestBody.getFile_id());
 	tSortOrder.setFolderId(requestBody.getFolder_id());
 	tSortOrder.setSortOrder(requestBody.getSort_order());
+	tSortOrder.setUpdateUser("tetuser");  // TODO:未整備のため別途対応
+//	tSortOrder.setUpdateDate(updateDate);  // TODO:現在時刻を設定
 
 	// 更新処理を実施
 	tSortOrderMapper.updateByExampleSelective(tSortOrder, tSortOrderExample);
