@@ -31,17 +31,19 @@ public class SortOrderUpdateService<REQUEST_BODY extends SortOrderUpdateRequest,
   @Transactional(noRollbackFor = Throwable.class)
   public void execute(HttpServletRequest request, HttpServletResponse response,
     REQUEST_BODY requestBody) {
-
-	// ファイルIDまたはフォルダIDをもとに表示順テーブルを絞り込み
+	  
+	// ファイルIDまたはフォルダIDをもとに表示順テーブルから更新対象行を取得
 	TSortOrderExample tSortOrderExample = new TSortOrderExample();
+	tSortOrderExample.setForUpdate(true);
 	if (requestBody.getFile_id() != null) {
 	  tSortOrderExample.createCriteria().andFileIdEqualTo(requestBody.getFile_id());
 	} else {
 	  tSortOrderExample.createCriteria().andFolderIdEqualTo(requestBody.getFolder_id());
 	}
+	List<TSortOrder> list = tSortOrderMapper.selectByExample(tSortOrderExample);
 
 	// 更新する項目を設定
-	TSortOrder tSortOrder = new TSortOrder();
+	TSortOrder tSortOrder = list.get(0);
 	tSortOrder.setFileId(requestBody.getFile_id());
 	tSortOrder.setFolderId(requestBody.getFolder_id());
 	tSortOrder.setSortOrder(requestBody.getSort_order());
@@ -49,7 +51,7 @@ public class SortOrderUpdateService<REQUEST_BODY extends SortOrderUpdateRequest,
 //	tSortOrder.setUpdateDate(updateDate);  // TODO:現在時刻を設定
 
 	// 更新処理を実施
-	tSortOrderMapper.updateByExampleSelective(tSortOrder, tSortOrderExample);
+	tSortOrderMapper.updateByPrimaryKey(tSortOrder);
 
 	// レスポンス項目なし
 	return;
