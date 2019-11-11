@@ -7,4 +7,6 @@ public final class StorageApiUrl {
 
 	public static final String STORAGEACCESS = "/storageaccess";
 
+	// 表示順登録
+	public static final String FILE_INSERT_DISPLAY_ORDER = "/lib/filemanagement/insert";  // TODO:適切なURLを指定する
 }
