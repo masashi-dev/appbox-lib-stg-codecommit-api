@@ -54,7 +54,15 @@ public class FileUpdateDisplayOrderLogic<REQUEST_BODY extends FileUpdateDisplayO
    * @throws StorageException
    */
   private void logicalCheck(HttpServletRequest request, HttpServletResponse response,
-      REQUEST_BODY requestBody) {}
+      REQUEST_BODY requestBody) {
+	  
+	// リクエスト項目「ファイルID」「フォルダID」のどちらかのみが設定されていることをチェック
+	if ((requestBody.getFile_id() == null && requestBody.getFolder_id() == null)
+		|| (requestBody.getFile_id() != null && requestBody.getFolder_id() != null)) {
+		throw new StorageBadRequestException(Messages.E05001);  
+	}
+      
+  }
 
   /**
    * メイン処理.

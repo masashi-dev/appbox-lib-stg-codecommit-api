@@ -30,7 +30,7 @@ public class FileUpdateDisplayOrderController {
   @Autowired
   FileUpdateDisplayOrderLogic<FileUpdateDisplayOrderRequest, List<FileUpdateDisplayOrderResponse>> fileUpdateDisplayOrderLogic;
 
-  @RequestMapping(method = RequestMethod.POST, path = StorageApiUrl.FILE_UPDATE_DISPLAY_ORDER)
+  @RequestMapping(method = RequestMethod.PUT, path = StorageApiUrl.FILE_UPDATE_DISPLAY_ORDER)
   public ResponseEntity<List<FileUpdateDisplayOrderResponse>> getList(HttpServletRequest request,
       HttpServletResponse response, @RequestBody FileUpdateDisplayOrderRequest requestBody) throws StorageException {
 

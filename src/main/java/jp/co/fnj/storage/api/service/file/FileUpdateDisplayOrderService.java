@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrder;
+import jp.co.fnj.storage.api.entity.model.generat.TSortOrderExample;
 import jp.co.fnj.storage.api.model.file.FileUpdateDisplayOrderRequest;
 import jp.co.fnj.storage.api.model.file.FileUpdateDisplayOrderResponse;
 
@@ -23,7 +24,7 @@ import jp.co.fnj.storage.api.model.file.FileUpdateDisplayOrderResponse;
 @Service
 public class FileUpdateDisplayOrderService<REQUEST_BODY extends FileUpdateDisplayOrderRequest, RESPONSE extends List<FileUpdateDisplayOrderResponse>> {
 
-  /** ファイル一覧取得APIマッパー */
+  /** 表示順テーブルマッパー */
   @Autowired
   TSortOrderMapper tSortOrderMapper;
 
@@ -31,19 +32,25 @@ public class FileUpdateDisplayOrderService<REQUEST_BODY extends FileUpdateDispla
   public void execute(HttpServletRequest request, HttpServletResponse response,
     REQUEST_BODY requestBody) {
 
+	// ファイルIDまたはフォルダIDをもとに表示順テーブルを絞り込み
+	TSortOrderExample tSortOrderExample = new TSortOrderExample();
+	if (requestBody.getFile_id() != null) {
+	  tSortOrderExample.createCriteria().andFileIdEqualTo(requestBody.getFile_id());
+	} else {
+	  tSortOrderExample.createCriteria().andFolderIdEqualTo(requestBody.getFolder_id());
+	}
+
+	// 更新する項目を設定
 	TSortOrder tSortOrder = new TSortOrder();
-	tSortOrder.setSortOrderId(requestBody.getSort_order_id());
+	tSortOrder.setFileId(requestBody.getFile_id());
+	tSortOrder.setFolderId(requestBody.getFolder_id());
 	tSortOrder.setSortOrder(requestBody.getSort_order());
 
 	// 更新処理を実施
-	tSortOrderMapper.updateByPrimaryKey(tSortOrder);
+	tSortOrderMapper.updateByExampleSelective(tSortOrder, tSortOrderExample);
 
-	// レスポンス成型して返却
+	// レスポンス項目なし
 	return;
-
-//    // レスポンス成型して返却
-//    return (RESPONSE) List.of(new FileUpdateDisplayOrderResponse().setUpdate_user_id("K2110031"),
-//        new FileUpdateDisplayOrderResponse().setSort_order(999));
   }
 
 }

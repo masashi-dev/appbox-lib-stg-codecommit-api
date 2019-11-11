@@ -1,6 +1,7 @@
 package jp.co.fnj.storage.api.model.file;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,16 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class FileUpdateDisplayOrderRequest {
 
-  /** 表示順ID */
-  @NotNull
-  private Integer sort_order_id;
+  /** ファイルID */
+  @Size(max = 14)
+  private String file_id;
 
-  /** 表示順 */
+  /** フォルダID */
+  @Size(max = 14)
+  private String folder_id;
+
+  /** 並び順 */
   @NotNull
-  private Integer sort_order;
+  private int sort_order;
 
 }
