@@ -12,10 +12,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 import org.springframework.validation.SmartValidator;
 import jp.co.fnj.storage.api.constant.Messages;
-import jp.co.fnj.storage.api.controller.sample.SampleRequest;
-import jp.co.fnj.storage.api.controller.sample.SampleResponse;
 import jp.co.fnj.storage.api.exception.StorageBadRequestException;
 import jp.co.fnj.storage.api.exception.StorageException;
+import jp.co.fnj.storage.api.model.sample.SampleRequest;
+import jp.co.fnj.storage.api.model.sample.SampleResponse;
 import jp.co.fnj.storage.api.service.sample.SampleService;
 
 /**

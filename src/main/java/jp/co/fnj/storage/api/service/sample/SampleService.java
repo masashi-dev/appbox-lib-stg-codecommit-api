@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jp.co.fnj.storage.api.constant.Messages;
-import jp.co.fnj.storage.api.controller.sample.SampleRequest;
-import jp.co.fnj.storage.api.controller.sample.SampleResponse;
 import jp.co.fnj.storage.api.entity.mapper.custom.SampleMapper;
 import jp.co.fnj.storage.api.exception.StorageRuntimeException;
+import jp.co.fnj.storage.api.model.sample.SampleRequest;
+import jp.co.fnj.storage.api.model.sample.SampleResponse;
 
 /**
  * サンプルサービス.

@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.controller.sample;
+package jp.co.fnj.storage.api.model.sample;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

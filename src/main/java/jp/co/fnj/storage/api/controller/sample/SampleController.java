@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jp.co.fnj.storage.api.logic.sample.SampleLogic;
+import jp.co.fnj.storage.api.model.sample.SampleRequest;
+import jp.co.fnj.storage.api.model.sample.SampleResponse;
 
 /********************************************************************
  *
