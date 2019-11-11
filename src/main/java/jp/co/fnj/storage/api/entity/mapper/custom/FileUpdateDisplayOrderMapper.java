@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import jp.co.fnj.storage.api.entity.model.custom.FileUpdateDisplayOrderEntity;
+import jp.co.fnj.storage.api.entity.model.generat.TSortOrder;
 
 /**
  * 表示順更新APIマッパー.
@@ -13,6 +14,8 @@ import jp.co.fnj.storage.api.entity.model.custom.FileUpdateDisplayOrderEntity;
 public interface FileUpdateDisplayOrderMapper {
 
   /** 表示順更新 */
-  List<FileUpdateDisplayOrderEntity> updateDisplayOrder(@Param("folderId") String folderId);
+//  List<FileUpdateDisplayOrderEntity> updateDisplayOrder(@Param("folderId") String folderId);
+
+  void updateByPrimaryKey(TSortOrder tSortOrder);
 
 }

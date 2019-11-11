@@ -17,8 +17,7 @@ public class FileUpdateDisplayOrderRequest {
 
   /** 表示順ID */
   @NotNull
-  @Size(max = 14)
-  private String sort_order_id;
+  private Integer sort_order_id;
 
   /** 表示順 */
   @NotNull
