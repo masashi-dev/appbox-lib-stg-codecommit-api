@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import jp.co.fnj.storage.api.entity.mapper.custom.SortOrderResistMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrder;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrderExample;
@@ -47,17 +48,16 @@ public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest,
   /** 表示順テーブルマッパー */
   @Autowired
   TSortOrderMapper tSortOrderMapper;
+  @Autowired
+  SortOrderResistMapper sortOrderRegistMapper;
 
   @Transactional(noRollbackFor = Throwable.class)
   public void execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
     // リクエストの親フォルダIDを条件とし表示順テーブルをグルーピングする
-    TSortOrderExample tSortOrderExampleParentGrp = new TSortOrderExample();
-    // TODO:グループ条件を実装する
-    List<TSortOrder> listParentGrp = tSortOrderMapper.selectByExample(tSortOrderExampleParentGrp);
-
-
+    Integer sortOrderMax =
+        sortOrderRegistMapper.selectSortOrderMax(requestBody.getParent_folder_id());
 
     // 登録する項目を設定
     TSortOrder tSortOrder = new TSortOrder();
@@ -71,12 +71,12 @@ public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest,
       tSortOrder.setFolderId(requestBody.getFile_folder_id());
     }
 
-    if (true) {
-      // グループの中で最も大きい表示順＋初期値を設定
-      tSortOrder.setSortOrder(1111 + SORT_ORDER_INIT_VAL);
-    } else {
-      // 初期値を設定
+    // 表示順テーブルに同一の親フォルダIDを持つレコードが存在しない場合のみ初期値を設定
+    // それ以外の場合は表示順の最大値＋初期値を設定
+    if (sortOrderMax == null) {
       tSortOrder.setSortOrder(SORT_ORDER_INIT_VAL);
+    } else {
+      tSortOrder.setSortOrder(sortOrderMax + SORT_ORDER_INIT_VAL);
     }
 
 

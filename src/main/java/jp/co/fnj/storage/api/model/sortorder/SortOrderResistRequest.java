@@ -27,7 +27,7 @@ public class SortOrderResistRequest {
   @Size(max = 14)
   private String parent_folder_id;
 
-  /** 並び順 */
+  /** 登録区分 */
   @NotNull
   @Min(0)
   @Max(1)
