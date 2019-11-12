@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import jp.co.fnj.storage.api.exception.StorageException;
+import jp.co.fnj.storage.api.constant.StorageApiUrl;
 import jp.co.fnj.storage.api.logic.file.FileSearchLogic;
 import jp.co.fnj.storage.api.model.file.FileSearchRequest;
 import jp.co.fnj.storage.api.model.file.FileSearchResponse;
@@ -26,12 +26,10 @@ public class FileSearchController {
   @Autowired
   FileSearchLogic<FileSearchRequest, List<FileSearchResponse>> fileSearchLogic;
 
-  @RequestMapping(method = RequestMethod.GET, value = "/filesearch2") // TODO エンドポイントは確定後書き換えること
+  @RequestMapping(method = RequestMethod.GET, path = StorageApiUrl.FILE_SEARCH) // TODO:エンドポイントは確定後書き換えること
   public ResponseEntity<List<FileSearchResponse>> search(HttpServletRequest request,
-      HttpServletResponse response, @ModelAttribute FileSearchRequest requestBody)
-      throws StorageException {
+      HttpServletResponse response, @ModelAttribute FileSearchRequest requestBody) {
 
-    // requestBody.setFolder_id(folder_id);
     return fileSearchLogic.execute(request, response, requestBody);
   }
 

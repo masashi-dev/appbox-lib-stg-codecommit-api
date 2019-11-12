@@ -5,13 +5,16 @@ import org.springframework.stereotype.Component;
 @Component
 public final class StorageApiUrl {
 
-	public static final String STORAGEACCESS = "/storageaccess";
+  public static final String STORAGEACCESS = "/storageaccess";
 
-	// ファイル管理
-	public static final String FILE_GET_LIST = "/lib/filemanagement/{folder_id}";
 
-	// 表示順更新
-	public static final String SORT_ORDER_UPDATE = "/lib/filemanagement/update";  // TODO:URLが確定次第修正する
-	public static final String SORT_ORDER_DELETE = "/lib/filemanagement/delete";  // TODO:URLが確定次第修正する
+  // ファイル管理
+  public static final String FILE_GET_LIST = "/lib/filemanagement/{folder_id}";
+  // ファイル管理_検索
+  public static final String FILE_SEARCH = "/filesearch";
+
+  // 表示順更新
+  public static final String SORT_ORDER_UPDATE = "/lib/filemanagement/update"; // TODO:URLが確定次第修正する
+  public static final String SORT_ORDER_DELETE = "/lib/filemanagement/delete"; // TODO:URLが確定次第修正する
 
 }
