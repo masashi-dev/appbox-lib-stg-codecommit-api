@@ -9,4 +9,5 @@ public final class StorageApiUrl {
 
 	// 表示順更新
 	public static final String SORT_ORDER_UPDATE = "/lib/filemanagement/update";  // TODO:URLが確定次第修正する
+	public static final String SORT_ORDER_DELETE = "/lib/filemanagement/delete";  // TODO:URLが確定次第修正する
 }
