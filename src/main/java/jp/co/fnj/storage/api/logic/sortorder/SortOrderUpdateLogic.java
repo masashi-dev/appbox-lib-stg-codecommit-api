@@ -75,8 +75,14 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
   private void innerExecute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
-    // 各種サービスを順次実行
-    sortOrderUpdateService.execute(request, response, requestBody);
+    try {
+      // 各種サービスを順次実行
+      sortOrderUpdateService.execute(request, response, requestBody);
+
+    } catch (Exception ex) {
+      throw new StorageBadRequestException(Messages.E02025);
+    }
+
     return;
   }
 
