@@ -16,8 +16,8 @@ import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.exception.StorageBadRequestException;
 import jp.co.fnj.storage.api.exception.StorageException;
 import jp.co.fnj.storage.api.exception.StorageRuntimeException;
-import jp.co.fnj.storage.api.model.file.FileGetListRequest;
-import jp.co.fnj.storage.api.model.file.FileGetListResponse;
+import jp.co.fnj.storage.api.model.file.FileSearchRequest;
+import jp.co.fnj.storage.api.model.file.FileSearchResponse;
 import jp.co.fnj.storage.api.service.file.FileSearchService;
 
 /**
@@ -27,9 +27,7 @@ import jp.co.fnj.storage.api.service.file.FileSearchService;
  * @param <RESPONSE>
  */
 @Service
-public class FileSearchLogic<REQUEST_BODY extends FileGetListRequest, RESPONSE extends List<FileGetListResponse>> {
-
-  // TODO:リクエストとレスポンスの型を直す
+public class FileSearchLogic<REQUEST_BODY extends FileSearchRequest, RESPONSE extends List<FileSearchResponse>> {
 
   @Autowired
   private FileSearchService<REQUEST_BODY, RESPONSE> fileSearchService;

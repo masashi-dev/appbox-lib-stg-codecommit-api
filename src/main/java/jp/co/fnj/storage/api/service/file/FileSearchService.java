@@ -1,9 +1,7 @@
 package jp.co.fnj.storage.api.service.file;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +14,8 @@ import jp.co.fnj.storage.api.entity.model.generat.TFile;
 import jp.co.fnj.storage.api.entity.model.generat.TFileExample;
 import jp.co.fnj.storage.api.entity.model.generat.TFolder;
 import jp.co.fnj.storage.api.entity.model.generat.TFolderExample;
-import jp.co.fnj.storage.api.entity.model.generat.TSortOrder;
-import jp.co.fnj.storage.api.entity.model.generat.TSortOrderExample;
-import jp.co.fnj.storage.api.model.file.FileGetListRequest;
-import jp.co.fnj.storage.api.model.file.FileGetListResponse;
+import jp.co.fnj.storage.api.model.file.FileSearchRequest;
+import jp.co.fnj.storage.api.model.file.FileSearchResponse;
 
 /**
  * ファイル検索APIサービス.
@@ -28,7 +24,7 @@ import jp.co.fnj.storage.api.model.file.FileGetListResponse;
  * @param <RESPONSE>
  */
 @Service
-public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE extends List<FileGetListResponse>> {
+public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE extends List<FileSearchResponse>> {
 
 
   @Autowired
@@ -43,9 +39,9 @@ public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE
 
   // TODO:Listの型を適切にする
   /** 該当ファイルList */
-  List<FileGetListResponse> applicableFile = new ArrayList<>();
+  List<FileSearchResponse> applicableFile = new ArrayList<>();
   /** 該当フォルダList */
-  List<FileGetListResponse> applicableFolder = new ArrayList<>();
+  List<FileSearchResponse> applicableFolder = new ArrayList<>();
 
 
   @Transactional(noRollbackFor = Throwable.class)
@@ -71,9 +67,9 @@ public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE
 
 
     // レスポンスを返却
-    List<FileGetListResponse> responseBodys =
+    List<FileSearchResponse> responseBodys =
         new ArrayList<>(applicableFolder.size() + applicableFile.size());
-    responseBodys.sort(Comparator.comparing(FileGetListResponse::getSort_order));
+    // responseBodys.sort(Comparator.comparing(FileSearchResponse::getSort_order));
     return (RESPONSE) responseBodys;
 
 
@@ -161,7 +157,7 @@ public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE
 
     // 抽出された結果をレスポンスListに登録
     for (TFile file : applicableFiles) {
-      FileGetListResponse item = new FileGetListResponse();
+      FileSearchResponse item = new FileSearchResponse();
       item.setFile_file_id(file.getFileId());
       item.setFile_folder_id(file.getFolderId());
       item.setFile_file_name(file.getFileName());
@@ -192,7 +188,7 @@ public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE
     for (TFolder folder : allFolders) {
       // キーワードに該当する場合はレスポンスListに登録
       if (folder.getFolderName().contains(argKeyword)) {
-        FileGetListResponse item = new FileGetListResponse();
+        FileSearchResponse item = new FileSearchResponse();
         item.setFolder_folder_id(folder.getFolderId());
         item.setFolder_parent_folder_id(folder.getParentFolderId());
         item.setFolder_folder_name(folder.getFolderName());
