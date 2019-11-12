@@ -37,7 +37,6 @@ public final class Messages {
   public static final String E02008 = rb.getString("E02008");
   public static final String E02009 = rb.getString("E02009");
   public static final String E02010 = rb.getString("E02010");
-  public static final String E02011 = rb.getString("E02011");
   public static final String E02012 = rb.getString("E02012");
   public static final String E02013 = rb.getString("E02013");
   public static final String E02014 = rb.getString("E02014");
@@ -196,10 +195,6 @@ public final class Messages {
 
   public String E02010() {
     return E02010;
-  }
-
-  public String E02011() {
-    return E02011;
   }
 
   public String E02012() {
