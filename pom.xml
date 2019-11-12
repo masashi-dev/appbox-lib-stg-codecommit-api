@@ -132,8 +132,14 @@
          	<dependency>
          		<groupId>mysql</groupId>
             	<artifactId>mysql-connector-java</artifactId>
-            	<version>5.1.6</version>
-            	<scope>runtime</scope>
+            	<version>8.0.18</version>
+         	</dependency>
+         	<dependency>
+         		<groupId>com.storage</groupId>
+         		<artifactId>mybatis-plugin</artifactId>
+         		<version>1.0</version>
+         		<scope>system</scope>
+         		<systemPath>${basedir}/lib/mybatis-plugin-1.0.jar</systemPath>
          	</dependency>
          </dependencies>
       </plugin>
