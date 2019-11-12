@@ -55,13 +55,13 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
    */
   private void logicalCheck(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
-	  
-	// リクエスト項目「ファイルID」「フォルダID」のどちらかのみが設定されていることをチェック
-	if ((requestBody.getFile_id() == null && requestBody.getFolder_id() == null)
-		|| (requestBody.getFile_id() != null && requestBody.getFolder_id() != null)) {
-		throw new StorageBadRequestException(Messages.E05001);
-	}
-      
+
+    // リクエスト項目「ファイルID」「フォルダID」のどちらかのみが設定されていることをチェック
+    if ((requestBody.getFile_id() == null && requestBody.getFolder_id() == null)
+        || (requestBody.getFile_id() != null && requestBody.getFolder_id() != null)) {
+      throw new StorageBadRequestException(Messages.E05001);
+    }
+
   }
 
   /**
@@ -108,13 +108,13 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
 
     // バリデーション
     validate(requestBody);
-    
+
     // ロジカルチェック
     logicalCheck(request, response, requestBody);
 
     // メイン処理実行
     innerExecute(request, response, requestBody);
-    
+
     MultiValueMap<String, String> headerMap = new LinkedMultiValueMap<>();
 
     return new ResponseEntity<RESPONSE>(null, headerMap, HttpStatus.OK);
