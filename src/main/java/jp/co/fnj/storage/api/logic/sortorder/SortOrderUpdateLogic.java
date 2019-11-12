@@ -14,6 +14,7 @@ import org.springframework.validation.SmartValidator;
 import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.exception.StorageBadRequestException;
 import jp.co.fnj.storage.api.exception.StorageException;
+import jp.co.fnj.storage.api.exception.StorageRuntimeException;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateRequest;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateResponse;
 import jp.co.fnj.storage.api.service.sortorder.SortOrderUpdateService;
@@ -80,7 +81,7 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
       sortOrderUpdateService.execute(request, response, requestBody);
 
     } catch (Exception ex) {
-      throw new StorageBadRequestException(Messages.E02025);
+      throw new StorageRuntimeException(Messages.E02025);
     }
 
     return;
@@ -106,7 +107,7 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
    * @throws StorageException
    */
   public final ResponseEntity<RESPONSE> execute(HttpServletRequest request,
-      HttpServletResponse response, REQUEST_BODY requestBody) throws StorageException {
+      HttpServletResponse response, REQUEST_BODY requestBody) {
 
     // 事前実行
     preExecute(request, response, requestBody);

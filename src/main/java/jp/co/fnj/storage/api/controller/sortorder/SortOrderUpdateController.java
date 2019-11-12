@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import jp.co.fnj.storage.api.constant.StorageApiUrl;
-import jp.co.fnj.storage.api.exception.StorageException;
 import jp.co.fnj.storage.api.logic.sortorder.SortOrderUpdateLogic;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateRequest;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateResponse;
@@ -28,8 +27,7 @@ public class SortOrderUpdateController {
 
   @RequestMapping(method = RequestMethod.PUT, path = StorageApiUrl.SORT_ORDER_UPDATE)
   public ResponseEntity<SortOrderUpdateResponse> getList(HttpServletRequest request,
-      HttpServletResponse response, @RequestBody SortOrderUpdateRequest requestBody)
-      throws StorageException {
+      HttpServletResponse response, @RequestBody SortOrderUpdateRequest requestBody) {
 
     return sortOrderUpdateLogic.execute(request, response, requestBody);
   }
