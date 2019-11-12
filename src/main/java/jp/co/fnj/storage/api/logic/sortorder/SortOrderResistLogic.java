@@ -55,9 +55,9 @@ public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, R
    */
   private void logicalCheck(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
-	  
+
     // セッション情報から実行権限をチェックする
-	// TODO:未整備事項のため別途実装
+    // TODO:未整備事項のため別途実装
   }
 
   /**
@@ -73,7 +73,7 @@ public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, R
       REQUEST_BODY requestBody) {
 
     // 各種サービスを順次実行
-	sortOrderResistService.execute(request, response, requestBody);
+    sortOrderResistService.execute(request, response, requestBody);
     return;
   }
 
@@ -86,6 +86,7 @@ public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, R
   // protected AppboxPlatformUser getAuthenticationPrincipal() throws AppboxPlatformException {
   // return AuthenticationUtil.getAuthenticationPrincipal();
   // }
+
   /**
    * 処理実行
    * 
@@ -103,13 +104,13 @@ public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, R
 
     // バリデーション
     validate(requestBody);
-    
+
     // ロジカルチェック
     logicalCheck(request, response, requestBody);
 
     // メイン処理実行
     innerExecute(request, response, requestBody);
-    
+
     MultiValueMap<String, String> headerMap = new LinkedMultiValueMap<>();
 
     return new ResponseEntity<RESPONSE>(null, headerMap, HttpStatus.OK);
