@@ -76,14 +76,14 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
   /**
    * 指定したフォルダ以下に存在する、キーワードに該当するファイル・フォルダを検索します.
    * 
-   * @param argParentFolderId
+   * @param argFolderId
    * @param argKeyword
    */
-  private void searchKeyword(String argParentFolderId, String argKeyword) {
+  private void searchKeyword(String argFolderId, String argKeyword) {
 
-    // 親フォルダ直下のキーワードに該当するファイルを抽出
+    // 指定フォルダ直下のキーワードに該当するファイルを抽出
     TFileExample fileCriteria = new TFileExample();
-    fileCriteria.createCriteria().andFolderIdEqualTo(argParentFolderId).andDeleteFlgEqualTo(false)
+    fileCriteria.createCriteria().andFolderIdEqualTo(argFolderId).andDeleteFlgEqualTo(false)
         .andFileNameLike("%" + argKeyword + "%");
     List<TFile> applicableFiles = tFileMapper.selectByExample(fileCriteria);
 
@@ -104,18 +104,18 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
     }
 
 
-    // 親フォルダ直下のフォルダの一覧を取得
+    // 指定フォルダ直下のフォルダの一覧を取得
     TFolderExample folderCriteria = new TFolderExample();
-    folderCriteria.createCriteria().andParentFolderIdEqualTo(argParentFolderId)
+    folderCriteria.createCriteria().andParentFolderIdEqualTo(argFolderId)
         .andDeleteFlgEqualTo(false); // TODO:条件を見直す
     List<TFolder> allFolders = tFolderMapper.selectByExample(folderCriteria);
 
-    // 親フォルダ直下にフォルダが存在しない場合（＝最下層のディレクトリの場合）は処理終了
+    // 指定フォルダ直下にフォルダが存在しない場合（＝最下層のディレクトリの場合）は処理終了
     if (allFolders == null) {
       return;
     }
 
-    // 親フォルダ直下のフォルダを順番に処理
+    // 指定フォルダ直下のフォルダを順番に処理
     for (TFolder folder : allFolders) {
       // キーワードに該当する場合はレスポンスListに登録
       if (folder.getFolderName().contains(argKeyword)) {
@@ -135,7 +135,7 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
         applicableFolder.add(item);
       }
 
-      // 親フォルダ直下のフォルダの直下を検索（再帰的に検索）
+      // 指定フォルダ直下のフォルダの直下を検索（再帰的に検索）
       searchKeyword(folder.getFolderId(), argKeyword);
     }
 
