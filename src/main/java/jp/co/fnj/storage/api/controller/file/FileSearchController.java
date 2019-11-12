@@ -22,12 +22,13 @@ import jp.co.fnj.storage.api.model.file.FileSearchResponse;
 public class FileSearchController {
 
   /**
-   * お気に入り削除
+   * ファイル検索.
    *
-   * お気に入り情報を削除する。 物理削除とする。
+   * 指定した入力を元にファイル名、フォルダ名の検索を行う。
    *
-   * @param bookmark_id お気に入りID
-   * @return BookmarkDeleteResponce ユーザー情報
+   * @param folder_id フォルダID
+   * @param search_word 検索ワード
+   * @return FileSearchResponse ファイル検索結果
    */
   @RequestMapping(value = "/filesearch", method = RequestMethod.GET) // TODO エンドポイントは確定後書き換えること
   public ResponseEntity<FileSearchResponse> search(HttpServletRequest request,
