@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import jp.co.fnj.storage.api.constant.StorageApiUrl;
-import jp.co.fnj.storage.api.exception.StorageException;
 import jp.co.fnj.storage.api.logic.sortorder.SortOrderResistLogic;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistRequest;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
@@ -27,10 +26,9 @@ public class SortOrderResistController {
   @Autowired
   SortOrderResistLogic<SortOrderResistRequest, List<SortOrderResistResponse>> sortOrderResistLogic;
 
-  @RequestMapping(method = RequestMethod.POST, path = StorageApiUrl.FILE_INSERT_DISPLAY_ORDER)
+  @RequestMapping(method = RequestMethod.POST, path = StorageApiUrl.SORT_ORDER_RESIST)
   public ResponseEntity<List<SortOrderResistResponse>> getList(HttpServletRequest request,
-      HttpServletResponse response, @RequestBody SortOrderResistRequest requestBody)
-      throws StorageException {
+      HttpServletResponse response, @RequestBody SortOrderResistRequest requestBody) {
 
     return sortOrderResistLogic.execute(request, response, requestBody);
   }

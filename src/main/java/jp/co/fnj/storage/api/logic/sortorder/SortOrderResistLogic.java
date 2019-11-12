@@ -15,6 +15,7 @@ import org.springframework.validation.SmartValidator;
 import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.exception.StorageBadRequestException;
 import jp.co.fnj.storage.api.exception.StorageException;
+import jp.co.fnj.storage.api.exception.StorageRuntimeException;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistRequest;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
 import jp.co.fnj.storage.api.service.sortorder.SortOrderResistService;
@@ -72,8 +73,14 @@ public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, R
   private void innerExecute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
-    // 各種サービスを順次実行
-    sortOrderResistService.execute(request, response, requestBody);
+    try {
+      // 各種サービスを順次実行
+      sortOrderResistService.execute(request, response, requestBody);
+
+    } catch (Exception ex) {
+      throw new StorageRuntimeException(Messages.E02025);
+    }
+
     return;
   }
 
@@ -97,7 +104,7 @@ public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, R
    * @throws StorageException
    */
   public final ResponseEntity<RESPONSE> execute(HttpServletRequest request,
-      HttpServletResponse response, REQUEST_BODY requestBody) throws StorageException {
+      HttpServletResponse response, REQUEST_BODY requestBody) {
 
     // 事前実行
     preExecute(request, response, requestBody);
