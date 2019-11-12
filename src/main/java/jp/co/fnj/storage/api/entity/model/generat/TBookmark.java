@@ -11,7 +11,7 @@ public class TBookmark implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer bookmarkId;
+    private String bookmarkId;
 
     /**
      *
@@ -92,7 +92,7 @@ public class TBookmark implements Serializable {
      *
      * @mbg.generated
      */
-    public Integer getBookmarkId() {
+    public String getBookmarkId() {
         return bookmarkId;
     }
 
@@ -104,8 +104,8 @@ public class TBookmark implements Serializable {
      *
      * @mbg.generated
      */
-    public void setBookmarkId(Integer bookmarkId) {
-        this.bookmarkId = bookmarkId;
+    public void setBookmarkId(String bookmarkId) {
+        this.bookmarkId = bookmarkId == null ? null : bookmarkId.trim();
     }
 
     /**

@@ -8,7 +8,7 @@
     <property name="javaFileEncoding" value="UTF-8" />
     
     <!-- プラグイン設定 -->
-    <plugin type="jp.co.fnj.storage.api.MyBatisForUpdatePlugin" />
+    <plugin type="jp.co.fnj.storage.common.mybatis.plugin.MyBatisForUpdatePlugin" />
     <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin" />
     <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
     <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
