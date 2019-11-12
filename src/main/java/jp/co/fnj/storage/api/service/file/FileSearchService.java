@@ -61,16 +61,12 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
     // 検索結果を該当ファイルListと該当フォルダListにそれぞれ登録する
     searchKeyword(requestBody.getFolder_id(), requestBody.getSearch_word());
 
-    // 該当ファイルListをソート
-
-    // 該当フォルダListをソート
-
-    // 2つの該当リストをマージしレスポンスListを作成・返却
-    // （該当フォルダ→該当ファイルの並び順）
+    // 2つの該当リストをマージ
     List<FileSearchResponse> responseBodys =
         new ArrayList<>(applicableFolder.size() + applicableFile.size());
     responseBodys.addAll(applicableFolder);
     responseBodys.addAll(applicableFile);
+    // レスポンスを返却
     return (RESPONSE) responseBodys;
 
   }
@@ -104,7 +100,6 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
       item.setFile_insert_date_time(file.getCreateDate());
       item.setFile_update_user_id(file.getUpdateUser());
       item.setFile_update_date_time(file.getUpdateDate());
-      // item.setSort_order(tSortOrder.getSortOrder()); // TODO:表示順の付番は別途考える
       applicableFile.add(item);
     }
 
@@ -137,7 +132,6 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
         item.setFolder_insert_date_time(folder.getCreateDate());
         item.setFolder_update_user_id(folder.getUpdateUser());
         item.setFolder_update_date_time(folder.getUpdateDate());
-        // item.setSort_order(tSortOrder.getSortOrder()); // TODO:表示順の付番は別途考える
         applicableFolder.add(item);
       }
 
