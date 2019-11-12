@@ -1,5 +1,6 @@
-package jp.co.fnj.storage.api.logic.sortorder;
+package jp.co.fnj.storage.api.logic.file;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +16,21 @@ import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.exception.StorageBadRequestException;
 import jp.co.fnj.storage.api.exception.StorageException;
 import jp.co.fnj.storage.api.exception.StorageRuntimeException;
-import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateRequest;
-import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateResponse;
-import jp.co.fnj.storage.api.service.sortorder.SortOrderUpdateService;
+import jp.co.fnj.storage.api.model.file.FileGetListRequest;
+import jp.co.fnj.storage.api.model.file.FileGetListResponse;
+import jp.co.fnj.storage.api.service.file.FileGetListService;
 
 /**
- * 表示順更新APIロジック.
+ * ファイル一覧取得APIロジック.
  *
  * @param <REQUEST_BODY>
  * @param <RESPONSE>
  */
 @Service
-public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, RESPONSE extends SortOrderUpdateResponse> {
+public class FileGetListLogic<REQUEST_BODY extends FileGetListRequest, RESPONSE extends List<FileGetListResponse>> {
 
   @Autowired
-  private SortOrderUpdateService<REQUEST_BODY, RESPONSE> sortOrderUpdateService;
+  private FileGetListService<REQUEST_BODY, RESPONSE> fileGetListService;
 
   @Autowired
   private SmartValidator validator;
@@ -54,15 +55,7 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
    * @throws StorageException
    */
   private void logicalCheck(HttpServletRequest request, HttpServletResponse response,
-      REQUEST_BODY requestBody) {
-
-    // リクエスト項目「ファイルID」「フォルダID」のどちらかのみが設定されていることをチェック
-    if ((requestBody.getFile_id() == null && requestBody.getFolder_id() == null)
-        || (requestBody.getFile_id() != null && requestBody.getFolder_id() != null)) {
-      throw new StorageBadRequestException(Messages.E02001);
-    }
-
-  }
+      REQUEST_BODY requestBody) {}
 
   /**
    * メイン処理.
@@ -73,18 +66,16 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
    * @return
    * @throws StorageException
    */
-  private void innerExecute(HttpServletRequest request, HttpServletResponse response,
+  private RESPONSE innerExecute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
     try {
       // 各種サービスを順次実行
-      sortOrderUpdateService.execute(request, response, requestBody);
-
-    } catch (Exception ex) {
-      throw new StorageRuntimeException(Messages.E02025);
+      RESPONSE res = (RESPONSE) fileGetListService.execute(request, response, requestBody);
+      return res;
+    } catch (Exception e) {
+      throw new StorageRuntimeException(Messages.E02021, e);
     }
-
-    return;
   }
 
   /**
@@ -96,7 +87,6 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
   // protected AppboxPlatformUser getAuthenticationPrincipal() throws AppboxPlatformException {
   // return AuthenticationUtil.getAuthenticationPrincipal();
   // }
-
   /**
    * 処理実行
    * 
@@ -107,7 +97,7 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
    * @throws StorageException
    */
   public final ResponseEntity<RESPONSE> execute(HttpServletRequest request,
-      HttpServletResponse response, REQUEST_BODY requestBody) {
+      HttpServletResponse response, REQUEST_BODY requestBody) throws StorageException {
 
     // 事前実行
     preExecute(request, response, requestBody);
@@ -119,11 +109,11 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
     logicalCheck(request, response, requestBody);
 
     // メイン処理実行
-    innerExecute(request, response, requestBody);
+    RESPONSE responseBody = innerExecute(request, response, requestBody);
 
     MultiValueMap<String, String> headerMap = new LinkedMultiValueMap<>();
 
-    return new ResponseEntity<RESPONSE>(null, headerMap, HttpStatus.OK);
+    return new ResponseEntity<RESPONSE>(responseBody, headerMap, HttpStatus.OK);
   }
 
   /**
@@ -139,23 +129,12 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
     }
 
     BindingResult bindingResult = new DataBinder(requestBody).getBindingResult();
-    validator.validate(requestBody, bindingResult, getValidationGroup());
+    validator.validate(requestBody, bindingResult);
 
     if (bindingResult.hasErrors()) {
       throw new StorageBadRequestException(Messages.E00007);
     }
 
   }
-
-  /**
-   * バリデーショングループを取得します。
-   * 
-   * @return
-   */
-  private Class<?> getValidationGroup() {
-    return null;
-  }
-
-
 
 }
