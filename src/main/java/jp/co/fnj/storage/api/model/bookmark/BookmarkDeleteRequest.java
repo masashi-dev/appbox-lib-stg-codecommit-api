@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 public class BookmarkDeleteRequest {
 
   /** お気に入りID */
-  @NotNull
   @Size(max = 14)
+  @NotNull
   private String bookmark_id;
 }

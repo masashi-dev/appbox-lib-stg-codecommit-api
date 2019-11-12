@@ -26,6 +26,15 @@ public class FileSearchController {
   @Autowired
   FileSearchLogic<FileSearchRequest, List<FileSearchResponse>> fileSearchLogic;
 
+  /**
+   * ファイル検索.
+   *
+   * 指定した入力を元にファイル名、フォルダ名の検索を行う。
+   *
+   * @param folder_id フォルダID
+   * @param search_word 検索ワード
+   * @return FileSearchResponse ファイル検索結果
+   */
   @RequestMapping(method = RequestMethod.GET, path = StorageApiUrl.FILE_SEARCH) // TODO:エンドポイントは確定後書き換えること
   public ResponseEntity<List<FileSearchResponse>> search(HttpServletRequest request,
       HttpServletResponse response, @ModelAttribute FileSearchRequest requestBody) {
