@@ -71,8 +71,8 @@ public class SortOrderDeleteLogic<REQUEST_BODY extends SortOrderDeleteRequest, R
       // 各種サービスを順次実行
       sortOrderDeleteService.execute(request, response, requestBody);
 
-    } catch (Exception ex) {
-      throw new StorageRuntimeException(Messages.E00004);
+    } catch (Exception e) {
+      throw new StorageRuntimeException(Messages.E00004, e);
     }
     return;
   }

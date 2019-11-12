@@ -28,9 +28,8 @@ public class SortOrderDeleteController {
 	SortOrderDeleteLogic<SortOrderDeleteRequest, SortOrderDeleteResponse> sortOrderDeleteLogic;
 	
 	@RequestMapping(method = RequestMethod.DELETE, path = StorageApiUrl.SORT_ORDER_DELETE)
-	public ResponseEntity<SortOrderDeleteResponse> getList(HttpServletRequest request,
-	    HttpServletResponse response, @RequestBody SortOrderDeleteRequest requestBody)
-	    throws StorageException {
+	public ResponseEntity<SortOrderDeleteResponse> delete(HttpServletRequest request,
+	    HttpServletResponse response, @RequestBody SortOrderDeleteRequest requestBody){
 
 		return sortOrderDeleteLogic.execute(request, response, requestBody);
 	}
