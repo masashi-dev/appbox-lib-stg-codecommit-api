@@ -52,9 +52,8 @@ public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest,
   public void execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
-    // リクエストの親フォルダIDを条件とし表示順テーブルをグルーピングする（悲観ロックあり）
+    // リクエストの親フォルダIDを条件とし表示順テーブルをグルーピングする
     TSortOrderExample tSortOrderExampleParentGrp = new TSortOrderExample();
-    tSortOrderExampleParentGrp.setForUpdate(true);
     // TODO:グループ条件を実装する
     List<TSortOrder> listParentGrp = tSortOrderMapper.selectByExample(tSortOrderExampleParentGrp);
 
@@ -62,7 +61,7 @@ public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest,
 
     // 登録する項目を設定
     TSortOrder tSortOrder = new TSortOrder();
-    // tSortOrder.setSortOrderId(); TODO:実装する
+    tSortOrder.setSortOrderId("12345"); // TODO:採番した値をinsertするよう実装する
     tSortOrder.setParentFolderId(requestBody.getParent_folder_id());
 
     // 登録区分に応じて設定する項目を切り替え
