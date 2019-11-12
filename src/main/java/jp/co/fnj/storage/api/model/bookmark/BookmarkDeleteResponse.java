@@ -9,5 +9,5 @@ import lombok.experimental.Accessors;
  **/
 @Data
 @Accessors(chain = true)
-public class BookmarkDeleteResponce {
+public class BookmarkDeleteResponse {
 }

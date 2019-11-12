@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.model.bookmark;
+package jp.co.fnj.storage.api.model.file;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -7,16 +7,21 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- * お気に入り削除リクエストクラス.
- * 
- **/
+ * ファイル検索APIリクエスト.
+ *
+ */
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-public class BookmarkDeleteRequest {
+public class FileSearchRequest {
 
-  /** お気に入りID */
-  @Size(max = 14)
+  /** フォルダID */
   @NotNull
-  private String bookmark_id;
+  @Size(max = 14)
+  private String folder_id;
+
+  /** 検索ワード */
+  @NotNull
+  @Size(min = 1, max = 50)
+  private String search_word;
 }
