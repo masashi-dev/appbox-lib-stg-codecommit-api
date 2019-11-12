@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrder;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrderExample;
+import jp.co.fnj.storage.api.exception.StorageBadRequestException;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateRequest;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateResponse;
 
@@ -21,7 +23,7 @@ import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateResponse;
  * @param <RESPONSE>
  */
 @Service
-public class SortOrderUpdateService<REQUEST_BODY extends SortOrderUpdateRequest, RESPONSE extends List<SortOrderUpdateResponse>> {
+public class SortOrderUpdateService<REQUEST_BODY extends SortOrderUpdateRequest, RESPONSE extends SortOrderUpdateResponse> {
 
   /** 表示順テーブルマッパー */
   @Autowired
@@ -40,6 +42,11 @@ public class SortOrderUpdateService<REQUEST_BODY extends SortOrderUpdateRequest,
       tSortOrderExampleForUpdate.createCriteria().andFolderIdEqualTo(requestBody.getFolder_id());
     }
     List<TSortOrder> listForUpdate = tSortOrderMapper.selectByExample(tSortOrderExampleForUpdate);
+    if (listForUpdate.size() == 0) {
+      // 更新対象行を取得できなかった場合は例外
+      // TODO:メッセージIDとメッセージ内容をdevelopで一括対応したのち更新する
+      throw new StorageBadRequestException(Messages.E05001);
+    }
     TSortOrder tSortOrderUpdate = listForUpdate.get(0);
 
     // 更新する項目を設定

@@ -25,6 +25,6 @@ public class SortOrderUpdateRequest {
 
   /** 並び順 */
   @NotNull
-  private int sort_order;
+  private Integer sort_order;
 
 }

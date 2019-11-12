@@ -1,6 +1,5 @@
 package jp.co.fnj.storage.api.logic.sortorder;
 
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ import jp.co.fnj.storage.api.service.sortorder.SortOrderUpdateService;
  * @param <RESPONSE>
  */
 @Service
-public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, RESPONSE extends List<SortOrderUpdateResponse>> {
+public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, RESPONSE extends SortOrderUpdateResponse> {
 
   @Autowired
   private SortOrderUpdateService<REQUEST_BODY, RESPONSE> sortOrderUpdateService;
@@ -59,6 +58,7 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
     // リクエスト項目「ファイルID」「フォルダID」のどちらかのみが設定されていることをチェック
     if ((requestBody.getFile_id() == null && requestBody.getFolder_id() == null)
         || (requestBody.getFile_id() != null && requestBody.getFolder_id() != null)) {
+      // TODO:メッセージIDとメッセージ内容をdevelopで一括対応したのち更新する
       throw new StorageBadRequestException(Messages.E05001);
     }
 
@@ -136,6 +136,7 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
     validator.validate(requestBody, bindingResult, getValidationGroup());
 
     if (bindingResult.hasErrors()) {
+      // TODO:メッセージIDとメッセージ内容をdevelopで一括対応したのち更新する
       throw new StorageBadRequestException(Messages.E05001);
     }
 

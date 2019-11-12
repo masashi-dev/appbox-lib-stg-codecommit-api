@@ -1,6 +1,5 @@
 package jp.co.fnj.storage.api.controller.sortorder;
 
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +24,10 @@ import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateResponse;
 public class SortOrderUpdateController {
 
   @Autowired
-  SortOrderUpdateLogic<SortOrderUpdateRequest, List<SortOrderUpdateResponse>> sortOrderUpdateLogic;
+  SortOrderUpdateLogic<SortOrderUpdateRequest, SortOrderUpdateResponse> sortOrderUpdateLogic;
 
   @RequestMapping(method = RequestMethod.PUT, path = StorageApiUrl.SORT_ORDER_UPDATE)
-  public ResponseEntity<List<SortOrderUpdateResponse>> getList(HttpServletRequest request,
+  public ResponseEntity<SortOrderUpdateResponse> getList(HttpServletRequest request,
       HttpServletResponse response, @RequestBody SortOrderUpdateRequest requestBody)
       throws StorageException {
 
