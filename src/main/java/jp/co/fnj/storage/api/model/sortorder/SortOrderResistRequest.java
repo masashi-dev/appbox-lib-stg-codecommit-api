@@ -31,6 +31,6 @@ public class SortOrderResistRequest {
   @NotNull
   @Min(0)
   @Max(1)
-  private int entry_devision;
+  private Integer entry_devision;
 
 }
