@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jp.co.fnj.storage.api.entity.mapper.custom.SortOrderResistMapper;
+import jp.co.fnj.storage.api.entity.mapper.generat.TSequenceMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrder;
-import jp.co.fnj.storage.api.entity.model.generat.TSortOrderExample;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistRequest;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
+import jp.co.fnj.storage.api.service.SequenceService;
 
 /**
  * 表示順登録APIサービス.
@@ -45,11 +46,12 @@ public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest,
   final private int SORT_ORDER_INIT_VAL = 2;
 
 
-  /** 表示順テーブルマッパー */
   @Autowired
   TSortOrderMapper tSortOrderMapper;
   @Autowired
   SortOrderResistMapper sortOrderRegistMapper;
+  @Autowired
+  TSequenceMapper tSequenceMapper;
 
   @Transactional(noRollbackFor = Throwable.class)
   public void execute(HttpServletRequest request, HttpServletResponse response,
@@ -61,7 +63,7 @@ public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest,
 
     // 登録する項目を設定
     TSortOrder tSortOrder = new TSortOrder();
-    tSortOrder.setSortOrderId("12345"); // TODO:採番した値をinsertするよう実装する
+    tSortOrder.setSortOrderId(new SequenceService(tSequenceMapper).createSortOrderId());
     tSortOrder.setParentFolderId(requestBody.getParent_folder_id());
 
     // 登録区分に応じて設定する項目を切り替え

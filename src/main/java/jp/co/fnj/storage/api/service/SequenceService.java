@@ -1,12 +1,10 @@
 package jp.co.fnj.storage.api.service;
 
 import java.util.List;
-import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.entity.mapper.generat.TSequenceMapper;
 import jp.co.fnj.storage.api.entity.model.generat.TSequence;
 import jp.co.fnj.storage.api.entity.model.generat.TSequenceExample;
@@ -50,7 +48,6 @@ public class SequenceService {
 
   }
 
-  // TSequenceテーブルのマッパーをインジェクション
   private final TSequenceMapper tSequenceMapper;
 
   /**

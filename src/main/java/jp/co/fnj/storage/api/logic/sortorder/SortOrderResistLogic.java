@@ -77,8 +77,8 @@ public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, R
       // 各種サービスを順次実行
       sortOrderResistService.execute(request, response, requestBody);
 
-    } catch (Exception ex) {
-      throw new StorageRuntimeException(Messages.E02025);
+    } catch (Exception e) {
+      throw new StorageRuntimeException(Messages.E02025, e);
     }
 
     return;
