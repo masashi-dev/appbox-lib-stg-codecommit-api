@@ -233,52 +233,62 @@ public class TBookmarkExample {
             return (Criteria) this;
         }
 
-        public Criteria andBookmarkIdEqualTo(Integer value) {
+        public Criteria andBookmarkIdEqualTo(String value) {
             addCriterion("BOOKMARK_ID =", value, "bookmarkId");
             return (Criteria) this;
         }
 
-        public Criteria andBookmarkIdNotEqualTo(Integer value) {
+        public Criteria andBookmarkIdNotEqualTo(String value) {
             addCriterion("BOOKMARK_ID <>", value, "bookmarkId");
             return (Criteria) this;
         }
 
-        public Criteria andBookmarkIdGreaterThan(Integer value) {
+        public Criteria andBookmarkIdGreaterThan(String value) {
             addCriterion("BOOKMARK_ID >", value, "bookmarkId");
             return (Criteria) this;
         }
 
-        public Criteria andBookmarkIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andBookmarkIdGreaterThanOrEqualTo(String value) {
             addCriterion("BOOKMARK_ID >=", value, "bookmarkId");
             return (Criteria) this;
         }
 
-        public Criteria andBookmarkIdLessThan(Integer value) {
+        public Criteria andBookmarkIdLessThan(String value) {
             addCriterion("BOOKMARK_ID <", value, "bookmarkId");
             return (Criteria) this;
         }
 
-        public Criteria andBookmarkIdLessThanOrEqualTo(Integer value) {
+        public Criteria andBookmarkIdLessThanOrEqualTo(String value) {
             addCriterion("BOOKMARK_ID <=", value, "bookmarkId");
             return (Criteria) this;
         }
 
-        public Criteria andBookmarkIdIn(List<Integer> values) {
+        public Criteria andBookmarkIdLike(String value) {
+            addCriterion("BOOKMARK_ID like", value, "bookmarkId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookmarkIdNotLike(String value) {
+            addCriterion("BOOKMARK_ID not like", value, "bookmarkId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookmarkIdIn(List<String> values) {
             addCriterion("BOOKMARK_ID in", values, "bookmarkId");
             return (Criteria) this;
         }
 
-        public Criteria andBookmarkIdNotIn(List<Integer> values) {
+        public Criteria andBookmarkIdNotIn(List<String> values) {
             addCriterion("BOOKMARK_ID not in", values, "bookmarkId");
             return (Criteria) this;
         }
 
-        public Criteria andBookmarkIdBetween(Integer value1, Integer value2) {
+        public Criteria andBookmarkIdBetween(String value1, String value2) {
             addCriterion("BOOKMARK_ID between", value1, value2, "bookmarkId");
             return (Criteria) this;
         }
 
-        public Criteria andBookmarkIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andBookmarkIdNotBetween(String value1, String value2) {
             addCriterion("BOOKMARK_ID not between", value1, value2, "bookmarkId");
             return (Criteria) this;
         }
@@ -750,6 +760,11 @@ public class TBookmarkExample {
 
         public Criteria andUpdateDateNotBetween(LocalDateTime value1, LocalDateTime value2) {
             addCriterion("UPDATE_DATE not between", value1, value2, "updateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookmarkIdLikeInsensitive(String value) {
+            addCriterion("upper(BOOKMARK_ID) like", value.toUpperCase(), "bookmarkId");
             return (Criteria) this;
         }
 
