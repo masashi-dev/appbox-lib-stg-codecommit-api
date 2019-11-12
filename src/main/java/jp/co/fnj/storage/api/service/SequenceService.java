@@ -1,5 +1,6 @@
 package jp.co.fnj.storage.api.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Service;
@@ -90,6 +91,8 @@ public class SequenceService {
     // 採番を更新
     TSequence update = tSequences.get(0);
     update.setSequenceValue(update.getSequenceValue() + 1);
+    update.setUpdateUser("testuser"); // TODO:未整備事項のため別途実装
+    update.setUpdateDate(LocalDateTime.now());
     tSequenceMapper.updateByPrimaryKey(update);
 
     return String.format("%11d", update.getSequenceValue());
