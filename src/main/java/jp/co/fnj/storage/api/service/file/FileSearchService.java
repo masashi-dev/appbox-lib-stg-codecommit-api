@@ -29,12 +29,8 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
 
   @Autowired
   private TFolderMapper tFolderMapper;
-
   @Autowired
   private TFileMapper tFileMapper;
-
-  @Autowired
-  private TSortOrderMapper tSortOrderMapper;
 
 
   /** 該当ファイルList */
@@ -43,15 +39,18 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
   List<FileSearchResponse> applicableFolder;
 
 
+  // セッション情報を取得し設定する
+  // TODO:未整備のため別途実装
+  String developerId = "111";
+  String mansionId = "50";
+  String userId = "2110031";
+
+
   @Transactional(noRollbackFor = Throwable.class)
   public RESPONSE execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
-    // セッション情報を取得し設定する
-    // TODO:未整備のため別途実装
-    String developerId = null;
-    String mansionId = null;
-    String userId = null;
+
 
     // 該当ファイルList、該当フォルダListを初期化
     applicableFile = new ArrayList<>();
@@ -106,8 +105,15 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
 
     // 指定フォルダ直下のフォルダの一覧を取得
     TFolderExample folderCriteria = new TFolderExample();
-    folderCriteria.createCriteria().andParentFolderIdEqualTo(argFolderId)
-        .andDeleteFlgEqualTo(false); // TODO:条件を見直す
+
+    folderCriteria.createCriteria().andParentFolderIdEqualTo(argFolderId).andDeleteFlgEqualTo(false)
+        .andDeveloperIdEqualTo(developerId).andMansionIdIn(List.of(mansionId))
+        .andCreateUserEqualTo(userId);
+
+    folderCriteria.or().andParentFolderIdEqualTo(argFolderId).andDeleteFlgEqualTo(false)
+        .andDeveloperIdEqualTo(developerId).andMansionIdIn(List.of(mansionId))
+        .andPrivateFlgEqualTo(true);
+
     List<TFolder> allFolders = tFolderMapper.selectByExample(folderCriteria);
 
     // 指定フォルダ直下にフォルダが存在しない場合（＝最下層のディレクトリの場合）は処理終了
