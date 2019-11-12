@@ -37,11 +37,10 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
   private TSortOrderMapper tSortOrderMapper;
 
 
-  // TODO:Listの型を適切にする
   /** 該当ファイルList */
-  List<FileSearchResponse> applicableFile = new ArrayList<>();
+  List<FileSearchResponse> applicableFile;
   /** 該当フォルダList */
-  List<FileSearchResponse> applicableFolder = new ArrayList<>();
+  List<FileSearchResponse> applicableFolder;
 
 
   @Transactional(noRollbackFor = Throwable.class)
@@ -54,9 +53,13 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
     String mansionId = null;
     String userId = null;
 
+    // 該当ファイルList、該当フォルダListを初期化
+    applicableFile = new ArrayList<>();
+    applicableFolder = new ArrayList<>();
+
     // リクエストに指定されたフォルダー以下を再帰的に検索し
     // 検索結果を該当ファイルListと該当フォルダListにそれぞれ登録する
-    searchKeyword(requestBody.getFolder_id(), "test"); // TODO;キーワードを動的にする
+    searchKeyword(requestBody.getFolder_id(), requestBody.getSearch_word());
 
     // 該当ファイルListをソート
 
@@ -69,7 +72,8 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
     // レスポンスを返却
     List<FileSearchResponse> responseBodys =
         new ArrayList<>(applicableFolder.size() + applicableFile.size());
-    // responseBodys.sort(Comparator.comparing(FileSearchResponse::getSort_order));
+    responseBodys.addAll(applicableFolder);
+    responseBodys.addAll(applicableFile);
     return (RESPONSE) responseBodys;
 
 
@@ -152,7 +156,8 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
 
     // 親フォルダ直下のキーワードに該当するファイルを抽出
     TFileExample fileCriteria = new TFileExample();
-    fileCriteria.createCriteria().andFolderIdEqualTo(argParentFolderId).andDeleteFlgEqualTo(false); // TODO:Like条件を実装する
+    fileCriteria.createCriteria().andFolderIdEqualTo(argParentFolderId).andDeleteFlgEqualTo(false)
+        .andFileNameLike("%" + argKeyword + "%");
     List<TFile> applicableFiles = tFileMapper.selectByExample(fileCriteria);
 
     // 抽出された結果をレスポンスListに登録
