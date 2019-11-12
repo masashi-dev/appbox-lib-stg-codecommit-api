@@ -18,4 +18,5 @@ public final class StorageApiUrl {
 
 	//お気に入り
 	public static final String BOOKMARK_DELETE = "/lib/bookmark";  // TODO:URLが確定次第修正する
+	public static final String BOOKMARKREGIST = "/lib/bookmark/regist";
 }
