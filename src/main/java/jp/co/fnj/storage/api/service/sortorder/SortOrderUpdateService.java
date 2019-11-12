@@ -8,11 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrder;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrderExample;
-import jp.co.fnj.storage.api.exception.StorageBadRequestException;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateRequest;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderUpdateResponse;
 
