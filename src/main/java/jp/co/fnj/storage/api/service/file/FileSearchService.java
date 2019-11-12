@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import jp.co.fnj.storage.api.entity.mapper.custom.FileSearchMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TFileMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TFolderMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
@@ -31,6 +32,8 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
   private TFolderMapper tFolderMapper;
   @Autowired
   private TFileMapper tFileMapper;
+  @Autowired
+  private FileSearchMapper fileSearchMapper;
 
 
   /** 該当ファイルList */
