@@ -15,6 +15,7 @@ import org.springframework.validation.SmartValidator;
 import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.exception.StorageBadRequestException;
 import jp.co.fnj.storage.api.exception.StorageException;
+import jp.co.fnj.storage.api.exception.StorageRuntimeException;
 import jp.co.fnj.storage.api.model.file.FileGetListRequest;
 import jp.co.fnj.storage.api.model.file.FileGetListResponse;
 import jp.co.fnj.storage.api.service.file.FileGetListService;
@@ -68,9 +69,13 @@ public class FileGetListLogic<REQUEST_BODY extends FileGetListRequest, RESPONSE 
   private RESPONSE innerExecute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
-    // 各種サービスを順次実行
-    RESPONSE res = (RESPONSE) fileGetListService.execute(request, response, requestBody);
-    return res;
+    try {
+      // 各種サービスを順次実行
+      RESPONSE res = (RESPONSE) fileGetListService.execute(request, response, requestBody);
+      return res;
+    } catch (Exception e) {
+      throw new StorageRuntimeException(Messages.E02021, e);
+    }
   }
 
   /**
@@ -124,23 +129,12 @@ public class FileGetListLogic<REQUEST_BODY extends FileGetListRequest, RESPONSE 
     }
 
     BindingResult bindingResult = new DataBinder(requestBody).getBindingResult();
-    validator.validate(requestBody, bindingResult, getValidationGroup());
+    validator.validate(requestBody, bindingResult);
 
     if (bindingResult.hasErrors()) {
-      throw new StorageBadRequestException(Messages.E05001);
+      throw new StorageBadRequestException(Messages.E00007);
     }
 
   }
-
-  /**
-   * バリデーショングループを取得します。
-   * 
-   * @return
-   */
-  private Class<?> getValidationGroup() {
-    return null;
-  }
-
-
 
 }

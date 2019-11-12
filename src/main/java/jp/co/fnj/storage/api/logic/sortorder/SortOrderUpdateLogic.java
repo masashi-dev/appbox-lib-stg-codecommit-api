@@ -142,7 +142,7 @@ public class SortOrderUpdateLogic<REQUEST_BODY extends SortOrderUpdateRequest, R
     validator.validate(requestBody, bindingResult, getValidationGroup());
 
     if (bindingResult.hasErrors()) {
-      throw new StorageBadRequestException(Messages.E05007);
+      throw new StorageBadRequestException(Messages.E00007);
     }
 
   }

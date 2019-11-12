@@ -78,7 +78,7 @@ public class FileGetListService<REQUEST_BODY extends FileGetListRequest, RESPONS
     TSortOrderExample fileSortCriteria = new TSortOrderExample();
     List<String> fileIds = tFiles.stream().map(TFile::getFileId).collect(Collectors.toList());
     fileSortCriteria.createCriteria().andParentFolderIdEqualTo(requestBody.getFolder_id())
-        .andFolderIdIn(fileIds);
+        .andFileIdIn(fileIds);
     List<TSortOrder> fileSorts = tSortOrderMapper.selectByExample(fileSortCriteria);
 
     List<FileGetListResponse> responseBodys = new ArrayList<>(tFolders.size() + tFiles.size());
