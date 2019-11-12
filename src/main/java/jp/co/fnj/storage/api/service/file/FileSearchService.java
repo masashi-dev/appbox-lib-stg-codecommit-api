@@ -30,6 +30,7 @@ import jp.co.fnj.storage.api.model.file.FileGetListResponse;
 @Service
 public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE extends List<FileGetListResponse>> {
 
+
   @Autowired
   private TFolderMapper tFolderMapper;
 
@@ -38,6 +39,14 @@ public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE
 
   @Autowired
   private TSortOrderMapper tSortOrderMapper;
+
+
+  // TODO:Listの型を適切にする
+  /** 該当ファイルList */
+  List<FileGetListResponse> applicableFile = new ArrayList<>();
+  /** 該当フォルダList */
+  List<FileGetListResponse> applicableFolder = new ArrayList<>();
+
 
   @Transactional(noRollbackFor = Throwable.class)
   public RESPONSE execute(HttpServletRequest request, HttpServletResponse response,
@@ -49,111 +58,93 @@ public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE
     String mansionId = null;
     String userId = null;
 
+    // リクエストに指定されたフォルダー以下を再帰的に検索し
+    // 検索結果を該当ファイルListと該当フォルダListにそれぞれ登録する
+    searchKeyword(requestBody.getFolder_id(), "test"); // TODO;キーワードを動的にする
 
-    // TODO:仮実装
+    // 該当ファイルListをソート
 
-    // 現在のディレクトリ以下のフォルダ・ファイルに対し検索
+    // 該当フォルダListをソート
 
-    // フォルダID配下のファイル名一覧を抽出
-
-    // ファイル名を順番に検索
-    // {該当するデータはリストに追加}
-
-    // フォルダID配下のフォルダ名一覧を抽出
-
-    // フォルダ名を検索
-    // {該当するデータはリストに追加}
+    // 2つの該当リストをマージしレスポンスListを作成
+    // 該当フォルダ→該当ファイルの並び順
 
 
-
-    // フォルダの検索
-    TFolderExample folderCriteria = new TFolderExample();
-    // TODO:公開フラグor追加ユーザIDの指定
-    TFolderExample.Criteria fCriteria2 = folderCriteria.createCriteria()
-        .andDeveloperIdEqualTo(developerId).andMansionIdIn(List.of(mansionId))
-        .andDeleteFlgEqualTo(false).andCreateUserEqualTo(userId)
-        .andParentFolderIdEqualTo(requestBody.getFolder_id()).andFolderNameEqualTo("");
-    folderCriteria.or(fCriteria2);
-    List<TFolder> tFolders = tFolderMapper.selectByExample(folderCriteria);
-
-    // ファイルの検索
-    TFileExample fileCriteria = new TFileExample();
-    fileCriteria.createCriteria().andFolderIdEqualTo(requestBody.getFolder_id())
-        .andDeleteFlgEqualTo(false);
-    List<TFile> tFiles = tFileMapper.selectByExample(fileCriteria);
-
-
-    // フォルダの検索結果をソート
-    TSortOrderExample folderSortCriteria = new TSortOrderExample();
-    List<String> folderIds =
-        tFolders.stream().map(TFolder::getFolderId).collect(Collectors.toList());
-    folderSortCriteria.createCriteria().andParentFolderIdEqualTo(requestBody.getFolder_id())
-        .andFolderIdIn(folderIds);
-    List<TSortOrder> folderSorts = tSortOrderMapper.selectByExample(folderSortCriteria);
-
-    // ファイルの検索結果をソート
-    TSortOrderExample fileSortCriteria = new TSortOrderExample();
-    List<String> fileIds = tFiles.stream().map(TFile::getFileId).collect(Collectors.toList());
-    fileSortCriteria.createCriteria().andParentFolderIdEqualTo(requestBody.getFolder_id())
-        .andFileIdIn(fileIds);
-    List<TSortOrder> fileSorts = tSortOrderMapper.selectByExample(fileSortCriteria);
-
-
-    // フォルダと表示順をマージしながらレスポンスListを作成
-    List<FileGetListResponse> responseBodys = new ArrayList<>(tFolders.size() + tFiles.size());
-    tFolders.forEach(folder -> {
-      TSortOrder tSortOrder = folderSorts.stream()
-          .filter(s -> s.getFolderId().equals(folder.getFolderId())).findFirst().get();
-
-      FileGetListResponse item = new FileGetListResponse();
-      item.setFolder_folder_id(folder.getFolderId());
-      item.setFolder_parent_folder_id(folder.getParentFolderId());
-      item.setFolder_folder_name(folder.getFolderName());
-      item.setFolder_s3_folder_name(folder.getS3FolderName());
-      item.setFolder_developer_id(folder.getDeveloperId());
-      item.setFolder_mansion_id(folder.getMansionId());
-      item.setFolder_s3_object_key(folder.getS3ObjectKey());
-      item.setFolder_explanatory_text(folder.getExplanatoryText());
-      item.setFolder_insert_user_id(folder.getCreateUser());
-      item.setFolder_insert_date_time(folder.getCreateDate());
-      item.setFolder_update_user_id(folder.getUpdateUser());
-      item.setFolder_update_date_time(folder.getUpdateDate());
-      item.setSort_order(tSortOrder.getSortOrder());
-
-      responseBodys.add(item);
-    });
-
-
-    // ファイルと表示順をマージしながらレスポンスListを作成
-    tFiles.forEach(file -> {
-      TSortOrder tSortOrder =
-          fileSorts.stream().filter(s -> s.getFileId().equals(file.getFileId())).findFirst().get();
-
-      FileGetListResponse item = new FileGetListResponse();
-      item.setFile_file_id(file.getFileId());
-      item.setFile_folder_id(file.getFolderId());
-      item.setFile_file_name(file.getFileName());
-      item.setFile_s3_file_name(file.getS3FileName());
-      item.setFile_s3_objecrt_key(file.getS3ObjectKey());
-      item.setFile_file_size(file.getFileSize());
-      item.setFile_insert_user_id(file.getCreateUser());
-      item.setFile_insert_date_time(file.getCreateDate());
-      item.setFile_update_user_id(file.getUpdateUser());
-      item.setFile_update_date_time(file.getUpdateDate());
-      item.setSort_order(tSortOrder.getSortOrder());
-
-      responseBodys.add(item);
-    });
-
-    // 全体を表示順にソートして返却
+    // レスポンスを返却
+    List<FileGetListResponse> responseBodys =
+        new ArrayList<>(applicableFolder.size() + applicableFile.size());
     responseBodys.sort(Comparator.comparing(FileGetListResponse::getSort_order));
     return (RESPONSE) responseBodys;
+
+
+    // // フォルダの検索結果をソート
+    // TSortOrderExample folderSortCriteria = new TSortOrderExample();
+    // List<String> folderIds =
+    // tFolders.stream().map(TFolder::getFolderId).collect(Collectors.toList());
+    // folderSortCriteria.createCriteria().andParentFolderIdEqualTo(requestBody.getFolder_id())
+    // .andFolderIdIn(folderIds);
+    // List<TSortOrder> folderSorts = tSortOrderMapper.selectByExample(folderSortCriteria);
+    //
+    // // ファイルの検索結果をソート
+    // TSortOrderExample fileSortCriteria = new TSortOrderExample();
+    // List<String> fileIds = tFiles.stream().map(TFile::getFileId).collect(Collectors.toList());
+    // fileSortCriteria.createCriteria().andParentFolderIdEqualTo(requestBody.getFolder_id())
+    // .andFileIdIn(fileIds);
+    // List<TSortOrder> fileSorts = tSortOrderMapper.selectByExample(fileSortCriteria);
+    //
+    //
+    // // フォルダと表示順をマージしながらレスポンスListを作成
+    // List<FileGetListResponse> responseBodys = new ArrayList<>(tFolders.size() + tFiles.size());
+    // tFolders.forEach(folder -> {
+    // TSortOrder tSortOrder = folderSorts.stream()
+    // .filter(s -> s.getFolderId().equals(folder.getFolderId())).findFirst().get();
+    //
+    // FileGetListResponse item = new FileGetListResponse();
+    // item.setFolder_folder_id(folder.getFolderId());
+    // item.setFolder_parent_folder_id(folder.getParentFolderId());
+    // item.setFolder_folder_name(folder.getFolderName());
+    // item.setFolder_s3_folder_name(folder.getS3FolderName());
+    // item.setFolder_developer_id(folder.getDeveloperId());
+    // item.setFolder_mansion_id(folder.getMansionId());
+    // item.setFolder_s3_object_key(folder.getS3ObjectKey());
+    // item.setFolder_explanatory_text(folder.getExplanatoryText());
+    // item.setFolder_insert_user_id(folder.getCreateUser());
+    // item.setFolder_insert_date_time(folder.getCreateDate());
+    // item.setFolder_update_user_id(folder.getUpdateUser());
+    // item.setFolder_update_date_time(folder.getUpdateDate());
+    // item.setSort_order(tSortOrder.getSortOrder());
+    //
+    // responseBodys.add(item);
+    // });
+    //
+    //
+    // // ファイルと表示順をマージしながらレスポンスListを作成
+    // tFiles.forEach(file -> {
+    // TSortOrder tSortOrder =
+    // fileSorts.stream().filter(s -> s.getFileId().equals(file.getFileId())).findFirst().get();
+    //
+    // FileGetListResponse item = new FileGetListResponse();
+    // item.setFile_file_id(file.getFileId());
+    // item.setFile_folder_id(file.getFolderId());
+    // item.setFile_file_name(file.getFileName());
+    // item.setFile_s3_file_name(file.getS3FileName());
+    // item.setFile_s3_objecrt_key(file.getS3ObjectKey());
+    // item.setFile_file_size(file.getFileSize());
+    // item.setFile_insert_user_id(file.getCreateUser());
+    // item.setFile_insert_date_time(file.getCreateDate());
+    // item.setFile_update_user_id(file.getUpdateUser());
+    // item.setFile_update_date_time(file.getUpdateDate());
+    // item.setSort_order(tSortOrder.getSortOrder());
+    //
+    // responseBodys.add(item);
+    // });
+    //
+    // // 全体を表示順にソートして返却
+    // responseBodys.sort(Comparator.comparing(FileGetListResponse::getSort_order));
+    // return (RESPONSE) responseBodys;
   }
 
 
-
-  // TODO:整える
-  List<FileGetListResponse> responseBodys = new ArrayList<>();
 
   /**
    * 指定したフォルダ以下に存在する、キーワードに該当するファイル・フォルダを検索します.
@@ -168,7 +159,7 @@ public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE
     fileCriteria.createCriteria().andFolderIdEqualTo(argParentFolderId).andDeleteFlgEqualTo(false); // TODO:Like条件を実装する
     List<TFile> applicableFiles = tFileMapper.selectByExample(fileCriteria);
 
-    // 抽出された結果を該当リストに登録
+    // 抽出された結果をレスポンスListに登録
     for (TFile file : applicableFiles) {
       FileGetListResponse item = new FileGetListResponse();
       item.setFile_file_id(file.getFileId());
@@ -182,7 +173,7 @@ public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE
       item.setFile_update_user_id(file.getUpdateUser());
       item.setFile_update_date_time(file.getUpdateDate());
       // item.setSort_order(tSortOrder.getSortOrder()); // TODO:表示順の付番は別途考える
-      responseBodys.add(item);
+      applicableFile.add(item);
     }
 
 
@@ -199,7 +190,7 @@ public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE
 
     // 親フォルダ直下のフォルダを順番に処理
     for (TFolder folder : allFolders) {
-      // キーワードに該当する場合は該当リストに登録
+      // キーワードに該当する場合はレスポンスListに登録
       if (folder.getFolderName().contains(argKeyword)) {
         FileGetListResponse item = new FileGetListResponse();
         item.setFolder_folder_id(folder.getFolderId());
@@ -215,7 +206,7 @@ public class FileSearchService<REQUEST_BODY extends FileGetListRequest, RESPONSE
         item.setFolder_update_user_id(folder.getUpdateUser());
         item.setFolder_update_date_time(folder.getUpdateDate());
         // item.setSort_order(tSortOrder.getSortOrder()); // TODO:表示順の付番は別途考える
-        responseBodys.add(item);
+        applicableFolder.add(item);
       }
 
       // 親フォルダ直下のフォルダの直下を検索（再帰的に検索）
