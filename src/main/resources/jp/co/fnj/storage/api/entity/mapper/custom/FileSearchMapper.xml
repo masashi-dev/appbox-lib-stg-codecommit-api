@@ -24,25 +24,38 @@
 
   <select id="selectFileAndRelatedFolder" resultMap="fileAndRelatedFolderMap">
         SELECT
-            file_id AS a_file_id,
-            folder_id AS a_folder_id,
-            file_name AS a_file_name,
-            s3_file_name AS a_s3_file_name,
-            delete_flg AS a_delete_flg,
-            s3_object_key AS a_s3_object_key,
-            file_size AS a_file_size,
-            full_text_type AS a_full_text_type,
-            create_user AS a_create_user,
-            create_date AS a_create_date,
-            update_user AS a_update_user,
-            update_date AS a_update_date
+            file.file_id AS a_file_id,
+            file.folder_id AS a_folder_id,
+            file.file_name AS a_file_name,
+            file.s3_file_name AS a_s3_file_name,
+            file.delete_flg AS a_delete_flg,
+            file.s3_object_key AS a_s3_object_key,
+            file.file_size AS a_file_size,
+            file.full_text_type AS a_full_text_type,
+            file.create_user AS a_create_user,
+            file.create_date AS a_create_date,
+            file.update_user AS a_update_user,
+            file.update_date AS a_update_date
         FROM
-            t_file
-        WHERE
-            folder_id = #{folderId}
-          AND
-            file_name = #{keyword}
-          AND
-            delete_flg = #{delFlg}
+            t_file AS file
+  INNER JOIN
+            t_folder AS folder
+          ON
+            file.folder_id = folder.folder_id
+       WHERE
+            file.delete_flg = false
+         AND
+            folder.delete_flg = false
+         AND
+            file.folder_id = #{folderId}
+         AND
+            file.file_name LIKE '%' || #{keyword} || '%'
+         AND
+            folder.developer_id = #{developerId}
+         AND
+            folder.mansion_id = #{mansionId}
+         AND
+            (file.create_user = #{userId} OR folder.private_flg = false)
+
   </select>
 </mapper>
