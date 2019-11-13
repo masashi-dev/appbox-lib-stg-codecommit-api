@@ -19,6 +19,8 @@ import jp.co.fnj.storage.api.entity.model.generat.TFolderExample;
 import jp.co.fnj.storage.api.exception.StorageRuntimeException;
 import jp.co.fnj.storage.api.model.file.FileRegistRequest;
 import jp.co.fnj.storage.api.model.file.FileRegistResponse;
+import jp.co.fnj.storage.api.model.file.S3FileNameCheckRequest;
+import jp.co.fnj.storage.api.model.file.S3FileNameCheckResponse;
 
 /**
  * ファイル登録APIサービス.
@@ -37,6 +39,9 @@ public class FileRegistService<REQUEST_BODY extends FileRegistRequest, RESPONSE 
 
   @Autowired
   private TSortOrderMapper tSortOrderMapper;
+
+  @Autowired
+  private S3FileNameCheckService<S3FileNameCheckRequest, S3FileNameCheckResponse> s3FileNameCheckService;
 
   @Transactional(noRollbackFor = Throwable.class)
   public RESPONSE execute(HttpServletRequest request, HttpServletResponse response,
@@ -67,6 +72,13 @@ public class FileRegistService<REQUEST_BODY extends FileRegistRequest, RESPONSE 
     // TODO ファイルの論理重複チェックを呼ぶ
 
     // TODO ファイルの物理重複チェックを呼ぶ
+    S3FileNameCheckRequest input = new S3FileNameCheckRequest();
+    input.setFile_id(null);
+    input.setFolder_id(putFolder.getFolderId());
+    input.setS3_file_name(requestBody.getFile_name());
+    if (s3FileNameCheckService.execute(request, response, input).getCheck_rslt()) {
+      // 重複あり
+    }
 
     // TODO 重複があった場合はファイルテーブルの更新、重複はエラーにするかも？
     // TODO 権限チェックを行っている前提でデベID、マンションIDの一致確認サボる。Generatorつかう
