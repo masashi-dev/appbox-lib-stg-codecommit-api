@@ -11,6 +11,7 @@ import jp.co.fnj.storage.api.entity.mapper.custom.FileSearchMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TFileMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TFolderMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
+import jp.co.fnj.storage.api.entity.model.custom.FileAndRelatedFolderInfoEntity;
 import jp.co.fnj.storage.api.entity.model.generat.TFile;
 import jp.co.fnj.storage.api.entity.model.generat.TFileExample;
 import jp.co.fnj.storage.api.entity.model.generat.TFolder;
@@ -84,24 +85,26 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
   private void searchKeyword(String argFolderId, String argKeyword) {
 
     // 指定フォルダ直下のキーワードに該当するファイルを抽出
-    TFileExample fileCriteria = new TFileExample();
-    fileCriteria.createCriteria().andFolderIdEqualTo(argFolderId).andDeleteFlgEqualTo(false)
-        .andFileNameLike("%" + argKeyword + "%");
-    List<TFile> applicableFiles = tFileMapper.selectByExample(fileCriteria);
+    List<FileAndRelatedFolderInfoEntity> applicableFiles = fileSearchMapper
+        .selectFileAndRelatedFolder(argFolderId, argKeyword, false, developerId, mansionId, userId);
+    // TFileExample fileCriteria = new TFileExample();
+    // fileCriteria.createCriteria().andFolderIdEqualTo(argFolderId).andDeleteFlgEqualTo(false)
+    // .andFileNameLike("%" + argKeyword + "%");
+    // List<TFile> applicableFiles = tFileMapper.selectByExample(fileCriteria);
 
     // 抽出された結果をレスポンスListに登録
-    for (TFile file : applicableFiles) {
+    for (FileAndRelatedFolderInfoEntity file : applicableFiles) {
       FileSearchResponse item = new FileSearchResponse();
-      item.setFile_file_id(file.getFileId());
-      item.setFile_folder_id(file.getFolderId());
-      item.setFile_file_name(file.getFileName());
-      item.setFile_s3_file_name(file.getS3FileName());
-      item.setFile_s3_objecrt_key(file.getS3ObjectKey());
-      item.setFile_file_size(file.getFileSize());
-      item.setFile_insert_user_id(file.getCreateUser());
-      item.setFile_insert_date_time(file.getCreateDate());
-      item.setFile_update_user_id(file.getUpdateUser());
-      item.setFile_update_date_time(file.getUpdateDate());
+      item.setFile_file_id(file.getTFile().getFileId());
+      item.setFile_folder_id(file.getTFile().getFolderId());
+      item.setFile_file_name(file.getTFile().getFileName());
+      item.setFile_s3_file_name(file.getTFile().getS3FileName());
+      item.setFile_s3_objecrt_key(file.getTFile().getS3ObjectKey());
+      item.setFile_file_size(file.getTFile().getFileSize());
+      item.setFile_insert_user_id(file.getTFile().getCreateUser());
+      item.setFile_insert_date_time(file.getTFile().getCreateDate());
+      item.setFile_update_user_id(file.getTFile().getUpdateUser());
+      item.setFile_update_date_time(file.getTFile().getUpdateDate());
       applicableFile.add(item);
     }
 
@@ -110,11 +113,11 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
     TFolderExample folderCriteria = new TFolderExample();
 
     folderCriteria.createCriteria().andParentFolderIdEqualTo(argFolderId).andDeleteFlgEqualTo(false)
-        .andDeveloperIdEqualTo(developerId).andMansionIdIn(List.of(mansionId))
+        .andDeveloperIdEqualTo(developerId).andMansionIdEqualTo(mansionId)
         .andCreateUserEqualTo(userId);
 
     folderCriteria.or().andParentFolderIdEqualTo(argFolderId).andDeleteFlgEqualTo(false)
-        .andDeveloperIdEqualTo(developerId).andMansionIdIn(List.of(mansionId))
+        .andDeveloperIdEqualTo(developerId).andMansionIdEqualTo(mansionId)
         .andPrivateFlgEqualTo(true);
 
     List<TFolder> allFolders = tFolderMapper.selectByExample(folderCriteria);
