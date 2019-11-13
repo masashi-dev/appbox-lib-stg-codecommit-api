@@ -1,6 +1,5 @@
 package jp.co.fnj.storage.api.logic.sortorder;
 
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import jp.co.fnj.storage.api.exception.StorageException;
 import jp.co.fnj.storage.api.exception.StorageRuntimeException;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistRequest;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
+import jp.co.fnj.storage.api.service.SequenceService;
 import jp.co.fnj.storage.api.service.sortorder.SortOrderResistService;
 
 /**
@@ -27,13 +27,17 @@ import jp.co.fnj.storage.api.service.sortorder.SortOrderResistService;
  * @param <RESPONSE>
  */
 @Service
-public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, RESPONSE extends List<SortOrderResistResponse>> {
+public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, RESPONSE extends SortOrderResistResponse> {
 
   @Autowired
   private SortOrderResistService<REQUEST_BODY, RESPONSE> sortOrderResistService;
 
   @Autowired
+  private SequenceService sequenceService;
+
+  @Autowired
   private SmartValidator validator;
+
 
   /**
    * 事前処理.
@@ -74,6 +78,10 @@ public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, R
       REQUEST_BODY requestBody) {
 
     try {
+      // 表示順IDを発番
+      String newSortOrderId = sequenceService.createSortOrderId();
+      request.setAttribute("new_sort_order_id", newSortOrderId);
+
       // 各種サービスを順次実行
       sortOrderResistService.execute(request, response, requestBody);
 
@@ -139,7 +147,7 @@ public class SortOrderResistLogic<REQUEST_BODY extends SortOrderResistRequest, R
     validator.validate(requestBody, bindingResult, getValidationGroup());
 
     if (bindingResult.hasErrors()) {
-      throw new StorageBadRequestException(Messages.E05001);
+      throw new StorageBadRequestException(Messages.E05007);
     }
 
   }

@@ -58,7 +58,7 @@ public class SequenceService {
    */
   @Transactional(rollbackFor = Throwable.class)
   public String createSortOrderId() {
-    return getNextVal(ID_NAME.FILE_SORT_ORDER);
+    return ID_NAME.FILE_SORT_ORDER.getValue() + getNextVal(ID_NAME.FILE_SORT_ORDER);
   }
 
 
@@ -95,7 +95,7 @@ public class SequenceService {
     update.setUpdateDate(LocalDateTime.now());
     tSequenceMapper.updateByPrimaryKey(update);
 
-    return String.format("%11d", update.getSequenceValue());
+    return String.format("%010d", update.getSequenceValue());
 
   }
 

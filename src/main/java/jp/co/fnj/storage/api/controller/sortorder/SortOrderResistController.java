@@ -1,6 +1,5 @@
 package jp.co.fnj.storage.api.controller.sortorder;
 
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +23,10 @@ import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
 public class SortOrderResistController {
 
   @Autowired
-  SortOrderResistLogic<SortOrderResistRequest, List<SortOrderResistResponse>> sortOrderResistLogic;
+  SortOrderResistLogic<SortOrderResistRequest, SortOrderResistResponse> sortOrderResistLogic;
 
   @RequestMapping(method = RequestMethod.POST, path = StorageApiUrl.SORT_ORDER_RESIST)
-  public ResponseEntity<List<SortOrderResistResponse>> getList(HttpServletRequest request,
+  public ResponseEntity<SortOrderResistResponse> getList(HttpServletRequest request,
       HttpServletResponse response, @RequestBody SortOrderResistRequest requestBody) {
 
     return sortOrderResistLogic.execute(request, response, requestBody);

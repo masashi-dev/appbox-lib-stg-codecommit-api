@@ -1,7 +1,6 @@
 package jp.co.fnj.storage.api.service.sortorder;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
 import jp.co.fnj.storage.api.entity.model.generat.TSortOrder;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistRequest;
 import jp.co.fnj.storage.api.model.sortorder.SortOrderResistResponse;
-import jp.co.fnj.storage.api.service.SequenceService;
 
 /**
  * 表示順登録APIサービス.
@@ -22,7 +20,7 @@ import jp.co.fnj.storage.api.service.SequenceService;
  * @param <RESPONSE>
  */
 @Service
-public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest, RESPONSE extends List<SortOrderResistResponse>> {
+public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest, RESPONSE extends SortOrderResistResponse> {
 
   /** 登録区分 */
   private enum ENTRY_DEVISION {
@@ -63,7 +61,7 @@ public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest,
 
     // 登録する項目を設定
     TSortOrder tSortOrder = new TSortOrder();
-    tSortOrder.setSortOrderId(new SequenceService(tSequenceMapper).createSortOrderId());
+    tSortOrder.setSortOrderId((String) request.getAttribute("new_sort_order_id"));
     tSortOrder.setParentFolderId(requestBody.getParent_folder_id());
 
     // 登録区分に応じて設定する項目を切り替え
