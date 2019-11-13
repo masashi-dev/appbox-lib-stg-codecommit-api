@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.fnj.storage.api.entity.mapper.custom.FileMapper">
+
+  <resultMap id="fileAndRelatedFolderMap" type="jp.co.fnj.storage.api.entity.model.custom.FileAndRelatedFolderInfoEntity">
+    <association javaType="jp.co.fnj.storage.api.entity.model.generat.TFile" columnPrefix="a_" property="tFile">
+      <id property="fileId" column="file_id"/>
+      <result property="folderId" column="folder_id"/>
+      <result property="fileName" column="file_name"/>
+      <result property="s3FileName" column="s3_file_name"/>
+      <result property="deleteFlg" column="delete_flg"/>
+      <result property="s3ObjectKey" column="s3_object_key"/>
+      <result property="fileSize" column="file_size"/>
+      <result property="fullTextType" column="full_text_type"/>
+      <result property="createUser" column="create_user"/>
+      <result property="createDate" column="create_date"/>
+      <result property="updateUser" column="update_user"/>
+      <result property="updateDate" column="update_date"/>
+    </association>
+    <association javaType="jp.co.fnj.storage.api.entity.model.generat.TFolder" columnPrefix="b_" property="tFolder">
+      <id property="folderId" column="folder_id"/>
+      <result property="parentFolderId" column="parent_folder_id"/>
+      <result property="folderGroup" column="folder_group"/>
+      <result property="folderName" column="folder_name"/>
+      <result property="s3FolderName" column="s3_folder_name"/>
+      <result property="developerId" column="developer_id"/>
+      <result property="mansionId" column="mansion_id"/>
+      <result property="s3ObjectKey" column="s3_object_key"/>
+      <result property="deleteFlg" column="delete_flg"/>
+      <result property="privateFlg" column="private_flg"/>
+      <result property="explanatoryText" column="explanatory_text"/>
+      <result property="createUser" column="create_user"/>
+      <result property="createDate" column="create_date"/>
+      <result property="updateUser" column="update_user"/>
+      <result property="updateDate" column="update_date"/>
+    </association>
+  </resultMap>
+
+  <select id="selectFileAndRelatedFolder" resultMap="fileAndRelatedFolderMap">
+        SELECT
+            file.file_id AS a_file_id,
+            file.folder_id AS a_folder_id,
+            file.file_name AS a_file_name,
+            file.s3_file_name AS a_s3_file_name,
+            file.delete_flg AS a_delete_flg,
+            file.s3_object_key AS a_s3_object_key,
+            file.file_size AS a_file_size,
+            file.full_text_type AS a_full_text_type,
+            file.create_user AS a_create_user,
+            file.create_date AS a_create_date,
+            file.update_user AS a_update_user,
+            file.update_date AS a_update_date,
+            folder.folder_id AS b_folder_id,
+            folder.parent_folder_id AS b_parent_folder_id,
+            folder.folder_group AS b_folder_group,
+            folder.folder_name AS b_folder_name,
+            folder.s3_folder_name AS b_s3_folder_name,
+            folder.developer_id AS b_developer_id,
+            folder.mansion_id AS b_mansion_id,
+            folder.s3_object_key AS b_s3_object_key,
+            folder.delete_flg AS b_delete_flg,
+            folder.private_flg AS b_private_flg,
+            folder.explanatory_text AS b_explanatory_text,
+            folder.create_user AS b_create_user,
+            folder.create_date AS b_create_date,
+            folder.update_user AS b_update_user,
+            folder.update_date AS b_update_date
+        FROM
+            t_file AS file
+  INNER JOIN
+            t_folder AS folder
+          ON
+            file.folder_id = folder.folder_id
+       WHERE
+            file.delete_flg = false
+         AND
+            folder.delete_flg = false
+         AND
+            file.folder_id = #{folderId}
+         AND
+            file.file_name LIKE '%' || #{keyword} || '%'
+    <if test="developerId != null">
+         AND
+            folder.developer_id = #{developerId}
+    </if>
+    <if test="mansionId != null">
+         AND
+            folder.mansion_id = #{mansionId}
+    </if>
+         AND
+            (file.create_user = #{userId} OR folder.private_flg = false)
+
+  </select>
+</mapper>
