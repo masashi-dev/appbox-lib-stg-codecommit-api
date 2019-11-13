@@ -28,7 +28,7 @@ public class BookmarkRegisatController {
 	@Autowired
 	BookmarkRegistLogic<BookmarkRegistRequest, BookmarkRegistResponse> bookmarkRegistLogic;
 
-	@RequestMapping(method = RequestMethod.POST, path = StorageApiUrl.BOOKMARKREGIST)
+	@RequestMapping(method = RequestMethod.POST, path = StorageApiUrl.BOOKMARK_REGIST)
 	public ResponseEntity<BookmarkRegistResponse> register(HttpServletRequest request,
 	    HttpServletResponse response, @RequestBody BookmarkRegistRequest requestBody) throws StorageException {
 
