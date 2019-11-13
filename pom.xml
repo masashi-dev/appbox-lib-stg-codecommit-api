@@ -1,183 +1,189 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.7.RELEASE</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
-  <groupId>com.storage</groupId>
-  <artifactId>storage-api</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>storage-api</name>
-  <description>ストレージサービスAPIのプロジェクト</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.7.RELEASE</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.storage</groupId>
+    <artifactId>storage-api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>storage-api</name>
+    <description>ストレージサービスAPIのプロジェクト</description>
 
-  <properties>
-    <java.version>11</java.version>
-  </properties>
-  
-  <!-- Spring -->
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-  <!-- 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-redis</artifactId>
-    </dependency>
--->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.mybatis.spring.boot</groupId>
-      <artifactId>mybatis-spring-boot-starter</artifactId>
-      <version>2.1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <scope>runtime</scope>
-    </dependency>
+    <properties>
+        <java.version>11</java.version>
+    </properties>
 
-  <!-- 
-    <dependency>
-      <groupId>org.springframework.session</groupId>
-      <artifactId>spring-session-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.session</groupId>
-      <artifactId>spring-session-data-redis</artifactId>
-    </dependency>
-  -->
-     
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
-    
-    <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
-    <dependency>
-      <groupId>com.auth0</groupId>
-      <artifactId>java-jwt</artifactId>
-      <version>3.7.0</version>
-    </dependency>
-    
-    <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>28.0-jre</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>3.8.1</version><!--$NO-MVN-MAN-VER$-->
-    </dependency>
+    <!-- Spring -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-data-redis</artifactId> 
+            </dependency> -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.junit.vintage</groupId>
-          <artifactId>junit-vintage-engine</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mybatis.generator</groupId>
-      <artifactId>mybatis-generator-core</artifactId>
-      <version>1.3.7</version>
-      <scope>test</scope>
-    </dependency>
-</dependencies>
+        <!-- <dependency> <groupId>org.springframework.session</groupId> <artifactId>spring-session-core</artifactId> 
+            </dependency> <dependency> <groupId>org.springframework.session</groupId> 
+            <artifactId>spring-session-data-redis</artifactId> </dependency> -->
 
-  <build>
-    <plugins>
-      <plugin>
-         <groupId>org.mybatis.generator</groupId>
-         <artifactId>mybatis-generator-maven-plugin</artifactId>
-         <version>1.3.7</version>
-         <executions>
-            <execution>
-              <id>Generate MyBatis Artifacts</id>
-              <goals>
-                <goal>generate</goal>
-              </goals>
-              <configuration>
-                <verbose>true</verbose>
-                <overwrite>true</overwrite>
-              </configuration>
-            </execution>
-         </executions>
-         <dependencies>
-         	<dependency>
-         		<groupId>mysql</groupId>
-            	<artifactId>mysql-connector-java</artifactId>
-            	<version>8.0.18</version>
-         	</dependency>
-         	<dependency>
-         		<groupId>com.storage</groupId>
-         		<artifactId>mybatis-plugin</artifactId>
-         		<version>1.0</version>
-         		<scope>system</scope>
-         		<systemPath>${basedir}/lib/mybatis-plugin-1.0.jar</systemPath>
-         	</dependency>
-         </dependencies>
-      </plugin>
-    </plugins>
-    <pluginManagement>
-    	<plugins>
-    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-    		<plugin>
-    			<groupId>org.eclipse.m2e</groupId>
-    			<artifactId>lifecycle-mapping</artifactId>
-    			<version>1.0.0</version>
-    			<configuration>
-    				<lifecycleMappingMetadata>
-    					<pluginExecutions>
-    						<pluginExecution>
-    							<pluginExecutionFilter>
-    								<groupId>
-    									org.mybatis.generator
-    								</groupId>
-    								<artifactId>
-    									mybatis-generator-maven-plugin
-    								</artifactId>
-    								<versionRange>
-    									[1.3.7,)
-    								</versionRange>
-    								<goals>
-    									<goal>generate</goal>
-    								</goals>
-    							</pluginExecutionFilter>
-    							<action>
-    								<ignore></ignore>
-    							</action>
-    						</pluginExecution>
-    					</pluginExecutions>
-    				</lifecycleMappingMetadata>
-    			</configuration>
-    		</plugin>
-    	</plugins>
-    </pluginManagement>
-  </build>
-</project>	
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.7.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>28.0-jre</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.8.1</version><!--$NO-MVN-MAN-VER$ -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.7</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.dbunit/dbunit -->
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>2.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.springtestdbunit/spring-test-dbunit -->
+        <dependency>
+            <groupId>com.github.springtestdbunit</groupId>
+            <artifactId>spring-test-dbunit</artifactId>
+            <version>1.3.0</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.7</version>
+                <executions>
+                    <execution>
+                        <id>Generate MyBatis Artifacts</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.18</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.storage</groupId>
+                        <artifactId>mybatis-plugin</artifactId>
+                        <version>1.0</version>
+                        <scope>system</scope>
+                        <systemPath>${basedir}/lib/mybatis-plugin-1.0.jar</systemPath>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse m2e settings 
+                    only. It has no influence on the Maven build itself. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>
+                                            org.mybatis.generator
+                                        </groupId>
+                                        <artifactId>
+                                            mybatis-generator-maven-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [1.3.7,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>generate</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>    
