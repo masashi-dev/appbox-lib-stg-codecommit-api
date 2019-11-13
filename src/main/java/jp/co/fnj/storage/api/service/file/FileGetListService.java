@@ -44,11 +44,15 @@ public class FileGetListService<REQUEST_BODY extends FileGetListRequest, RESPONS
       REQUEST_BODY requestBody) {
 
     // TODO セッション情報を取得し設定する
-    String developerId = "111";
-    String mansionId = "50";
-    String userId = "2110031";
+    String developerId = null;
+    String mansionId = null;
+    String userId = null;
 
     TFolderExample folderCriteria = new TFolderExample();
+    folderCriteria.createCriteria().andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6))
+        .andDeveloperIdEqualTo(developerId).andMansionIdIn(List.of(mansionId))
+        .andParentFolderIdEqualTo(requestBody.getFolder_id()).andDeleteFlgEqualTo(false)
+        .andPrivateFlgEqualTo(false);
     TFolderExample.Criteria fCriteria = folderCriteria.createCriteria()
         .andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6)).andDeveloperIdEqualTo(developerId)
         .andMansionIdIn(List.of(mansionId)).andParentFolderIdEqualTo(requestBody.getFolder_id())
