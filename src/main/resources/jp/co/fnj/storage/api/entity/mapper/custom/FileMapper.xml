@@ -3,36 +3,36 @@
 <mapper namespace="jp.co.fnj.storage.api.entity.mapper.custom.FileMapper">
 
   <resultMap id="fileAndRelatedFolderMap" type="jp.co.fnj.storage.api.entity.model.custom.FileAndRelatedFolderInfoEntity">
-    <association autoMapping="true" javaType="jp.co.fnj.storage.api.entity.model.generat.TFile" columnPrefix="a_" property="tFile">
+    <association javaType="jp.co.fnj.storage.api.entity.model.generat.TFile" columnPrefix="a_" property="tFile">
       <id property="fileId" column="file_id"/>
-      <id property="folderId" column="folder_id"/>
-      <id property="fileName" column="file_name"/>
-      <id property="s3FileName" column="s3_file_name"/>
-      <id property="deleteFlg" column="delete_flg"/>
-      <id property="s3ObjectKey" column="s3_object_key"/>
-      <id property="fileSize" column="file_size"/>
-      <id property="fullTextType" column="full_text_type"/>
-      <id property="createUser" column="create_user"/>
-      <id property="createDate" column="create_date"/>
-      <id property="updateUser" column="update_user"/>
-      <id property="updateDate" column="update_date"/>
+      <result property="folderId" column="folder_id"/>
+      <result property="fileName" column="file_name"/>
+      <result property="s3FileName" column="s3_file_name"/>
+      <result property="deleteFlg" column="delete_flg"/>
+      <result property="s3ObjectKey" column="s3_object_key"/>
+      <result property="fileSize" column="file_size"/>
+      <result property="fullTextType" column="full_text_type"/>
+      <result property="createUser" column="create_user"/>
+      <result property="createDate" column="create_date"/>
+      <result property="updateUser" column="update_user"/>
+      <result property="updateDate" column="update_date"/>
     </association>
-    <association autoMapping="true" javaType="jp.co.fnj.storage.api.entity.model.generat.TFolder" columnPrefix="b_" property="tFolder">
+    <association javaType="jp.co.fnj.storage.api.entity.model.generat.TFolder" columnPrefix="b_" property="tFolder">
       <id property="folderId" column="folder_id"/>
-      <id property="parentFolderId" column="parent_folder_id"/>
-      <id property="folderGroup" column="folder_group"/>
-      <id property="folderName" column="folder_name"/>
-      <id property="s3FolderName" column="s3_folder_name"/>
-      <id property="developerId" column="developer_id"/>
-      <id property="mansionId" column="mansion_id"/>
-      <id property="s3ObjectKey" column="s3_object_key"/>
-      <id property="deleteFlg" column="delete_flg"/>
-      <id property="privateFlg" column="private_flg"/>
-      <id property="explanatoryText" column="explanatory_text"/>
-      <id property="createUser" column="create_user"/>
-      <id property="createDate" column="create_date"/>
-      <id property="updateUser" column="update_user"/>
-      <id property="updateDate" column="update_date"/>
+      <result property="parentFolderId" column="parent_folder_id"/>
+      <result property="folderGroup" column="folder_group"/>
+      <result property="folderName" column="folder_name"/>
+      <result property="s3FolderName" column="s3_folder_name"/>
+      <result property="developerId" column="developer_id"/>
+      <result property="mansionId" column="mansion_id"/>
+      <result property="s3ObjectKey" column="s3_object_key"/>
+      <result property="deleteFlg" column="delete_flg"/>
+      <result property="privateFlg" column="private_flg"/>
+      <result property="explanatoryText" column="explanatory_text"/>
+      <result property="createUser" column="create_user"/>
+      <result property="createDate" column="create_date"/>
+      <result property="updateUser" column="update_user"/>
+      <result property="updateDate" column="update_date"/>
     </association>
   </resultMap>
 
@@ -79,10 +79,14 @@
             file.folder_id = #{folderId}
          AND
             file.file_name LIKE '%' || #{keyword} || '%'
+    <if test="developerId != null">
          AND
             folder.developer_id = #{developerId}
+    </if>
+    <if test="mansionId != null">
          AND
             folder.mansion_id = #{mansionId}
+    </if>
          AND
             (file.create_user = #{userId} OR folder.private_flg = false)
 

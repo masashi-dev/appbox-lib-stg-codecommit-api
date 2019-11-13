@@ -32,9 +32,9 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
 
 
   /** 該当ファイルList */
-  List<FileSearchResponse> applicableFile;
+  private List<FileSearchResponse> applicableFile;
   /** 該当フォルダList */
-  List<FileSearchResponse> applicableFolder;
+  private List<FileSearchResponse> applicableFolder;
 
 
   // セッション情報を取得し設定する
@@ -103,12 +103,23 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
     TFolderExample folderCriteria = new TFolderExample();
 
     folderCriteria.createCriteria().andParentFolderIdEqualTo(argFolderId).andDeleteFlgEqualTo(false)
-        .andDeveloperIdEqualTo(developerId).andMansionIdEqualTo(mansionId)
         .andCreateUserEqualTo(userId);
+    if (developerId != null) {
+      folderCriteria.createCriteria().andDeveloperIdEqualTo(developerId);
+    }
+    if (mansionId != null) {
+      folderCriteria.createCriteria().andMansionIdEqualTo(mansionId);
+    }
 
     folderCriteria.or().andParentFolderIdEqualTo(argFolderId).andDeleteFlgEqualTo(false)
-        .andDeveloperIdEqualTo(developerId).andMansionIdEqualTo(mansionId)
         .andPrivateFlgEqualTo(false);
+    if (developerId != null) {
+      folderCriteria.createCriteria().andDeveloperIdEqualTo(developerId);
+    }
+    if (mansionId != null) {
+      folderCriteria.createCriteria().andMansionIdEqualTo(mansionId);
+    }
+
 
     List<TFolder> allFolders = tFolderMapper.selectByExample(folderCriteria);
 
