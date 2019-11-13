@@ -11,6 +11,9 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookmarkGetDetail {
+  /** お気に入りID */
+  private String bookmark_id;
+  
   /** (フォルダTBL)フォルダID */
   private String folder_folder_id;
 
