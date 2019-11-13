@@ -21,7 +21,8 @@ public final class StorageApiUrl {
   // 表示順削除
   public static final String SORT_ORDER_DELETE = "/lib/filemanagement/delete"; // TODO:URLが確定次第修正する
 
-  // お気に入り
-  public static final String BOOKMARK_DELETE = "/lib/bookmark"; // TODO:URLが確定次第修正する
+  //お気に入り
+  public static final String BOOKMARK_DELETE = "/lib/bookmark";  // TODO:URLが確定次第修正する 
   public static final String BOOKMARK_REGIST = "/lib/bookmark"; // TODO:URLが確定次第修正する
+  public static final String BOOKMARK_GET = "/lib/bookmark";  // TODO:URLが確定次第修正する
 }
