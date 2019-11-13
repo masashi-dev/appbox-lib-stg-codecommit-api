@@ -8,12 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jp.co.fnj.storage.api.entity.mapper.custom.FileMapper;
-import jp.co.fnj.storage.api.entity.mapper.generat.TFileMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TFolderMapper;
-import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
 import jp.co.fnj.storage.api.entity.model.custom.FileAndRelatedFolderInfoEntity;
-import jp.co.fnj.storage.api.entity.model.generat.TFile;
-import jp.co.fnj.storage.api.entity.model.generat.TFileExample;
 import jp.co.fnj.storage.api.entity.model.generat.TFolder;
 import jp.co.fnj.storage.api.entity.model.generat.TFolderExample;
 import jp.co.fnj.storage.api.model.file.FileSearchRequest;
@@ -83,9 +79,8 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
   private void searchKeyword(String argFolderId, String argSearchWord) {
 
     // 指定フォルダ直下の検索ワードに該当するファイルを抽出
-    List<FileAndRelatedFolderInfoEntity> applicableFiles =
-        fileMapper.selectFileAndRelatedFolder(argFolderId, argSearchWord, false, developerId,
-            mansionId, userId);
+    List<FileAndRelatedFolderInfoEntity> applicableFiles = fileMapper.selectFileAndRelatedFolder(
+        argFolderId, argSearchWord, false, developerId, mansionId, userId);
 
     // 抽出された結果をレスポンスListに登録
     for (FileAndRelatedFolderInfoEntity file : applicableFiles) {
