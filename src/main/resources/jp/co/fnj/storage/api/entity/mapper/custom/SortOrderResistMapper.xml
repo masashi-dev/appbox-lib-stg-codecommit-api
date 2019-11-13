@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.fnj.storage.api.entity.mapper.custom.SortOrderResistMapper">
+
+  <select id="selectSortOrderMax" resultType="INTEGER">
+        SELECT
+            MAX(sort_order) AS sort_order
+        FROM
+            t_sort_order
+        WHERE
+            parent_folder_id = #{parentFolderId}
+        GROUP BY
+            parent_folder_id
+  </select>
+</mapper>

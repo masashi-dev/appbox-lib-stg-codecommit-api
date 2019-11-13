@@ -1,12 +1,11 @@
 package jp.co.fnj.storage.api.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import jp.co.fnj.storage.api.constant.Messages;
 import jp.co.fnj.storage.api.entity.mapper.generat.TSequenceMapper;
 import jp.co.fnj.storage.api.entity.model.generat.TSequence;
 import jp.co.fnj.storage.api.entity.model.generat.TSequenceExample;
@@ -50,7 +49,6 @@ public class SequenceService {
 
   }
 
-  // TSequenceテーブルのマッパーをインジェクション
   private final TSequenceMapper tSequenceMapper;
 
   /**
@@ -60,7 +58,7 @@ public class SequenceService {
    */
   @Transactional(rollbackFor = Throwable.class)
   public String createSortOrderId() {
-    return getNextVal(ID_NAME.FILE_SORT_ORDER);
+    return ID_NAME.FILE_SORT_ORDER.getValue() + getNextVal(ID_NAME.FILE_SORT_ORDER);
   }
 
 
@@ -93,9 +91,11 @@ public class SequenceService {
     // 採番を更新
     TSequence update = tSequences.get(0);
     update.setSequenceValue(update.getSequenceValue() + 1);
+    update.setUpdateUser("testuser"); // TODO:未整備事項のため別途実装
+    update.setUpdateDate(LocalDateTime.now());
     tSequenceMapper.updateByPrimaryKey(update);
 
-    return String.format("%11d", update.getSequenceValue());
+    return String.format("%010d", update.getSequenceValue());
 
   }
 
