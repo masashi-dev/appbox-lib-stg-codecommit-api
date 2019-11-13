@@ -30,7 +30,7 @@ public class BookmarkRegisatController {
 
 	@RequestMapping(method = RequestMethod.POST, path = StorageApiUrl.BOOKMARK_REGIST)
 	public ResponseEntity<BookmarkRegistResponse> register(HttpServletRequest request,
-	    HttpServletResponse response, @RequestBody BookmarkRegistRequest requestBody) throws StorageException {
+	    HttpServletResponse response, @RequestBody BookmarkRegistRequest requestBody) {
 
 		return bookmarkRegistLogic.execute(request, response, requestBody);
 	}

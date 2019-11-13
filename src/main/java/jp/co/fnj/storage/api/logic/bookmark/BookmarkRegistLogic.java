@@ -107,7 +107,7 @@ public class BookmarkRegistLogic<REQUEST_BODY extends BookmarkRegistRequest, RES
    * @throws StorageException
    */
   public final ResponseEntity<RESPONSE> execute(HttpServletRequest request,
-      HttpServletResponse response, REQUEST_BODY requestBody) throws StorageException {
+      HttpServletResponse response, REQUEST_BODY requestBody) {
 
     // 事前実行
     preExecute(request, response, requestBody);

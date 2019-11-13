@@ -67,7 +67,8 @@ public class SequenceService {
    */
   @Transactional(rollbackFor = Throwable.class)
   public String createBookmarkId() {
-    return getNextVal(ID_NAME.BOOKMARK_BOOKMARK_ID);
+    ID_NAME idName = ID_NAME.BOOKMARK_BOOKMARK_ID;
+    return idName.getValue() + getNextVal(idName);
   }
 
 
