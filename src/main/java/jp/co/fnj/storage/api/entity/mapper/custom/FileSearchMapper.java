@@ -2,6 +2,7 @@ package jp.co.fnj.storage.api.entity.mapper.custom;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import jp.co.fnj.storage.api.entity.model.custom.FileAndRelatedFolderInfoEntity;
 
 /**
@@ -22,8 +23,9 @@ public interface FileSearchMapper {
    * @param argMyUserId
    * @return ファイルとフォルダ（1:1）のリスト
    */
-  List<FileAndRelatedFolderInfoEntity> selectFileAndRelatedFolder(String argFolderId,
-      String argKeyword, Boolean argDelFLg, String argDeveloperId, String argMansionId,
-      String argMyUserId);
+  List<FileAndRelatedFolderInfoEntity> selectFileAndRelatedFolder(
+      @Param("folderId") String argFolderId, @Param("keyword") String argKeyword,
+      @Param("delFlg") Boolean argDelFLg, @Param("developerId") String argDeveloperId,
+      @Param("mansionId") String argMansionId, @Param("userId") String argMyUserId);
 
 }

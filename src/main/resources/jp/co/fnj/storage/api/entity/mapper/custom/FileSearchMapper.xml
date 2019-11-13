@@ -3,23 +3,46 @@
 <mapper namespace="jp.co.fnj.storage.api.entity.mapper.custom.FileSearchMapper">
 
   <resultMap id="fileAndRelatedFolderMap" type="jp.co.fnj.storage.api.entity.model.custom.FileAndRelatedFolderInfoEntity">
-    <association autoMapping="true" javaType="jp.co.fnj.storage.api.entity.model.generat.TFolder" columnPrefix="a_" property="tFolder">
-      <id property="folderId" column="folder_id"/>
-    </association>
-    <association autoMapping="true" javaType="jp.co.fnj.storage.api.entity.model.generat.TFile" columnPrefix="b_" property="tFile">
+    <association autoMapping="true" javaType="jp.co.fnj.storage.api.entity.model.generat.TFile" columnPrefix="a_" property="tFile">
       <id property="fileId" column="file_id"/>
       <id property="folderId" column="folder_id"/>
+      <id property="fileName" column="file_name"/>
+      <id property="s3FileName" column="s3_file_name"/>
+      <id property="deleteFlg" column="delete_flg"/>
+      <id property="s3ObjectKey" column="s3_object_key"/>
+      <id property="fileSize" column="file_size"/>
+      <id property="fullTextType" column="full_text_type"/>
+      <id property="createUser" column="create_user"/>
+      <id property="createDate" column="create_date"/>
+      <id property="updateUser" column="update_user"/>
+      <id property="updateDate" column="update_date"/>
+    </association>
+    <association autoMapping="true" javaType="jp.co.fnj.storage.api.entity.model.generat.TFolder" columnPrefix="b_" property="tFolder">
+
     </association>
   </resultMap>
 
   <select id="selectFileAndRelatedFolder" resultMap="fileAndRelatedFolderMap">
         SELECT
-            MAX(sort_order) AS sort_order
+            file_id AS a_file_id,
+            folder_id AS a_folder_id,
+            file_name AS a_file_name,
+            s3_file_name AS a_s3_file_name,
+            delete_flg AS a_delete_flg,
+            s3_object_key AS a_s3_object_key,
+            file_size AS a_file_size,
+            full_text_type AS a_full_text_type,
+            create_user AS a_create_user,
+            create_date AS a_create_date,
+            update_user AS a_update_user,
+            update_date AS a_update_date
         FROM
-            t_sort_order
+            t_file
         WHERE
-            parent_folder_id = #{parentFolderId}
-        GROUP BY
-            parent_folder_id
+            folder_id = #{folderId}
+          AND
+            file_name = #{keyword}
+          AND
+            delete_flg = #{delFlg}
   </select>
 </mapper>
