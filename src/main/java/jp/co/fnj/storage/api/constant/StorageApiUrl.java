@@ -11,6 +11,9 @@ public final class StorageApiUrl {
   public static final String FILE_GET_LIST = "/lib/filemanagement/{folder_id}";
   // ファイル管理_検索
   public static final String FILE_SEARCH = "/filesearch";
+  // ファイル論理名重複チェック
+  public static final String FILECHECK_NAME = "//lib/filenamecheck"; // TODO:URLが確定次第修正する
+
   // 表示順登録
   public static final String SORT_ORDER_RESIST = "/lib/filemanagement/insert"; // TODO:適切なURLを指定する
   // 表示順更新
@@ -18,7 +21,7 @@ public final class StorageApiUrl {
   // 表示順削除
   public static final String SORT_ORDER_DELETE = "/lib/filemanagement/delete"; // TODO:URLが確定次第修正する
 
-  //お気に入り
-  public static final String BOOKMARK_DELETE = "/lib/bookmark";  // TODO:URLが確定次第修正する 
+  // お気に入り
+  public static final String BOOKMARK_DELETE = "/lib/bookmark"; // TODO:URLが確定次第修正する
   public static final String BOOKMARK_REGIST = "/lib/bookmark"; // TODO:URLが確定次第修正する
 }

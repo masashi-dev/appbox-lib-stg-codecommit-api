@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.model.file;
+package jp.co.fnj.storage.api.model.filecheck;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

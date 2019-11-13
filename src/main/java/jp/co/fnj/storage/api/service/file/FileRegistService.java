@@ -19,8 +19,9 @@ import jp.co.fnj.storage.api.entity.model.generat.TFolderExample;
 import jp.co.fnj.storage.api.exception.StorageRuntimeException;
 import jp.co.fnj.storage.api.model.file.FileRegistRequest;
 import jp.co.fnj.storage.api.model.file.FileRegistResponse;
-import jp.co.fnj.storage.api.model.file.S3FileNameCheckRequest;
-import jp.co.fnj.storage.api.model.file.S3FileNameCheckResponse;
+import jp.co.fnj.storage.api.model.filecheck.S3FileNameCheckRequest;
+import jp.co.fnj.storage.api.model.filecheck.S3FileNameCheckResponse;
+import jp.co.fnj.storage.api.service.filecheck.S3FileNameCheckService;
 
 /**
  * ファイル登録APIサービス.
@@ -71,7 +72,7 @@ public class FileRegistService<REQUEST_BODY extends FileRegistRequest, RESPONSE 
     TFolder putFolder = tFolderMapper.selectByExample(folderCriteria).get(0);
     // TODO ファイルの論理重複チェックを呼ぶ
 
-    // TODO ファイルの物理重複チェックを呼ぶ
+    // ファイルの物理重複チェックを呼ぶ
     S3FileNameCheckRequest input = new S3FileNameCheckRequest();
     input.setFile_id(null);
     input.setFolder_id(putFolder.getFolderId());
