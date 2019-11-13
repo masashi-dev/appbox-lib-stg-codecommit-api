@@ -60,6 +60,16 @@ public class SequenceService {
   public String createSortOrderId() {
     return ID_NAME.FILE_SORT_ORDER.getValue() + getNextVal(ID_NAME.FILE_SORT_ORDER);
   }
+  
+  /**
+   * お気に入りテーブルの主キーを生成する
+   * @return bookmark_id
+   */
+  @Transactional(rollbackFor = Throwable.class)
+  public String createBookmarkId() {
+    ID_NAME idName = ID_NAME.BOOKMARK_BOOKMARK_ID;
+    return idName.getValue() + getNextVal(idName);
+  }
 
 
   /**
