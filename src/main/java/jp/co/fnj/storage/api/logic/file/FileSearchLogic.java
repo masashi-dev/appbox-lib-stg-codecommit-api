@@ -74,8 +74,7 @@ public class FileSearchLogic<REQUEST_BODY extends FileSearchRequest, RESPONSE ex
       RESPONSE res = (RESPONSE) fileSearchService.execute(request, response, requestBody);
       return res;
     } catch (Exception e) {
-      // TODO:メッセージIDを見直す
-      throw new StorageRuntimeException(Messages.E02021, e);
+      throw new StorageRuntimeException(Messages.E00004, e);
     }
   }
 
