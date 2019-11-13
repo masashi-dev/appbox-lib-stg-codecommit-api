@@ -31,12 +31,6 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
   private FileMapper fileMapper;
 
 
-  /** 該当ファイルList */
-  private List<FileSearchResponse> applicableFile;
-  /** 該当フォルダList */
-  private List<FileSearchResponse> applicableFolder;
-
-
   // セッション情報を取得し設定する
   // TODO:未整備のため別途実装
   String developerId = "111";
@@ -51,12 +45,13 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
 
 
     // 該当ファイルList、該当フォルダListを初期化
-    applicableFile = new ArrayList<>();
-    applicableFolder = new ArrayList<>();
+    List<FileSearchResponse> applicableFile = new ArrayList<>();
+    List<FileSearchResponse> applicableFolder = new ArrayList<>();
 
     // リクエストに指定されたフォルダー以下を再帰的に検索し
     // 検索結果を該当ファイルListと該当フォルダListにそれぞれ登録する
-    searchKeyword(requestBody.getFolder_id(), requestBody.getSearch_word());
+    searchKeyword(requestBody.getFolder_id(), requestBody.getSearch_word(), applicableFile,
+        applicableFolder);
 
     // 2つの該当リストをマージ
     List<FileSearchResponse> responseBodys =
@@ -75,8 +70,11 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
    * 
    * @param argFolderId
    * @param argSearchWord
+   * @param argApplicableFile
+   * @param argApplicableFolder
    */
-  private void searchKeyword(String argFolderId, String argSearchWord) {
+  private void searchKeyword(String argFolderId, String argSearchWord,
+      List<FileSearchResponse> argApplicableFile, List<FileSearchResponse> argApplicableFolder) {
 
     // 指定フォルダ直下の検索ワードに該当するファイルを抽出
     List<FileAndRelatedFolderInfoEntity> applicableFiles = fileMapper.selectFileAndRelatedFolder(
@@ -95,7 +93,7 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
       item.setFile_insert_date_time(file.getTFile().getCreateDate());
       item.setFile_update_user_id(file.getTFile().getUpdateUser());
       item.setFile_update_date_time(file.getTFile().getUpdateDate());
-      applicableFile.add(item);
+      argApplicableFile.add(item);
     }
 
 
@@ -145,11 +143,11 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
         item.setFolder_insert_date_time(folder.getCreateDate());
         item.setFolder_update_user_id(folder.getUpdateUser());
         item.setFolder_update_date_time(folder.getUpdateDate());
-        applicableFolder.add(item);
+        argApplicableFolder.add(item);
       }
 
       // 指定フォルダ直下のフォルダの直下を検索（再帰的に検索）
-      searchKeyword(folder.getFolderId(), argSearchWord);
+      searchKeyword(folder.getFolderId(), argSearchWord, argApplicableFile, argApplicableFolder);
     }
 
 
