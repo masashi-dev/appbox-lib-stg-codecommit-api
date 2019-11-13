@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jp.co.fnj.storage.api.entity.mapper.custom.FileSearchMapper">
+<mapper namespace="jp.co.fnj.storage.api.entity.mapper.custom.FileMapper">
 
   <resultMap id="fileAndRelatedFolderMap" type="jp.co.fnj.storage.api.entity.model.custom.FileAndRelatedFolderInfoEntity">
     <association autoMapping="true" javaType="jp.co.fnj.storage.api.entity.model.generat.TFile" columnPrefix="a_" property="tFile">
@@ -18,7 +18,21 @@
       <id property="updateDate" column="update_date"/>
     </association>
     <association autoMapping="true" javaType="jp.co.fnj.storage.api.entity.model.generat.TFolder" columnPrefix="b_" property="tFolder">
-
+      <id property="folderId" column="folder_id"/>
+      <id property="parentFolderId" column="parent_folder_id"/>
+      <id property="folderGroup" column="folder_group"/>
+      <id property="folderName" column="folder_name"/>
+      <id property="s3FolderName" column="s3_folder_name"/>
+      <id property="developerId" column="developer_id"/>
+      <id property="mansionId" column="mansion_id"/>
+      <id property="s3ObjectKey" column="s3_object_key"/>
+      <id property="deleteFlg" column="delete_flg"/>
+      <id property="privateFlg" column="private_flg"/>
+      <id property="explanatoryText" column="explanatory_text"/>
+      <id property="createUser" column="create_user"/>
+      <id property="createDate" column="create_date"/>
+      <id property="updateUser" column="update_user"/>
+      <id property="updateDate" column="update_date"/>
     </association>
   </resultMap>
 
@@ -35,7 +49,22 @@
             file.create_user AS a_create_user,
             file.create_date AS a_create_date,
             file.update_user AS a_update_user,
-            file.update_date AS a_update_date
+            file.update_date AS a_update_date,
+            folder.folder_id AS b_folder_id,
+            folder.parent_folder_id AS b_parent_folder_id,
+            folder.folder_group AS b_folder_group,
+            folder.folder_name AS b_folder_name,
+            folder.s3_folder_name AS b_s3_folder_name,
+            folder.developer_id AS b_developer_id,
+            folder.mansion_id AS b_mansion_id,
+            folder.s3_object_key AS b_s3_object_key,
+            folder.delete_flg AS b_delete_flg,
+            folder.private_flg AS b_private_flg,
+            folder.explanatory_text AS b_explanatory_text,
+            folder.create_user AS b_create_user,
+            folder.create_date AS b_create_date,
+            folder.update_user AS b_update_user,
+            folder.update_date AS b_update_date
         FROM
             t_file AS file
   INNER JOIN

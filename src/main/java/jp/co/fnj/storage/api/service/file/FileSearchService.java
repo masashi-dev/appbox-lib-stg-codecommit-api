@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import jp.co.fnj.storage.api.entity.mapper.custom.FileSearchMapper;
+import jp.co.fnj.storage.api.entity.mapper.custom.FileMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TFileMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TFolderMapper;
 import jp.co.fnj.storage.api.entity.mapper.generat.TSortOrderMapper;
@@ -32,9 +32,7 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
   @Autowired
   private TFolderMapper tFolderMapper;
   @Autowired
-  private TFileMapper tFileMapper;
-  @Autowired
-  private FileSearchMapper fileSearchMapper;
+  private FileMapper fileMapper;
 
 
   /** 該当ファイルList */
@@ -77,20 +75,17 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
 
 
   /**
-   * 指定したフォルダ以下に存在する、キーワードに該当するファイル・フォルダを検索します.
+   * 指定したフォルダ以下に存在する、検索ワードに該当するファイル・フォルダを検索します.
    * 
    * @param argFolderId
-   * @param argKeyword
+   * @param argSearchWord
    */
-  private void searchKeyword(String argFolderId, String argKeyword) {
+  private void searchKeyword(String argFolderId, String argSearchWord) {
 
-    // 指定フォルダ直下のキーワードに該当するファイルを抽出
-    List<FileAndRelatedFolderInfoEntity> applicableFiles = fileSearchMapper
-        .selectFileAndRelatedFolder(argFolderId, argKeyword, false, developerId, mansionId, userId);
-    // TFileExample fileCriteria = new TFileExample();
-    // fileCriteria.createCriteria().andFolderIdEqualTo(argFolderId).andDeleteFlgEqualTo(false)
-    // .andFileNameLike("%" + argKeyword + "%");
-    // List<TFile> applicableFiles = tFileMapper.selectByExample(fileCriteria);
+    // 指定フォルダ直下の検索ワードに該当するファイルを抽出
+    List<FileAndRelatedFolderInfoEntity> applicableFiles =
+        fileMapper.selectFileAndRelatedFolder(argFolderId, argSearchWord, false, developerId,
+            mansionId, userId);
 
     // 抽出された結果をレスポンスListに登録
     for (FileAndRelatedFolderInfoEntity file : applicableFiles) {
@@ -118,7 +113,7 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
 
     folderCriteria.or().andParentFolderIdEqualTo(argFolderId).andDeleteFlgEqualTo(false)
         .andDeveloperIdEqualTo(developerId).andMansionIdEqualTo(mansionId)
-        .andPrivateFlgEqualTo(true);
+        .andPrivateFlgEqualTo(false);
 
     List<TFolder> allFolders = tFolderMapper.selectByExample(folderCriteria);
 
@@ -129,8 +124,8 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
 
     // 指定フォルダ直下のフォルダを順番に処理
     for (TFolder folder : allFolders) {
-      // キーワードに該当する場合はレスポンスListに登録
-      if (folder.getFolderName().contains(argKeyword)) {
+      // 検索ワードに該当する場合はレスポンスListに登録
+      if (folder.getFolderName().contains(argSearchWord)) {
         FileSearchResponse item = new FileSearchResponse();
         item.setFolder_folder_id(folder.getFolderId());
         item.setFolder_parent_folder_id(folder.getParentFolderId());
@@ -148,7 +143,7 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
       }
 
       // 指定フォルダ直下のフォルダの直下を検索（再帰的に検索）
-      searchKeyword(folder.getFolderId(), argKeyword);
+      searchKeyword(folder.getFolderId(), argSearchWord);
     }
 
 

@@ -6,17 +6,17 @@ import org.apache.ibatis.annotations.Param;
 import jp.co.fnj.storage.api.entity.model.custom.FileAndRelatedFolderInfoEntity;
 
 /**
- * ファイル検索APIマッパー.
+ * ファイルテーブルマッパー.
  *
  */
 @Mapper
-public interface FileSearchMapper {
+public interface FileMapper {
 
   /**
-   * 引数をもとにファイルの情報および、そのファイルが格納されているフォルダの情報を取得する.
+   * 条件に該当するファイルの情報および、そのファイルが格納されているフォルダの情報を取得する.
    *
    * @param argFolderId
-   * @param argKeyword
+   * @param argSearchWord
    * @param argDelFLg
    * @param argDeveloperId
    * @param argMansionId
@@ -24,7 +24,7 @@ public interface FileSearchMapper {
    * @return ファイルとフォルダ（1:1）のリスト
    */
   List<FileAndRelatedFolderInfoEntity> selectFileAndRelatedFolder(
-      @Param("folderId") String argFolderId, @Param("keyword") String argKeyword,
+      @Param("folderId") String argFolderId, @Param("keyword") String argSearchWord,
       @Param("delFlg") Boolean argDelFLg, @Param("developerId") String argDeveloperId,
       @Param("mansionId") String argMansionId, @Param("userId") String argMyUserId);
 
