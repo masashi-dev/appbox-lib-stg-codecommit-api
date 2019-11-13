@@ -15,6 +15,9 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FileGetListResponse {
+  /** カレントフォルダの論理フォルダ名 */
+  private String current_folder_name;
+
   /** (フォルダTBL)フォルダID */
   private String folder_folder_id;
 

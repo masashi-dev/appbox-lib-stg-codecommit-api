@@ -49,15 +49,15 @@ public class FileGetListService<REQUEST_BODY extends FileGetListRequest, RESPONS
     String userId = null;
 
     TFolderExample folderCriteria = new TFolderExample();
-    TFolderExample.Criteria fCriteria1 = folderCriteria.createCriteria()
-        .andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6)).andDeveloperIdEqualTo(developerId)
-        .andMansionIdIn(List.of(mansionId)).andParentFolderIdEqualTo(requestBody.getFolder_id())
-        .andDeleteFlgEqualTo(false).andPrivateFlgEqualTo(false);
-    TFolderExample.Criteria fCriteria2 = folderCriteria.createCriteria()
+    folderCriteria.createCriteria().andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6))
+        .andDeveloperIdEqualTo(developerId).andMansionIdIn(List.of(mansionId))
+        .andParentFolderIdEqualTo(requestBody.getFolder_id()).andDeleteFlgEqualTo(false)
+        .andPrivateFlgEqualTo(false);
+    TFolderExample.Criteria fCriteria = folderCriteria.createCriteria()
         .andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6)).andDeveloperIdEqualTo(developerId)
         .andMansionIdIn(List.of(mansionId)).andParentFolderIdEqualTo(requestBody.getFolder_id())
         .andDeleteFlgEqualTo(false).andCreateUserEqualTo(userId);
-    folderCriteria.or(fCriteria2);
+    folderCriteria.or(fCriteria);
     List<TFolder> tFolders = tFolderMapper.selectByExample(folderCriteria);
 
 
@@ -87,7 +87,10 @@ public class FileGetListService<REQUEST_BODY extends FileGetListRequest, RESPONS
       TSortOrder tSortOrder = folderSorts.stream()
           .filter(s -> s.getFolderId().equals(folder.getFolderId())).findFirst().get();
 
+      TFolder currentFolder = tFolderMapper.selectByPrimaryKey(requestBody.getFolder_id());
+
       FileGetListResponse item = new FileGetListResponse();
+      item.setCurrent_folder_name(currentFolder.getFolderName());
       item.setFolder_folder_id(folder.getFolderId());
       item.setFolder_parent_folder_id(folder.getParentFolderId());
       item.setFolder_folder_name(folder.getFolderName());
