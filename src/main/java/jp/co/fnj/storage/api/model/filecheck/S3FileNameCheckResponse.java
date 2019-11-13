@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.model.file;
+package jp.co.fnj.storage.api.model.filecheck;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
