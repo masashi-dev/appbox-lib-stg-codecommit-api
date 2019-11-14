@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.controller;
+package jp.co.fnj.storage.api.controller.s3managedfileInfo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ import jp.co.fnj.storage.api.logic.S3UploadFileInfoRegistLogic;
 import jp.co.fnj.storage.api.model.s3uploadfile.S3UploadFileInfoRegistRequest;
 import jp.co.fnj.storage.api.model.s3uploadfile.S3UploadFileInfoRegistResponse;
 
-public class S3UploadFileInfoRegistController {
+public class S3ManagedFileInfoController {
 
 	@Autowired
 	private S3UploadFileInfoRegistLogic S3UploadFileInfoRegistLogic;

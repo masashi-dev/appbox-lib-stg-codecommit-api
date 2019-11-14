@@ -1,6 +1,8 @@
 package jp.co.fnj.storage.api.exception;
 
 import org.springframework.core.NestedRuntimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ストレージ例外
@@ -27,4 +29,5 @@ public class StorageRuntimeException extends NestedRuntimeException {
 		super(message, cause);
 	}
 
+	
 }

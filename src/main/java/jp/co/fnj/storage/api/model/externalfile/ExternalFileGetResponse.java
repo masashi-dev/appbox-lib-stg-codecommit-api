@@ -1,8 +1,5 @@
 package jp.co.fnj.storage.api.model.externalfile;
 
-import java.io.Serializable;
-import java.util.List;
-
 /**
  * 外部ファイル登録のモデル
  * 
@@ -11,23 +8,23 @@ import java.util.List;
  */
 public class ExternalFileGetResponse {
 
-    /**
-     * ファイルデータ
-     */
-    private String fileId;
+  /**
+   * コンストラクタ
+   */
+  public ExternalFileGetResponse() {
+    // NOP
+  }
 
-    /**
-     * コンストラクタ
-     */
-    public ExternalFileGetResponse() {
-        // NOP
-    }
+  /**
+   * s3ファイル
+   */
+  private byte[] s3file;
 
-    public String fileId() {
-        return fileId;
-    }
+  public byte[] getS3file() {
+    return s3file;
+  }
 
-    public void setFileId(String fileId) {
-        this.fileId = fileId;
-    }
+  public void setS3file(byte[] s3file) {
+    this.s3file = s3file;
+  }
 }

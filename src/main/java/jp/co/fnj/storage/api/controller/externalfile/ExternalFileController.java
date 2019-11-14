@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.controller;
+package jp.co.fnj.storage.api.controller.externalfile;
 
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.fnj.storage.api.constant.StorageApiUrl;
 import jp.co.fnj.storage.api.exception.StorageException;
-import jp.co.fnj.storage.api.logic.ExternalFileDeleteLogic;
-import jp.co.fnj.storage.api.logic.ExternalFileGetLogic;
-import jp.co.fnj.storage.api.logic.ExternalFileRegistLogic;
+import jp.co.fnj.storage.api.logic.externalfile.ExternalFileDeleteLogic;
+import jp.co.fnj.storage.api.logic.externalfile.ExternalFileGetLogic;
+import jp.co.fnj.storage.api.logic.externalfile.ExternalFileRegistLogic;
 import jp.co.fnj.storage.api.model.externalfile.ExternalFileDeleteRequest;
 import jp.co.fnj.storage.api.model.externalfile.ExternalFileDeleteResponse;
 import jp.co.fnj.storage.api.model.externalfile.ExternalFileGetRequest;
