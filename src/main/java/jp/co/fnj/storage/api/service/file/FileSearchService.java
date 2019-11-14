@@ -76,10 +76,13 @@ public class FileSearchService<REQUEST_BODY extends FileSearchRequest, RESPONSE 
   private void searchKeyword(String argFolderId, String argSearchWord,
       List<FileSearchResponse> argApplicableFile, List<FileSearchResponse> argApplicableFolder) {
 
+    //あいまい検索用に検索ワードを修正
+    String searchWord = '%' + argSearchWord + '%';
+    
     // 指定フォルダ直下の検索ワードに該当するファイルを抽出
     List<FileAndRelatedFolderInfoEntity> applicableFiles = fileMapper.selectFileAndRelatedFolder(
-        argFolderId, argSearchWord, false, developerId, mansionId, userId);
-
+        argFolderId, searchWord, false, developerId, mansionId, userId);
+    
     // 抽出された結果をレスポンスListに登録
     for (FileAndRelatedFolderInfoEntity file : applicableFiles) {
       FileSearchResponse item = new FileSearchResponse();
