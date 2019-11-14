@@ -43,7 +43,7 @@ public class SortOrderLogicalNameSortService<REQUEST_BODY extends SortOrderLogic
   @Autowired
   TSortOrderMapper tSortOrderMapper;
 
-  @Transactional(noRollbackFor = Throwable.class)
+  @Transactional(rollbackFor = Throwable.class)
   public void execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
@@ -55,15 +55,15 @@ public class SortOrderLogicalNameSortService<REQUEST_BODY extends SortOrderLogic
 
     // フォルダIDをもとに、フォルダ配下のファイル情報(ファイルID、論理ファイル名)を取得する。
     TFileExample tFileExample = new TFileExample();
-    tFileExample.createCriteria().andFolderIdEqualTo(requestBody.getFolder_id());
-    // .andDeleteFlgEqualTo(0); モデルの削除フラグがboolean型のため、修正され次第実装予定
+    tFileExample.createCriteria().andFolderIdEqualTo(requestBody.getFolder_id())
+        .andDeleteFlgEqualTo(false);
     tFileExample.setForUpdate(true);
     List<TFile> listFileExample = tFileMapper.selectByExample(tFileExample);
 
     // フォルダIDをもとに、フォルダ配下のフォルダ情報(フォルダID、論理フォルダ名)を取得する。
     TFolderExample tFolderExample = new TFolderExample();
-    tFolderExample.createCriteria().andParentFolderIdEqualTo(requestBody.getFolder_id());
-    // .andDeleteFlgEqualTo(0); モデルの削除フラグがboolean型のため、修正され次第実装予定
+    tFolderExample.createCriteria().andParentFolderIdEqualTo(requestBody.getFolder_id())
+        .andDeleteFlgEqualTo(false);
     tFolderExample.setForUpdate(true);
     List<TFolder> listFolderExample = tFolderMapper.selectByExample(tFolderExample);
 

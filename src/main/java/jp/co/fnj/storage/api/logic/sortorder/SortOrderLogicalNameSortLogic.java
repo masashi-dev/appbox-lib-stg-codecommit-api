@@ -134,7 +134,7 @@ public class SortOrderLogicalNameSortLogic<REQUEST_BODY extends SortOrderLogical
     validator.validate(requestBody, bindingResult, getValidationGroup());
 
     if (bindingResult.hasErrors()) {
-      throw new StorageBadRequestException(Messages.E05007);
+      throw new StorageBadRequestException(Messages.E00007);
     }
 
   }
