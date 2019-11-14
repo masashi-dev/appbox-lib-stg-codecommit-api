@@ -44,20 +44,33 @@ public class FileGetListService<REQUEST_BODY extends FileGetListRequest, RESPONS
       REQUEST_BODY requestBody) {
 
     // TODO セッション情報を取得し設定する
-    String developerId = null;
-    String mansionId = null;
-    String userId = null;
+    String developerId = "";
+    String mansionId = "";
+    String userId = "";
 
     TFolderExample folderCriteria = new TFolderExample();
-    folderCriteria.createCriteria().andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6))
-        .andDeveloperIdEqualTo(developerId).andMansionIdIn(List.of(mansionId))
+    folderCriteria.createCriteria()
+        // .andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6))
         .andParentFolderIdEqualTo(requestBody.getFolder_id()).andDeleteFlgEqualTo(false)
         .andPrivateFlgEqualTo(false);
-    TFolderExample.Criteria fCriteria = folderCriteria.createCriteria()
-        .andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6)).andDeveloperIdEqualTo(developerId)
-        .andMansionIdIn(List.of(mansionId)).andParentFolderIdEqualTo(requestBody.getFolder_id())
-        .andDeleteFlgEqualTo(false).andCreateUserEqualTo(userId);
-    folderCriteria.or(fCriteria);
+    if (developerId != null) {
+      folderCriteria.getOredCriteria().get(0).andDeveloperIdEqualTo(developerId);
+    }
+    if (mansionId != null) {
+      folderCriteria.getOredCriteria().get(0).andMansionIdEqualTo(mansionId);
+    }
+    // A AND ( B OR C) のクエリが書けないため、(A AND B) OR (A AND C) にしてる
+    TFolderExample.Criteria orCriteria = folderCriteria.createCriteria()
+        // .andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6))
+        .andParentFolderIdEqualTo(requestBody.getFolder_id()).andDeleteFlgEqualTo(false)
+        .andCreateUserEqualTo(userId);
+    if (developerId != null) {
+      orCriteria.andDeveloperIdEqualTo(developerId);
+    }
+    if (mansionId != null) {
+      orCriteria.andMansionIdEqualTo(mansionId);
+    }
+    folderCriteria.or(orCriteria);
     List<TFolder> tFolders = tFolderMapper.selectByExample(folderCriteria);
 
 

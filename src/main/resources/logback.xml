@@ -28,6 +28,19 @@
 
   <logger name="com.example" level="DEBUG"/>
 
+    <!-- 設定値については後ほど修正 
+    <appender name="CLOUDWATCH" class="com.j256.cloudwatchlogbackappender.CloudWatchAppender">
+        <region>us-east-1</region>
+        <accessKeyId>XXXXXXX</accessKeyId>
+        <secretKey>XXXXXXX</secretKey>
+        <logGroup>test-loggroup</logGroup>
+        <logStream>test-logstream</logStream>
+        <layout>
+            <pattern>[%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n</pattern>
+        </layout>
+        <maxBatchSize>32</maxBatchSize>
+    </appender>
+     -->
   <root level="DEBUG">
     <appender-ref ref="STDOUT"/>
     <appender-ref ref="FILE"/>

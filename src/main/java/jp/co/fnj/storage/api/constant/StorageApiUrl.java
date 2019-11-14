@@ -12,7 +12,9 @@ public final class StorageApiUrl {
   // ファイル管理_検索
   public static final String FILE_SEARCH = "/filesearch";
   // ファイル論理名重複チェック
-  public static final String FILECHECK_NAME = "//lib/filenamecheck"; // TODO:URLが確定次第修正する
+  public static final String FILENAME_CHECK = "//lib/filenamecheck"; // TODO:URLが確定次第修正する
+  // フォルダ論理名重複チェック
+  public static final String FOLDERNAME_CHECK = "//lib/foldernamecheck"; // TODO:URLが確定次第修正する
 
   // 表示順登録
   public static final String SORT_ORDER_RESIST = "/lib/filemanagement/insert"; // TODO:適切なURLを指定する
@@ -22,8 +24,9 @@ public final class StorageApiUrl {
   public static final String SORT_ORDER_DELETE = "/lib/filemanagement/delete"; // TODO:URLが確定次第修正する
   // 0~9並び替え
   public static final String SORT_ORDER_LOGICAL_NAME_SORT = "/lib/filemanagement/logicalNameSort"; // TODO:URLが確定次第修正する
+
   //お気に入り
-  public static final String BOOKMARK_DELETE = "/lib/bookmark";  // TODO:URLが確定次第修正する 
+  public static final String BOOKMARK_DELETE = "/lib/bookmark"; // TODO:URLが確定次第修正する
   public static final String BOOKMARK_REGIST = "/lib/bookmark"; // TODO:URLが確定次第修正する
   public static final String BOOKMARK_GET = "/lib/bookmark";  // TODO:URLが確定次第修正する
 }

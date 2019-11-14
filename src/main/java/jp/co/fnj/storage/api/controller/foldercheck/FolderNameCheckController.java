@@ -1,4 +1,4 @@
-package jp.co.fnj.storage.api.controller.filecheck;
+package jp.co.fnj.storage.api.controller.foldercheck;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,14 +15,14 @@ import jp.co.fnj.storage.api.model.filecheck.FileNameCheckRequest;
 import jp.co.fnj.storage.api.model.filecheck.FileNameCheckResponse;
 
 /**
- * ファイル論理名重複チェックAPIコントローラー.
+ * 論理フォルダ名重複チェックAPIコントローラー.
  *
  **/
 @RestController
 @Validated
-public class FileNameCheckController {
+public class FolderNameCheckController {
 
-  @Autowired
+  @Autowired // TODO 後で変える
   private FileNameCheckLogic<FileNameCheckRequest, FileNameCheckResponse> fileNameCheckLogic;
 
   /**
@@ -31,7 +31,7 @@ public class FileNameCheckController {
    * 
    * @return
    */
-  @RequestMapping(value = StorageApiUrl.FILENAME_CHECK, method = RequestMethod.GET)
+  @RequestMapping(value = StorageApiUrl.FOLDERNAME_CHECK, method = RequestMethod.GET)
   public ResponseEntity<FileNameCheckResponse> fileNameCheck(HttpServletRequest request,
       HttpServletResponse response, @RequestBody FileNameCheckRequest requestBody) {
 

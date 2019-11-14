@@ -19,7 +19,7 @@ import jp.co.fnj.storage.api.model.error.StorageApiErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * WebAPIの例外ハンドラー
+ * APIの例外ハンドラー
  * 
  * @author yamauchi
  *
@@ -27,7 +27,9 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 @Slf4j
 public class StoraegeApiExceptionHandler extends ResponseEntityExceptionHandler {
-    
+
+//　例外の出力先をクラウドウォッチへ変更する
+	
 //    @Autowired
 //    private StorageMessageSource messageSource;
 //    
