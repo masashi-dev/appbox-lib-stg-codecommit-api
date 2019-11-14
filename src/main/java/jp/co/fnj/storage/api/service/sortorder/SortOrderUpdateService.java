@@ -27,7 +27,7 @@ public class SortOrderUpdateService<REQUEST_BODY extends SortOrderUpdateRequest,
   @Autowired
   TSortOrderMapper tSortOrderMapper;
 
-  @Transactional(RollbackFo = Throwable.class)
+  @Transactional(rollbackFor = Throwable.class)
   public void execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
