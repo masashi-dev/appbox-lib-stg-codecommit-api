@@ -49,15 +49,17 @@ public class FileGetListService<REQUEST_BODY extends FileGetListRequest, RESPONS
     String userId = null;
 
     TFolderExample folderCriteria = new TFolderExample();
-    folderCriteria.createCriteria().andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6))
+    folderCriteria.createCriteria()
+        // .andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6))
         .andDeveloperIdEqualTo(developerId).andMansionIdIn(List.of(mansionId))
         .andParentFolderIdEqualTo(requestBody.getFolder_id()).andDeleteFlgEqualTo(false)
         .andPrivateFlgEqualTo(false);
     // A AND ( B OR C) のクエリが書けないため、(A AND B) OR (A AND C) にしてる
     TFolderExample.Criteria fCriteria = folderCriteria.createCriteria()
-        .andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6)).andDeveloperIdEqualTo(developerId)
-        .andMansionIdIn(List.of(mansionId)).andParentFolderIdEqualTo(requestBody.getFolder_id())
-        .andDeleteFlgEqualTo(false).andCreateUserEqualTo(userId);
+        // .andFolderGroupIn(List.of(1, 2, 3, 4, 5, 6))
+        .andDeveloperIdEqualTo(developerId).andMansionIdIn(List.of(mansionId))
+        .andParentFolderIdEqualTo(requestBody.getFolder_id()).andDeleteFlgEqualTo(false)
+        .andCreateUserEqualTo(userId);
     folderCriteria.or(fCriteria);
     List<TFolder> tFolders = tFolderMapper.selectByExample(folderCriteria);
 
