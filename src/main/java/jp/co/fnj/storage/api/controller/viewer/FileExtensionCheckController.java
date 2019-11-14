@@ -30,7 +30,7 @@ public class FileExtensionCheckController {
    * @return FileExtensionCheckResponse ファイル検索結果
    */
   @RequestMapping(value = "/fileextcheck", method = RequestMethod.GET) // TODO エンドポイントは確定後書き換えること
-  public ResponseEntity<FileExtensionCheckResponse> fileupdate(HttpServletRequest request,
+  public ResponseEntity<FileExtensionCheckResponse> extensionCheck(HttpServletRequest request,
       HttpServletResponse response, @ModelAttribute FileExtensionCheckRequest requestBody) {
 
     // レスポンスを返却

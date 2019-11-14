@@ -35,9 +35,8 @@ public class FileFullTextSearchController {
    * @return FileFullTextSearchResponse ファイル検索結果
    */
   @RequestMapping(method = RequestMethod.GET, path = "/fulltextsearch") // TODO:エンドポイントは確定後書き換えること
-  public ResponseEntity<List<FileFullTextSearchResponse>> search(HttpServletRequest request,
-      HttpServletResponse response,
-      @ModelAttribute @Validated FileFullTextSearchRequest requestBody) {
+  public ResponseEntity<List<FileFullTextSearchResponse>> fullTextSearch(HttpServletRequest request,
+      HttpServletResponse response, @ModelAttribute FileFullTextSearchRequest requestBody) {
 
     return fileFullTextSearchLogic.execute(request, response, requestBody);
   }

@@ -31,7 +31,7 @@ public class FileDownloadController {
    * @return FileUpdateResponse ファイル検索結果
    */
   @RequestMapping(value = "/download", method = RequestMethod.GET) // TODO エンドポイントは確定後書き換えること
-  public ResponseEntity<FileDownloadResponse> fileupdate(HttpServletRequest request,
+  public ResponseEntity<FileDownloadResponse> download(HttpServletRequest request,
       HttpServletResponse response, @ModelAttribute FileDownloadRequest requestBody) {
 
     // レスポンスを返却
