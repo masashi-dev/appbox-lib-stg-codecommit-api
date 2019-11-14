@@ -82,11 +82,11 @@
 		LEFT JOIN
 			(SELECT * FROM T_FOLDER 
 				WHERE
-					T_FOLDER.PRIVATE_FLG = false
+					(T_FOLDER.PRIVATE_FLG = false
+						OR (T_FOLDER.PRIVATE_FLG = true AND T_FOLDER.CREATE_DATE = #{user_id})
+                    )
 				AND
 					T_FOLDER.DELETE_FLG = false
-				AND 
-					T_FOLDER.CREATE_USER = #{user_id}
 			) AS folder
         ON
             bookmark.FOLDER_ID = folder.FOLDER_ID
