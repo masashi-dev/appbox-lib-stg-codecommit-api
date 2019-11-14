@@ -39,7 +39,7 @@ public class FileExtensionCheckController {
                                                                                          // エンドポイントは確定後書き換えること
   public ResponseEntity<FileExtensionCheckResponse> extensionCheck(HttpServletRequest request,
       HttpServletResponse response, @ModelAttribute FileExtensionCheckRequest requestBody,
-      @PathVariable String file_id) throws StorageException {
+      @PathVariable String file_id) {
 
     // レスポンスを返却
     requestBody.setFile_id(file_id);

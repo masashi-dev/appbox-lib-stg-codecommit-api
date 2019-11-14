@@ -55,7 +55,7 @@ public class FileExtensionCheckService<REQUEST_BODY extends FileExtensionCheckRe
     int display_type;
     // TODO 必要があれば追加する。
     switch (Extension) {
-      /** 表示種別(1:txt,2:pdf,3:img,4:audio,5:video,6:それ以外) */
+      /** 表示種別(1:txt,2:pdf,3:img,4:audio,5:video,99:それ以外) */
       case "text/plain":
         display_type = 1;
         break;
@@ -80,7 +80,8 @@ public class FileExtensionCheckService<REQUEST_BODY extends FileExtensionCheckRe
         display_type = 5;
         break;
       default:
-        display_type = 6;
+        display_type = 99;
+        break;
     }
 
     responseBodys.setExtension(Extension);
