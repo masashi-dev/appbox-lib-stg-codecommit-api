@@ -38,9 +38,11 @@ public class BookmarkGetService<REQUEST_BODY extends BookmarkGetRequest, RESPONS
     List<BookmarkGetDetail> bookmarkList = new ArrayList<>();
     
     String userId = "12345678901234"; //TODO: セッションからユーザーIDを取得する
+    String developerId = null;
+    String mansionId = null;
     
     // お気に入りファイルとフォルダの情報取得
-    List<BookmarkGetEntity> bookmarkEntities = bookmarkGetMapper.selectBookmark(userId);
+    List<BookmarkGetEntity> bookmarkEntities = bookmarkGetMapper.selectBookmark(userId, developerId, mansionId);
 
     //リスト作成
     for (BookmarkGetEntity bookmark : bookmarkEntities) {

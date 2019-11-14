@@ -85,13 +85,23 @@
 					T_FOLDER.PRIVATE_FLG = false
 				AND
 					T_FOLDER.DELETE_FLG = false
+				AND 
+					T_FOLDER.CREATE_USER = #{user_id}
 			) AS folder
         ON
             bookmark.FOLDER_ID = folder.FOLDER_ID
 		WHERE
-       		bookmark.user_id = '12345678901234'
+       		bookmark.user_id = #{user_id}
 		AND
 			((folder.FOLDER_ID IS NOT NULL) OR (file.FILE_ID IS NOT NULL))
+	<if test="developerId != null">
+         AND
+            folder.developer_id = #{developerId}
+	</if>
+	<if test="mansionId != null">
+         AND
+            folder.mansion_id = #{mansionId}
+	</if>
        	ORDER BY
        		folder.folder_name IS NULL ASC, 
        		folder.folder_name ASC, 

@@ -17,6 +17,8 @@ public interface BookmarkGetMapper {
    * @param argMyUserId
    * @return ファイルとフォルダ（1:1）のリスト
    */
-  List<BookmarkGetEntity> selectBookmark(@Param("user_id") String argMyUserId);
+  List<BookmarkGetEntity> selectBookmark(@Param("user_id") String argMyUserId, 
+      @Param("developerId") String argDeveloperId,
+      @Param("mansionId") String argMansionId);
 
 }
