@@ -78,7 +78,7 @@
          AND
             file.folder_id = #{folderId}
          AND
-            file.file_name LIKE '%' || #{keyword} || '%'
+            file.file_name LIKE #{keyword}
     <if test="developerId != null">
          AND
             folder.developer_id = #{developerId}
