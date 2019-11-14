@@ -25,7 +25,7 @@ public class S3FileNameCheckService<REQUEST_BODY extends S3FileNameCheckRequest,
   @Autowired
   private TFileMapper tFileMapper;
 
-  @Transactional(RollbackFo = Throwable.class)
+  @Transactional(rollbackFor = Throwable.class)
   public RESPONSE execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 

@@ -39,7 +39,7 @@ public class FileGetListService<REQUEST_BODY extends FileGetListRequest, RESPONS
   @Autowired
   private TSortOrderMapper tSortOrderMapper;
 
-  @Transactional(RollbackFo = Throwable.class)
+  @Transactional(rollbackFor = Throwable.class)
   public RESPONSE execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
