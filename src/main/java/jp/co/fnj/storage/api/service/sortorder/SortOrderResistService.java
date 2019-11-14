@@ -51,7 +51,7 @@ public class SortOrderResistService<REQUEST_BODY extends SortOrderResistRequest,
   @Autowired
   TSequenceMapper tSequenceMapper;
 
-  @Transactional(noRollbackFor = Throwable.class)
+  @Transactional(rollbackFor = Throwable.class)
   public void execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 

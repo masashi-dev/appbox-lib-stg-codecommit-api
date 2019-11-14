@@ -44,7 +44,7 @@ public class FileRegistService<REQUEST_BODY extends FileRegistRequest, RESPONSE 
   @Autowired
   private S3FileNameCheckService<S3FileNameCheckRequest, S3FileNameCheckResponse> s3FileNameCheckService;
 
-  @Transactional(noRollbackFor = Throwable.class)
+  @Transactional(rollbackFor = Throwable.class)
   public RESPONSE execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 

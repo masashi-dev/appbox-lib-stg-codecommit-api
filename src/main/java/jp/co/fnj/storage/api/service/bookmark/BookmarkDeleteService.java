@@ -23,7 +23,7 @@ public class BookmarkDeleteService<REQUEST_BODY extends BookmarkDeleteRequest, R
   @Autowired
   TBookmarkMapper tBookmarkMapper;
 
-  @Transactional(noRollbackFor = Throwable.class)
+  @Transactional(rollbackFor = Throwable.class)
   public void execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
     

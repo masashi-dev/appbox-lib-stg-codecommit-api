@@ -25,7 +25,7 @@ public class FileNameCheckService<REQUEST_BODY extends FileNameCheckRequest, RES
   @Autowired
   private TFileMapper tFileMapper;
 
-  @Transactional(noRollbackFor = Throwable.class)
+  @Transactional(rollbackFor = Throwable.class)
   public RESPONSE execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
