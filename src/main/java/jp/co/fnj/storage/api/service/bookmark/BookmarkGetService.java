@@ -30,7 +30,7 @@ public class BookmarkGetService<REQUEST_BODY extends BookmarkGetRequest, RESPONS
   @Autowired
   private BookmarkGetMapper bookmarkGetMapper;
 
-  @Transactional(noRollbackFor = Throwable.class)
+  @Transactional(rollbackFor = Throwable.class)
   public RESPONSE execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
     //レスポンス用のデータを用意
