@@ -22,7 +22,7 @@ public class BookmarkRegistService<REQUEST_BODY extends BookmarkRegistRequest, R
   @Autowired
   TBookmarkMapper tBookmarkMapper;
 
-  @Transactional(noRollbackFor = Throwable.class)
+  @Transactional(RollbackFo = Throwable.class)
   public void execute(HttpServletRequest request, HttpServletResponse response,
       REQUEST_BODY requestBody) {
 
