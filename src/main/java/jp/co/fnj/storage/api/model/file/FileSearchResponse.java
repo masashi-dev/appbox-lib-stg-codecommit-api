@@ -21,9 +21,6 @@ public class FileSearchResponse {
   /** (フォルダTBL)親フォルダID */
   private String folder_parent_folder_id;
 
-  /** (フォルダTBL)フォルダグループ */
-  private Integer folder_folder_group;
-
   /** (フォルダTBL)論理フォルダ名 */
   private String folder_folder_name;
 
