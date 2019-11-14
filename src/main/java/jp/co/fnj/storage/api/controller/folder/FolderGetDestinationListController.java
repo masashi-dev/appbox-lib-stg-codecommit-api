@@ -31,8 +31,9 @@ public class FolderGetDestinationListController {
    * @return FolderGetDestinationListResponse ファイル検索結果
    */
   @RequestMapping(method = RequestMethod.GET, path = "foldergetdestlist") // TODO:エンドポイントは確定後書き換えること
-  public ResponseEntity<List<FolderGetDestinationListResponse>> search(HttpServletRequest request,
-      HttpServletResponse response, @ModelAttribute FolderGetDestinationListRequest requestBody) {
+  public ResponseEntity<List<FolderGetDestinationListResponse>> getDesinationList(
+      HttpServletRequest request, HttpServletResponse response,
+      @ModelAttribute FolderGetDestinationListRequest requestBody) {
 
     // レスポンスを返却
     // FolderGetDestinationListResponse res = new FolderGetDestinationListResponse();
